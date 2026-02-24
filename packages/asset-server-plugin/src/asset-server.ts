@@ -297,6 +297,8 @@ export class AssetServer {
             case '.jpg':
             case '.jpeg':
                 return 'image/jpeg';
+            case '.pdf':
+                return 'application/pdf';
             case '.png':
                 return 'image/png';
             case '.gif':
