@@ -11,7 +11,7 @@ export const SHIPPING_METHOD_FRAGMENT = gql`
         name
         description
         fulfillmentHandlerCode
-        checker {
+        checkers {
             ...ConfigurableOperation
         }
         calculator {

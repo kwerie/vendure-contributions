@@ -26,7 +26,7 @@ export class ShippingMethodDataService {
         const variables: Codegen.CreateShippingMethodMutationVariables = {
             input: pick(input, [
                 'code',
-                'checker',
+                'checkers',
                 'calculator',
                 'fulfillmentHandler',
                 'customFields',
@@ -44,7 +44,7 @@ export class ShippingMethodDataService {
             input: pick(input, [
                 'id',
                 'code',
-                'checker',
+                'checkers',
                 'calculator',
                 'fulfillmentHandler',
                 'customFields',

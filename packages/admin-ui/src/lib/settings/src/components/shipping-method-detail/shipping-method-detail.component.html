@@ -16,7 +16,7 @@
                 *ngIf="isNew$ | async; else updateButton"
                 (click)="create()"
                 [disabled]="
-                    detailForm.pristine || detailForm.invalid || !selectedChecker || !selectedCalculator
+                    detailForm.pristine || detailForm.invalid || !checkers.length || !selectedCalculator
                 "
             >
                 {{ 'common.create' | translate }}
@@ -27,7 +27,7 @@
                     (click)="save()"
                     *vdrIfPermissions="updatePermission"
                     [disabled]="
-                        detailForm.pristine || detailForm.invalid || !selectedChecker || !selectedCalculator
+                        detailForm.pristine || detailForm.invalid || !checkers.length || !selectedCalculator
                     "
                 >
                     {{ 'common.update' | translate }}
@@ -110,28 +110,30 @@
                 [detailForm]="detailForm"
             ></vdr-custom-detail-component-host>
 
-            <vdr-card [title]="'settings.shipping-eligibility-checker' | translate">
-                <vdr-configurable-input
-                    class="card-span"
-                    *ngIf="selectedChecker && selectedCheckerDefinition"
-                    [operation]="selectedChecker"
-                    [operationDefinition]="selectedCheckerDefinition"
-                    [readonly]="!(updatePermission | hasPermission)"
-                    (remove)="selectedChecker = null"
-                    formControlName="checker"
-                ></vdr-configurable-input>
-                <div *ngIf="!selectedChecker || !selectedCheckerDefinition" class="card-span">
-                    <vdr-dropdown>
+            <vdr-card [title]="'settings.shipping-eligibility-checker' | translate" formArrayName="checkers">
+                <div *ngFor="let checker of checkers; index as i">
+                    <vdr-configurable-input
+                        (remove)="removeChecker($event)"
+                        [position]="i"
+                        [readonly]="!(updatePermission | hasPermission)"
+                        [operation]="checker"
+                        [operationDefinition]="getCheckerDefinition(checker)"
+                        [formControlName]="i"
+                    ></vdr-configurable-input>
+                </div>
+                <div>
+                    <vdr-dropdown *vdrIfPermissions="updatePermission">
                         <button class="btn btn-outline" vdrDropdownTrigger>
                             <clr-icon shape="plus"></clr-icon>
                             {{ 'common.select' | translate }}
                         </button>
                         <vdr-dropdown-menu vdrPosition="bottom-left">
                             <button
-                                *ngFor="let checker of checkers"
+                                *ngFor="let checker of getAvailableCheckers()"
                                 type="button"
                                 vdrDropdownItem
-                                (click)="selectChecker(checker)"
+                                class="item-wrap"
+                                (click)="addChecker(checker)"
                             >
                                 {{ checker.description }}
                             </button>

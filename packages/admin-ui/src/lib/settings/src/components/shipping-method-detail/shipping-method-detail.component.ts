@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormArray, Validators } from '@angular/forms';
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker';
 import {
     configurableDefinitionToInstance,
@@ -8,10 +8,12 @@ import {
     CreateShippingMethodInput,
     createUpdatedTranslatable,
     DataService,
+    encodeConfigArgValue,
     findTranslation,
     GetActiveChannelQuery,
     getConfigArgValue,
     getCustomFieldsDefaults,
+    getDefaultConfigArgValue,
     GetShippingMethodDetailDocument,
     GetShippingMethodDetailQuery,
     LanguageCode,
@@ -25,11 +27,11 @@ import {
     TypedBaseDetailComponent,
     UpdateShippingMethodInput,
 } from '@vendure/admin-ui/core';
+import { ConfigurableOperationInput } from '@vendure/common/lib/generated-types';
 import { normalizeString } from '@vendure/common/lib/normalize-string';
 import { gql } from 'apollo-angular';
 import { combineLatest, merge, Observable, of, Subject } from 'rxjs';
 import { mergeMap, switchMap, take, takeUntil } from 'rxjs/operators';
-
 import { TestAddress } from '../test-address-form/test-address-form.component';
 import { TestOrderLine } from '../test-order-builder/test-order-builder.component';
 
@@ -59,14 +61,17 @@ export class ShippingMethodDetailComponent
         name: ['', Validators.required],
         description: '',
         fulfillmentHandler: ['', Validators.required],
-        checker: {} as NonNullable<GetShippingMethodDetailQuery['shippingMethod']>['checker'],
+        checkers: this.formBuilder.array<ConfigurableOperation>([]),
         calculator: {} as NonNullable<GetShippingMethodDetailQuery['shippingMethod']>['calculator'],
         customFields: this.formBuilder.group(getCustomFieldsDefaults(this.customFields)),
     });
-    checkers: ConfigurableOperationDefinition[] = [];
+
+    checkers: ConfigurableOperation[] = [];
+    allCheckers: ConfigurableOperationDefinition[] = [];
+
     calculators: ConfigurableOperationDefinition[] = [];
     fulfillmentHandlers: ConfigurableOperationDefinition[] = [];
-    selectedChecker?: ConfigurableOperation | null;
+    selectedCheckers: ConfigurableOperation[] = [];
     selectedCheckerDefinition?: ConfigurableOperationDefinition;
     selectedCalculator?: ConfigurableOperation | null;
     selectedCalculatorDefinition?: ConfigurableOperationDefinition;
@@ -90,13 +95,12 @@ export class ShippingMethodDetailComponent
     ngOnInit() {
         this.init();
         this.dataService.shippingMethod.getShippingMethodOperations().single$.subscribe(data => {
-            this.checkers = data.shippingEligibilityCheckers;
+            this.allCheckers = data.shippingEligibilityCheckers;
             this.calculators = data.shippingCalculators;
             this.fulfillmentHandlers = data.fulfillmentHandlers;
             this.changeDetector.markForCheck();
-            this.selectedCheckerDefinition = data.shippingEligibilityCheckers.find(
-                c => c.code === this.entity?.checker?.code,
-            );
+            this.selectedCheckers = this.entity?.checkers ?? [];
+            this.selectedCalculator = this.entity?.calculator ?? null;
             this.selectedCalculatorDefinition = data.shippingCalculators.find(
                 c => c.code === this.entity?.calculator?.code,
             );
@@ -108,14 +112,14 @@ export class ShippingMethodDetailComponent
 
         this.testResult$ = this.fetchTestResult$.pipe(
             switchMap(([address, lines]) => {
-                const { checker, calculator } = this.detailForm.value;
-                if (!this.selectedChecker || !this.selectedCalculator || !checker || !calculator) {
+                const { checkers, calculator } = this.detailForm.value;
+                if (!this.checkers.length || !this.selectedCalculator || !checkers || !calculator) {
                     return of(undefined);
                 }
                 const input: TestShippingMethodInput = {
                     shippingAddress: { ...address, streetLine1: 'test' },
                     lines: lines.map(l => ({ productVariantId: l.id, quantity: l.quantity })),
-                    checker: toConfigurableOperationInput(this.selectedChecker, checker),
+                    checkers: this.mapOperationsToInputs(this.checkers, this.detailForm.value.checkers),
                     calculator: toConfigurableOperationInput(this.selectedCalculator, calculator),
                 };
                 return this.dataService.shippingMethod
@@ -126,7 +130,7 @@ export class ShippingMethodDetailComponent
 
         /* eslint-disable @typescript-eslint/no-non-null-assertion */
         merge(
-            this.detailForm.get(['checker'])!.valueChanges,
+            this.detailForm.get(['checkers'])!.valueChanges,
             this.detailForm.get(['calculator'])!.valueChanges,
         )
             .pipe(takeUntil(this.destroy$))
@@ -147,16 +151,23 @@ export class ShippingMethodDetailComponent
         }
     }
 
-    selectChecker(checker: ConfigurableOperationDefinition) {
-        this.selectedCheckerDefinition = checker;
-        this.selectedChecker = configurableDefinitionToInstance(checker);
-        const formControl = this.detailForm.get('checker');
-        if (formControl) {
-            formControl.clearValidators();
-            formControl.updateValueAndValidity({ onlySelf: true });
-            formControl.patchValue(this.selectedChecker);
-        }
+    addChecker(checker: ConfigurableOperation) {
+        this.addOperation('checkers', checker);
         this.detailForm.markAsDirty();
+    }
+
+    removeChecker(checker: ConfigurableOperation) {
+        this.removeOperation('checkers', checker);
+        this.detailForm.markAsDirty();
+    }
+
+    getCheckerDefinition(condition: ConfigurableOperation): ConfigurableOperationDefinition | undefined {
+        return this.allCheckers.find(c => c.code === condition.code);
+    }
+
+    getAvailableCheckers(): ConfigurableOperationDefinition[] {
+        console.log('checking checkers');
+        return this.allCheckers.filter(o => !this.checkers.find(c => c.code === o.code));
     }
 
     selectCalculator(calculator: ConfigurableOperationDefinition) {
@@ -171,11 +182,15 @@ export class ShippingMethodDetailComponent
         this.detailForm.markAsDirty();
     }
 
+    formArrayOf(key: 'checkers'): UntypedFormArray {
+        return this.detailForm.get(key) as UntypedFormArray;
+    }
+
     create() {
-        const selectedChecker = this.selectedChecker;
+        const selectedCheckers = this.checkers;
         const selectedCalculator = this.selectedCalculator;
-        const { checker, calculator } = this.detailForm.value;
-        if (!selectedChecker || !selectedCalculator || !checker || !calculator) {
+        const { checkers, calculator } = this.detailForm.value;
+        if (!selectedCheckers || !selectedCalculator || !checkers || !calculator) {
             return;
         }
         const input = {
@@ -188,18 +203,18 @@ export class ShippingMethodDetailComponent
                     name: '',
                     description: '',
                     fulfillmentHandlerCode: '',
-                    checker: undefined as any,
+                    checkers: undefined as any,
                     calculator: undefined as any,
                     translations: [],
                 },
                 this.detailForm,
                 this.languageCode,
             ) as CreateShippingMethodInput),
-            checker: toConfigurableOperationInput(selectedChecker, checker),
+            checkers: this.mapOperationsToInputs(selectedCheckers, this.detailForm.value.checkers),
             calculator: toConfigurableOperationInput(selectedCalculator, calculator),
         };
-        this.dataService.shippingMethod.createShippingMethod(input).subscribe(
-            data => {
+        this.dataService.shippingMethod.createShippingMethod(input).subscribe({
+            next: data => {
                 this.notificationService.success(_('common.notify-create-success'), {
                     entity: 'ShippingMethod',
                 });
@@ -207,32 +222,35 @@ export class ShippingMethodDetailComponent
                 this.changeDetector.markForCheck();
                 this.router.navigate(['../', data.createShippingMethod.id], { relativeTo: this.route });
             },
-            err => {
+            error: _err => {
                 this.notificationService.error(_('common.notify-create-error'), {
                     entity: 'ShippingMethod',
                 });
             },
-        );
+        });
     }
 
     save() {
-        const selectedChecker = this.selectedChecker;
+        const selectedCheckers = this.selectedCheckers;
         const selectedCalculator = this.selectedCalculator;
-        const { checker, calculator } = this.detailForm.value;
-        if (!selectedChecker || !selectedCalculator || !checker || !calculator) {
+        const { checkers, calculator } = this.detailForm.value;
+        if (!selectedCheckers || !selectedCalculator || !checkers || !calculator) {
             return;
         }
         combineLatest([this.entity$, this.languageCode$])
             .pipe(
                 take(1),
                 mergeMap(([shippingMethod, languageCode]) => {
+                    console.log({
+                        checkers: this.mapOperationsToInputs(this.checkers, this.detailForm.value.checkers),
+                    });
                     const input = {
                         ...(this.getUpdatedShippingMethod(
                             shippingMethod,
                             this.detailForm,
                             languageCode,
                         ) as UpdateShippingMethodInput),
-                        checker: toConfigurableOperationInput(selectedChecker, checker),
+                        checkers: this.mapOperationsToInputs(this.checkers, this.detailForm.value.checkers),
                         calculator: toConfigurableOperationInput(selectedCalculator, calculator),
                     };
                     return this.dataService.shippingMethod.updateShippingMethod(input);
@@ -271,7 +289,7 @@ export class ShippingMethodDetailComponent
             this.testAddress &&
             this.testOrderLines &&
             this.testOrderLines.length &&
-            this.selectedChecker &&
+            this.checkers.length &&
             this.selectedCalculator
         );
     }
@@ -289,7 +307,7 @@ export class ShippingMethodDetailComponent
         shippingMethod: NonNullable<GetShippingMethodDetailQuery['shippingMethod']>,
         formGroup: typeof this.detailForm,
         languageCode: LanguageCode,
-    ): Omit<CreateShippingMethodInput | UpdateShippingMethodInput, 'checker' | 'calculator'> {
+    ): Omit<CreateShippingMethodInput | UpdateShippingMethodInput, 'checkers' | 'calculator'> {
         const formValue = formGroup.value;
         const input = createUpdatedTranslatable({
             translatable: shippingMethod,
@@ -312,21 +330,11 @@ export class ShippingMethodDetailComponent
             description: currentTranslation?.description ?? '',
             code: shippingMethod.code,
             fulfillmentHandler: shippingMethod.fulfillmentHandlerCode,
-            checker: shippingMethod.checker || {},
             calculator: shippingMethod.calculator || {},
         });
-        if (!this.selectedChecker) {
-            this.selectedChecker = shippingMethod.checker && {
-                code: shippingMethod.checker.code,
-                args: shippingMethod.checker.args.map(a => ({ ...a, value: getConfigArgValue(a.value) })),
-            };
-        }
-        if (!this.selectedCalculator) {
-            this.selectedCalculator = shippingMethod.calculator && {
-                code: shippingMethod.calculator?.code,
-                args: shippingMethod.calculator?.args.map(a => ({ ...a, value: getConfigArgValue(a.value) })),
-            };
-        }
+        shippingMethod.checkers.forEach(o => {
+            this.addOperation('checkers', o);
+        });
         if (this.customFields.length) {
             this.setCustomFieldFormValues(
                 this.customFields,
@@ -334,6 +342,74 @@ export class ShippingMethodDetailComponent
                 shippingMethod,
                 currentTranslation,
             );
+        }
+    }
+
+    /**
+     * Maps an array of conditions or actions to the input format expected by the GraphQL API.
+     */
+    private mapOperationsToInputs(
+        operations: ConfigurableOperation[],
+        formValueOperations: any,
+    ): ConfigurableOperationInput[] {
+        return operations
+            .filter(o => !!o)
+            .map((o, i) => ({
+                code: o.code,
+                arguments: Object.values<any>(formValueOperations[i].args).map((value, j) => ({
+                    name: o.args[j].name,
+                    value: encodeConfigArgValue(value),
+                })),
+            }));
+    }
+
+    /**
+     * Adds a new condition or action to the promotion.
+     */
+    private addOperation(key: 'checkers', operation: ConfigurableOperation) {
+        const operationsArray = this.formArrayOf(key);
+        const index = operationsArray.value.findIndex(o => o.code === operation.code);
+        if (index === -1) {
+            const argsHash = operation.args.reduce(
+                (output, arg) => ({
+                    ...output,
+                    [arg.name]: getConfigArgValue(arg.value) ?? this.getDefaultArgValue(operation, arg.name),
+                }),
+                {},
+            );
+            operationsArray.push(
+                this.formBuilder.control({
+                    code: operation.code,
+                    args: argsHash,
+                }),
+            );
+            this.checkers.push({
+                code: operation.code,
+                args: operation.args.map(a => ({ name: a.name, value: getConfigArgValue(a.value) })),
+            });
+        }
+    }
+
+    private getDefaultArgValue(operation: ConfigurableOperation, argName: string) {
+        const def = this.allCheckers.find(c => c.code === operation.code);
+        if (def) {
+            const argDef = def.args.find(a => a.name === argName);
+            if (argDef) {
+                return getDefaultConfigArgValue(argDef);
+            }
+        }
+        throw new Error(`Could not determine default value for "argName"`);
+    }
+
+    /**
+     * Removes a condition or action from the promotion.
+     */
+    private removeOperation(key: 'checkers', operation: ConfigurableOperation) {
+        const operationsArray = this.formArrayOf(key);
+        const index = operationsArray.value.findIndex(o => o.code === operation.code);
+        if (index !== -1) {
+            operationsArray.removeAt(index);
+            this.checkers.splice(index, 1);
         }
     }
 }
