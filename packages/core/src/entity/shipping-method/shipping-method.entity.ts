@@ -56,7 +56,7 @@ export class ShippingMethod
 
     description: LocaleString;
 
-    @Column('simple-json') checker: ConfigurableOperation;
+    @Column('simple-json') checkers: ConfigurableOperation[];
 
     @Column('simple-json') calculator: ConfigurableOperation;
 
@@ -90,12 +90,18 @@ export class ShippingMethod
     }
 
     async test(ctx: RequestContext, order: Order): Promise<boolean> {
-        const checker = this.allCheckers[this.checker.code];
-        if (checker) {
-            return checker.check(ctx, order, this.checker.args, this);
-        } else {
-            return false;
+        let result = false;
+
+        for (const c of this.checkers) {
+            const checker = this.allCheckers[c.code];
+            if (checker) {
+                result = await checker.check(ctx, order, c.args, this);
+            } else {
+                result = false;
+            }
         }
+
+        return result;
     }
 
     /**

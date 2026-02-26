@@ -38,7 +38,7 @@ input ShippingMethodTranslationInput {
 input CreateShippingMethodInput {
     code: String!
     fulfillmentHandler: String!
-    checker: ConfigurableOperationInput!
+    checkers: [ConfigurableOperationInput!]!
     calculator: ConfigurableOperationInput!
     translations: [ShippingMethodTranslationInput!]!
 }
@@ -47,13 +47,13 @@ input UpdateShippingMethodInput {
     id: ID!
     code: String
     fulfillmentHandler: String
-    checker: ConfigurableOperationInput
+    checkers: [ConfigurableOperationInput!]!
     calculator: ConfigurableOperationInput
     translations: [ShippingMethodTranslationInput!]!
 }
 
 input TestShippingMethodInput {
-    checker: ConfigurableOperationInput!
+    checkers: [ConfigurableOperationInput!]!
     calculator: ConfigurableOperationInput!
     shippingAddress: CreateAddressInput!
     lines: [TestShippingMethodOrderLineInput!]!

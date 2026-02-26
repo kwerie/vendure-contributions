@@ -7,7 +7,7 @@ type ShippingMethod implements Node {
     name: String!
     description: String!
     fulfillmentHandlerCode: String!
-    checker: ConfigurableOperation!
+    checkers: [ConfigurableOperation!]!
     calculator: ConfigurableOperation!
     translations: [ShippingMethodTranslation!]!
 }

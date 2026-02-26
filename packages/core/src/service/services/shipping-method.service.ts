@@ -118,10 +118,11 @@ export class ShippingMethodService {
                     method.code,
                     input.fulfillmentHandler,
                 );
-                method.checker = this.configArgService.parseInput(
-                    'ShippingEligibilityChecker',
-                    input.checker,
+                // TODO: enable map when input types are regenerated to support arrays
+                const checkers = input.checkers.map(c =>
+                    this.configArgService.parseInput('ShippingEligibilityChecker', c),
                 );
+                method.checkers = checkers;
                 method.calculator = this.configArgService.parseInput('ShippingCalculator', input.calculator);
             },
         });
@@ -148,15 +149,15 @@ export class ShippingMethodService {
         }
         const updatedShippingMethod = await this.translatableSaver.update({
             ctx,
-            input: omit(input, ['checker', 'calculator']),
+            input: omit(input, ['checkers', 'calculator']),
             entityType: ShippingMethod,
             translationType: ShippingMethodTranslation,
         });
-        if (input.checker) {
-            updatedShippingMethod.checker = this.configArgService.parseInput(
-                'ShippingEligibilityChecker',
-                input.checker,
+        if (input.checkers) {
+            const checkers = input.checkers.map(c =>
+                this.configArgService.parseInput('ShippingEligibilityChecker', c),
             );
+            updatedShippingMethod.checkers = checkers;
         }
         if (input.calculator) {
             updatedShippingMethod.calculator = this.configArgService.parseInput(
@@ -214,6 +215,9 @@ export class ShippingMethodService {
                 shippingMethodId,
                 ctx.channelId,
             );
+
+            if (shippingMethod) continue; // If the shipping method is already assigned to the channel, skip it
+
             await this.channelService.assignToChannels(ctx, ShippingMethod, shippingMethodId, [
                 input.channelId,
             ]);
@@ -239,11 +243,7 @@ export class ShippingMethodService {
             throw new UserInputError('error.items-cannot-be-removed-from-default-channel');
         }
         for (const shippingMethodId of input.shippingMethodIds) {
-            const shippingMethod = await this.connection.getEntityOrThrow(
-                ctx,
-                ShippingMethod,
-                shippingMethodId,
-            );
+            await this.connection.getEntityOrThrow(ctx, ShippingMethod, shippingMethodId);
             await this.channelService.removeFromChannels(ctx, ShippingMethod, shippingMethodId, [
                 input.channelId,
             ]);

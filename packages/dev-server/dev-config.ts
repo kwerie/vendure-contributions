@@ -7,9 +7,12 @@ import {
     DefaultLogger,
     DefaultSchedulerPlugin,
     DefaultSearchPlugin,
+    defaultShippingEligibilityChecker,
     dummyPaymentHandler,
+    LanguageCode,
     LogLevel,
     SettingsStoreScopes,
+    ShippingEligibilityChecker,
     VendureConfig,
 } from '@vendure/core';
 import { DashboardPlugin } from '@vendure/dashboard/plugin';
@@ -62,6 +65,24 @@ export const devConfig: VendureConfig = {
     },
     paymentOptions: {
         paymentMethodHandlers: [dummyPaymentHandler],
+    },
+    shippingOptions: {
+        shippingEligibilityCheckers: [
+            defaultShippingEligibilityChecker,
+            new ShippingEligibilityChecker({
+                code: 'foobar',
+                description: [
+                    {
+                        languageCode: LanguageCode.en,
+                        value: 'Checks if the customer has more than 2 item in their order',
+                    },
+                ],
+                args: {},
+                check: (ctx, order, args) => {
+                    return order.lines.reduce((eligible, line) => eligible || line.quantity > 2, false);
+                },
+            }),
+        ],
     },
     settingsStoreFields: {
         MyPlugin: [

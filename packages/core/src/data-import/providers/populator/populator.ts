@@ -12,7 +12,7 @@ import {
 } from '../../../config';
 import { manualFulfillmentHandler } from '../../../config/fulfillment/manual-fulfillment-handler';
 import { TransactionalConnection } from '../../../connection/transactional-connection';
-import { Channel, Collection, FacetValue, TaxCategory, User } from '../../../entity';
+import { Channel, Collection, FacetValue, User } from '../../../entity';
 import {
     CollectionService,
     FacetValueService,
@@ -293,10 +293,12 @@ export class Populator {
         for (const method of shippingMethods) {
             await this.shippingMethodService.create(ctx, {
                 fulfillmentHandler: manualFulfillmentHandler.code,
-                checker: {
-                    code: defaultShippingEligibilityChecker.code,
-                    arguments: [{ name: 'orderMinimum', value: '0' }],
-                },
+                checkers: [
+                    {
+                        code: defaultShippingEligibilityChecker.code,
+                        arguments: [{ name: 'orderMinimum', value: '0' }],
+                    },
+                ],
                 calculator: {
                     code: defaultShippingCalculator.code,
                     arguments: [

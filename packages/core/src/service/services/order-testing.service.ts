@@ -55,7 +55,9 @@ export class OrderTestingService {
         input: TestShippingMethodInput,
     ): Promise<TestShippingMethodResult> {
         const shippingMethod = new ShippingMethod({
-            checker: this.configArgService.parseInput('ShippingEligibilityChecker', input.checker),
+            checkers: input.checkers.map(c =>
+                this.configArgService.parseInput('ShippingEligibilityChecker', c),
+            ),
             calculator: this.configArgService.parseInput('ShippingCalculator', input.calculator),
         });
         const mockOrder = await this.buildMockOrder(ctx, input.shippingAddress, input.lines);
