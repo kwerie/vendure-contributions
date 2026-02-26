@@ -959,7 +959,7 @@ export type CreateSellerInput = {
 
 export type CreateShippingMethodInput = {
   calculator: ConfigurableOperationInput;
-  checker: ConfigurableOperationInput;
+  checkers: Array<ConfigurableOperationInput>;
   code: Scalars['String']['input'];
   customFields?: InputMaybe<Scalars['JSON']['input']>;
   fulfillmentHandler: Scalars['String']['input'];
@@ -6039,7 +6039,7 @@ export type ShippingLine = {
 export type ShippingMethod = Node & {
   __typename?: 'ShippingMethod';
   calculator: ConfigurableOperation;
-  checker: ConfigurableOperation;
+  checkers: Array<ConfigurableOperation>;
   code: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   customFields?: Maybe<Scalars['JSON']['output']>;
@@ -6517,7 +6517,7 @@ export type TestEligibleShippingMethodsInput = {
 
 export type TestShippingMethodInput = {
   calculator: ConfigurableOperationInput;
-  checker: ConfigurableOperationInput;
+  checkers: Array<ConfigurableOperationInput>;
   lines: Array<TestShippingMethodOrderLineInput>;
   shippingAddress: CreateAddressInput;
 };
@@ -6858,7 +6858,7 @@ export type UpdateSellerInput = {
 
 export type UpdateShippingMethodInput = {
   calculator?: InputMaybe<ConfigurableOperationInput>;
-  checker?: InputMaybe<ConfigurableOperationInput>;
+  checkers?: InputMaybe<ConfigurableOperationInput[]>;
   code?: InputMaybe<Scalars['String']['input']>;
   customFields?: InputMaybe<Scalars['JSON']['input']>;
   fulfillmentHandler?: InputMaybe<Scalars['String']['input']>;

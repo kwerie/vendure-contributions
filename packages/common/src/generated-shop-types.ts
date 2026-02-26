@@ -3256,7 +3256,7 @@ export type ShippingLine = {
 export type ShippingMethod = Node & {
     __typename?: 'ShippingMethod';
     calculator: ConfigurableOperation;
-    checker: ConfigurableOperation;
+    checkers: Array<ConfigurableOperation>;
     code: Scalars['String']['output'];
     createdAt: Scalars['DateTime']['output'];
     customFields?: Maybe<Scalars['JSON']['output']>;
