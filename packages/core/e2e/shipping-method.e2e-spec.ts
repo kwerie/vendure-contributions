@@ -523,7 +523,7 @@ describe('ShippingMethod resolver', () => {
         expect(activeShippingMethods[0].description).toBe('This is an active shipping method');
     });
 
-    // https://github.com/vendure-ecommerce/vendure/issues/XXXX
+    // https://github.com/vendure-ecommerce/vendure/issues/4492
     describe('shipping line removal on delete/unassign', () => {
         let shippingMethodId: string;
 
