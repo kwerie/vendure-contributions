@@ -23,6 +23,7 @@ import { assertFound, idsAreEqual } from '../../common/utils';
 import { ConfigService } from '../../config/config.service';
 import { Logger } from '../../config/logger/vendure-logger';
 import { TransactionalConnection } from '../../connection/transactional-connection';
+import { ShippingLine } from '../../entity/shipping-line/shipping-line.entity';
 import { ShippingMethodTranslation } from '../../entity/shipping-method/shipping-method-translation.entity';
 import { ShippingMethod } from '../../entity/shipping-method/shipping-method.entity';
 import { EventBus } from '../../event-bus';
@@ -191,6 +192,7 @@ export class ShippingMethodService {
         shippingMethod.deletedAt = new Date();
         await this.connection.getRepository(ctx, ShippingMethod).save(shippingMethod, { reload: false });
         await this.eventBus.publish(new ShippingMethodEvent(ctx, shippingMethod, 'deleted', id));
+        await this.removeShippingMethodFromActiveOrders(ctx, ctx.channelId, id);
         return {
             result: DeletionResult.DELETED,
         };
@@ -247,6 +249,8 @@ export class ShippingMethodService {
             await this.channelService.removeFromChannels(ctx, ShippingMethod, shippingMethodId, [
                 input.channelId,
             ]);
+
+            await this.removeShippingMethodFromActiveOrders(ctx, input.channelId, shippingMethodId);
         }
         return this.connection
             .findByIdsInChannel(ctx, ShippingMethod, input.shippingMethodIds, ctx.channelId, {})
@@ -308,5 +312,26 @@ export class ShippingMethodService {
             );
         }
         return handler.code;
+    }
+
+    private async removeShippingMethodFromActiveOrders(
+        ctx: RequestContext,
+        channelId: ID,
+        shippingMethodId: ID,
+    ) {
+        const shippingLinesToRemove = await this.connection.getRepository(ctx, ShippingLine).find({
+            where: {
+                shippingMethodId,
+                order: {
+                    channels: { id: channelId },
+                    active: true,
+                },
+            },
+            relations: ['order', 'order.channels'],
+        });
+
+        if (!shippingLinesToRemove.length) return;
+
+        await this.connection.getRepository(ctx, ShippingLine).remove(shippingLinesToRemove);
     }
 }

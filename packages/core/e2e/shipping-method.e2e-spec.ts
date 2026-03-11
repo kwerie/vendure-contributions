@@ -17,12 +17,19 @@ import { SHIPPING_METHOD_FRAGMENT } from './graphql/fragments';
 import * as Codegen from './graphql/generated-e2e-admin-types';
 import { DeletionResult, LanguageCode } from './graphql/generated-e2e-admin-types';
 import {
+    ASSIGN_PRODUCTVARIANT_TO_CHANNEL,
+    CREATE_CHANNEL,
     CREATE_SHIPPING_METHOD,
     DELETE_SHIPPING_METHOD,
     GET_SHIPPING_METHOD_LIST,
     UPDATE_SHIPPING_METHOD,
 } from './graphql/shared-definitions';
-import { GET_ACTIVE_SHIPPING_METHODS } from './graphql/shop-definitions';
+import {
+    ADD_ITEM_TO_ORDER,
+    GET_ACTIVE_ORDER,
+    GET_ACTIVE_SHIPPING_METHODS,
+    SET_SHIPPING_METHOD,
+} from './graphql/shop-definitions';
 
 const TEST_METADATA = {
     foo: 'bar',
@@ -515,6 +522,151 @@ describe('ShippingMethod resolver', () => {
         expect(activeShippingMethods[0].name).toBe('Active Method');
         expect(activeShippingMethods[0].description).toBe('This is an active shipping method');
     });
+
+    // https://github.com/vendure-ecommerce/vendure/issues/XXXX
+    describe('shipping line removal on delete/unassign', () => {
+        let shippingMethodId: string;
+
+        beforeAll(async () => {
+            // Create a fresh shipping method for these tests
+            const { createShippingMethod } = await adminClient.query<
+                Codegen.CreateShippingMethodMutation,
+                Codegen.CreateShippingMethodMutationVariables
+            >(CREATE_SHIPPING_METHOD, {
+                input: {
+                    code: 'delete-test-method',
+                    fulfillmentHandler: manualFulfillmentHandler.code,
+                    checker: {
+                        code: defaultShippingEligibilityChecker.code,
+                        arguments: [{ name: 'orderMinimum', value: '0' }],
+                    },
+                    calculator: {
+                        code: defaultShippingCalculator.code,
+                        arguments: [
+                            { name: 'rate', value: '500' },
+                            { name: 'includesTax', value: 'auto' },
+                            { name: 'taxRate', value: '0' },
+                        ],
+                    },
+                    translations: [
+                        { languageCode: LanguageCode.en, name: 'Delete Test Method', description: '' },
+                    ],
+                },
+            });
+            shippingMethodId = createShippingMethod.id;
+        });
+
+        it('removes shipping lines from active orders when shipping method is deleted', async () => {
+            // Create an active order with the shipping method
+            await shopClient.asAnonymousUser();
+            await shopClient.query(ADD_ITEM_TO_ORDER, {
+                productVariantId: 'T_1',
+                quantity: 1,
+            });
+            await shopClient.query(SET_SHIPPING_METHOD, { id: [shippingMethodId] });
+
+            // Verify the shipping line is present
+            const { activeOrder: orderBefore } = await shopClient.query(GET_ACTIVE_ORDER);
+            expect(orderBefore.shippingLines).toHaveLength(1);
+            expect(orderBefore.shippingLines[0].shippingMethod.id).toBe(shippingMethodId);
+
+            // Delete the shipping method
+            await adminClient.query<
+                Codegen.DeleteShippingMethodMutation,
+                Codegen.DeleteShippingMethodMutationVariables
+            >(DELETE_SHIPPING_METHOD, { id: shippingMethodId });
+
+            // Verify the shipping line has been removed from the active order
+            const { activeOrder: orderAfter } = await shopClient.query(GET_ACTIVE_ORDER);
+            expect(orderAfter.shippingLines).toHaveLength(0);
+        });
+
+        it('removes shipping lines from active orders when shipping method is unassigned from channel', async () => {
+            // Create a new channel
+            const { createChannel } = await adminClient.query(CREATE_CHANNEL, {
+                input: {
+                    code: 'shipping-test-channel',
+                    token: 'shipping-test-channel-token',
+                    defaultLanguageCode: LanguageCode.en,
+                    currencyCode: 'USD',
+                    pricesIncludeTax: false,
+                    defaultShippingZoneId: 'T_1',
+                    defaultTaxZoneId: 'T_1',
+                },
+            });
+            const channelId = createChannel.id;
+
+            // Create a shipping method and assign it to the new channel
+            const { createShippingMethod } = await adminClient.query<
+                Codegen.CreateShippingMethodMutation,
+                Codegen.CreateShippingMethodMutationVariables
+            >(CREATE_SHIPPING_METHOD, {
+                input: {
+                    code: 'channel-test-method',
+                    fulfillmentHandler: manualFulfillmentHandler.code,
+                    checker: {
+                        code: defaultShippingEligibilityChecker.code,
+                        arguments: [{ name: 'orderMinimum', value: '0' }],
+                    },
+                    calculator: {
+                        code: defaultShippingCalculator.code,
+                        arguments: [
+                            { name: 'rate', value: '500' },
+                            { name: 'includesTax', value: 'auto' },
+                            { name: 'taxRate', value: '0' },
+                        ],
+                    },
+                    translations: [
+                        { languageCode: LanguageCode.en, name: 'Channel Test Method', description: '' },
+                    ],
+                },
+            });
+
+            await adminClient.query(ASSIGN_SHIPPING_METHODS_TO_CHANNEL, {
+                input: {
+                    channelId,
+                    shippingMethodIds: [createShippingMethod.id],
+                },
+            });
+
+            // Assign product variant to the new channel
+            await adminClient.query(ASSIGN_PRODUCTVARIANT_TO_CHANNEL, {
+                input: {
+                    channelId,
+                    productVariantIds: ['T_1'],
+                },
+            });
+
+            // Create an active order in the new channel with the shipping method
+            shopClient.setChannelToken('shipping-test-channel-token');
+            await shopClient.asAnonymousUser();
+            await shopClient.query(ADD_ITEM_TO_ORDER, {
+                productVariantId: 'T_1',
+                quantity: 1,
+            });
+            await shopClient.query(SET_SHIPPING_METHOD, { id: [createShippingMethod.id] });
+
+            // Verify shipping line is present
+            const { activeOrder: orderBefore } = await shopClient.query(GET_ACTIVE_ORDER);
+            expect(orderBefore.shippingLines).toHaveLength(1);
+            expect(orderBefore.shippingLines[0].shippingMethod.id).toBe(createShippingMethod.id);
+
+            // Remove the shipping method from the channel
+            await adminClient.query(REMOVE_SHIPPING_METHODS_FROM_CHANNEL, {
+                input: {
+                    channelId,
+                    shippingMethodIds: [createShippingMethod.id],
+                },
+            });
+
+            // Verify the shipping line has been removed from the active order
+            const { activeOrder: orderAfter } = await shopClient.query(GET_ACTIVE_ORDER);
+            expect(orderAfter.shippingLines).toHaveLength(0);
+
+            // Reset shop client to default channel
+            shopClient.setChannelToken('e2e-default-channel');
+        });
+    });
 });
 
 const GET_SHIPPING_METHOD = gql`
@@ -580,6 +732,24 @@ export const TEST_ELIGIBLE_SHIPPING_METHODS = gql`
             price
             priceWithTax
             metadata
+        }
+    }
+`;
+
+const ASSIGN_SHIPPING_METHODS_TO_CHANNEL = gql`
+    mutation AssignShippingMethodsToChannel($input: AssignShippingMethodsToChannelInput!) {
+        assignShippingMethodsToChannel(input: $input) {
+            id
+            name
+        }
+    }
+`;
+
+const REMOVE_SHIPPING_METHODS_FROM_CHANNEL = gql`
+    mutation RemoveShippingMethodsFromChannel($input: RemoveShippingMethodsFromChannelInput!) {
+        removeShippingMethodsFromChannel(input: $input) {
+            id
+            name
         }
     }
 `;
