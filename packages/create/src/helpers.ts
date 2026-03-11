@@ -4,10 +4,10 @@ import fs from 'fs-extra';
 import { execFile, execFileSync, execSync } from 'node:child_process';
 import { createWriteStream } from 'node:fs';
 import { platform } from 'node:os';
+import path from 'node:path';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import { promisify } from 'node:util';
-import path from 'path';
 import pc from 'picocolors';
 import semver from 'semver';
 import * as tar from 'tar';
@@ -286,25 +286,21 @@ async function checkMysqlDbExists(options: any, root: string): Promise<true> {
         port: options.port,
         database: options.database,
     };
-    const connection = mysql.createConnection(connectionOptions);
 
-    return new Promise<boolean>((resolve, reject) => {
-        connection.connect((err: any) => {
-            if (err) {
-                if (err.code === 'ER_BAD_DB_ERROR') {
-                    throwDatabaseDoesNotExist(options.database);
-                }
-                throwConnectionError(err);
-            }
-            resolve(true);
-        });
-    }).then(() => {
-        return new Promise((resolve, reject) => {
-            connection.end((err: any) => {
-                resolve(true);
-            });
-        });
-    });
+    let connection;
+    try {
+        // mysql2/promise's createConnection returns a Promise that resolves
+        // to a connection once connected, so we must await it.
+        connection = await mysql.createConnection(connectionOptions);
+    } catch (err: any) {
+        if (err.code === 'ER_BAD_DB_ERROR') {
+            throwDatabaseDoesNotExist(options.database);
+        }
+        throwConnectionError(err);
+    }
+
+    await connection.end();
+    return true;
 }
 
 async function checkPostgresDbExists(options: any, root: string): Promise<true> {
@@ -599,7 +595,7 @@ export async function downloadAndExtractStorefront(targetDir: string): Promise<v
         // Save the tarball to a temp file
         const fileStream = createWriteStream(tempTarPath);
         // Convert the web ReadableStream to a Node.js Readable stream
-        const nodeReadable = Readable.fromWeb(response.body as import('stream/web').ReadableStream);
+        const nodeReadable = Readable.fromWeb(response.body as import('node:stream/web').ReadableStream);
         await pipeline(nodeReadable, fileStream);
 
         // Create target directory

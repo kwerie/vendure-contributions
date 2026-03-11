@@ -149,7 +149,9 @@ export function useModifyOrder(order: Order | null | undefined): UseModifyOrderR
                 setModifyOrderInput(prev => ({
                     ...prev,
                     addItems: (prev.addItems ?? []).map(item =>
-                        item.productVariantId === productVariantId ? { ...item, quantity } : item,
+                        item.productVariantId === productVariantId
+                            ? { ...item, quantity, customFields }
+                            : item,
                     ),
                 }));
             } else {
@@ -163,7 +165,7 @@ export function useModifyOrder(order: Order | null | undefined): UseModifyOrderR
 
                 setModifyOrderInput(prev => {
                     const originalLine = order?.lines.find(l => l.id === lineId);
-                    const isBackToOriginal = originalLine && originalLine.quantity === quantity;
+                    const isBackToOriginal = originalLine?.quantity === quantity;
 
                     const originalCustomFields = (originalLine as any)?.customFields;
                     const customFieldsChanged =

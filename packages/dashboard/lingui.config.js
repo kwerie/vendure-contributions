@@ -16,6 +16,7 @@ export default defineConfig({
         'cs',
         'fr',
         'ru',
+        'hu',
         'uk',
         'it',
         'fa',
@@ -25,7 +26,8 @@ export default defineConfig({
         'sv',
         'tr',
         'ja',
-        'bg'
+        'bg',
+        'nl'
     ],
     catalogs: [
         {

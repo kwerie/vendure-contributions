@@ -1,7 +1,7 @@
 import { type Page, expect, test } from '@playwright/test';
 
-import { VENDURE_PORT } from '../../constants.js';
 import { BaseListPage } from '../../page-objects/list-page.base.js';
+import { VendureAdminClient } from '../../utils/vendure-admin-client.js';
 
 // Orders use a multi-step draft flow rather than a single CRUD form.
 // Each action (set customer, add line, set address, set shipping) is an
@@ -148,6 +148,32 @@ test.describe('Orders', () => {
         await expect(page.getByText('Hello from a custom plugin')).toBeVisible();
     });
 
+    // #4391 — clicking Edit on address during order modification should not hide the address
+    test('should keep address visible when editing during order modification', async ({ page }) => {
+        test.setTimeout(60_000);
+
+        const orderId = await createModifyingOrder(page);
+
+        await page.goto(`/orders/${orderId}/modify`);
+        await expect(page.getByRole('heading', { name: 'Modify order' })).toBeVisible({ timeout: 10_000 });
+
+        // Verify the shipping address is displayed
+        await expect(page.getByText('123 Main St')).toBeVisible();
+        await expect(page.getByText('London')).toBeVisible();
+
+        // Click the Edit button for the shipping address
+        const editButtons = page.getByRole('button', { name: 'Edit' });
+        await editButtons.first().click();
+
+        // The address should still be visible after clicking Edit
+        await expect(page.getByText('123 Main St')).toBeVisible();
+        await expect(page.getByText('London')).toBeVisible();
+
+        // The address selector popover should auto-open
+        await expect(page.locator('[data-slot="popover-content"]')).toBeVisible({ timeout: 5_000 });
+        await expect(page.getByText('Select an address')).toBeVisible();
+    });
+
     // #4393 — order modify page should show a "Recalculate shipping" checkbox
     test('should show recalculate shipping checkbox on modify page', async ({ page }) => {
         test.setTimeout(60_000);
@@ -179,48 +205,6 @@ test.describe('Orders', () => {
 });
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
-
-const ADMIN_API = `http://localhost:${VENDURE_PORT}/admin-api`;
-
-/** Thin wrapper around Playwright's request API with Vendure bearer-token auth. */
-class VendureAdminClient {
-    private authToken: string | null = null;
-    constructor(private page: Page) {}
-
-    async login(username = 'superadmin', password = 'superadmin') {
-        const response = await this.page.request.post(ADMIN_API, {
-            data: {
-                query: `mutation ($u: String!, $p: String!) {
-                    login(username: $u, password: $p) {
-                        ... on CurrentUser { id }
-                        ... on ErrorResult { errorCode message }
-                    }
-                }`,
-                variables: { u: username, p: password },
-            },
-        });
-        this.authToken = response.headers()['vendure-auth-token'] ?? null;
-        const json = await response.json();
-        if (json.errors?.length) {
-            throw new Error(`Login failed: ${String(json.errors[0].message)}`);
-        }
-    }
-
-    async gql(query: string, variables?: Record<string, unknown>) {
-        if (!this.authToken) throw new Error('Call login() first');
-        const response = await this.page.request.post(ADMIN_API, {
-            headers: { Authorization: `Bearer ${this.authToken}` },
-            data: { query, variables },
-        });
-        const newToken = response.headers()['vendure-auth-token'];
-        if (newToken) this.authToken = newToken;
-        const json = await response.json();
-        if (json.errors?.length) {
-            throw new Error(`GraphQL error: ${String(json.errors[0].message)}`);
-        }
-        return json.data;
-    }
-}
 
 /**
  * Creates a payment method (idempotent), builds a fully-paid order via the
