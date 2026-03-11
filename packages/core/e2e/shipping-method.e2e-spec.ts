@@ -524,63 +524,7 @@ describe('ShippingMethod resolver', () => {
     });
 
     // https://github.com/vendure-ecommerce/vendure/issues/4492
-    describe('shipping line removal on delete/unassign', () => {
-        let shippingMethodId: string;
-
-        beforeAll(async () => {
-            // Create a fresh shipping method for these tests
-            const { createShippingMethod } = await adminClient.query<
-                Codegen.CreateShippingMethodMutation,
-                Codegen.CreateShippingMethodMutationVariables
-            >(CREATE_SHIPPING_METHOD, {
-                input: {
-                    code: 'delete-test-method',
-                    fulfillmentHandler: manualFulfillmentHandler.code,
-                    checker: {
-                        code: defaultShippingEligibilityChecker.code,
-                        arguments: [{ name: 'orderMinimum', value: '0' }],
-                    },
-                    calculator: {
-                        code: defaultShippingCalculator.code,
-                        arguments: [
-                            { name: 'rate', value: '500' },
-                            { name: 'includesTax', value: 'auto' },
-                            { name: 'taxRate', value: '0' },
-                        ],
-                    },
-                    translations: [
-                        { languageCode: LanguageCode.en, name: 'Delete Test Method', description: '' },
-                    ],
-                },
-            });
-            shippingMethodId = createShippingMethod.id;
-        });
-
-        it('removes shipping lines from active orders when shipping method is deleted', async () => {
-            // Create an active order with the shipping method
-            await shopClient.asAnonymousUser();
-            await shopClient.query(ADD_ITEM_TO_ORDER, {
-                productVariantId: 'T_1',
-                quantity: 1,
-            });
-            await shopClient.query(SET_SHIPPING_METHOD, { id: [shippingMethodId] });
-
-            // Verify the shipping line is present
-            const { activeOrder: orderBefore } = await shopClient.query(GET_ACTIVE_ORDER);
-            expect(orderBefore.shippingLines).toHaveLength(1);
-            expect(orderBefore.shippingLines[0].shippingMethod.id).toBe(shippingMethodId);
-
-            // Delete the shipping method
-            await adminClient.query<
-                Codegen.DeleteShippingMethodMutation,
-                Codegen.DeleteShippingMethodMutationVariables
-            >(DELETE_SHIPPING_METHOD, { id: shippingMethodId });
-
-            // Verify the shipping line has been removed from the active order
-            const { activeOrder: orderAfter } = await shopClient.query(GET_ACTIVE_ORDER);
-            expect(orderAfter.shippingLines).toHaveLength(0);
-        });
-
+    describe('shipping line removal on channel unassign', () => {
         it('removes shipping lines from active orders when shipping method is unassigned from channel', async () => {
             // Create a new channel
             const { createChannel } = await adminClient.query(CREATE_CHANNEL, {

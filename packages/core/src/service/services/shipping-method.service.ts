@@ -192,7 +192,6 @@ export class ShippingMethodService {
         shippingMethod.deletedAt = new Date();
         await this.connection.getRepository(ctx, ShippingMethod).save(shippingMethod, { reload: false });
         await this.eventBus.publish(new ShippingMethodEvent(ctx, shippingMethod, 'deleted', id));
-        await this.removeShippingMethodFromActiveOrders(ctx, ctx.channelId, id);
         return {
             result: DeletionResult.DELETED,
         };
