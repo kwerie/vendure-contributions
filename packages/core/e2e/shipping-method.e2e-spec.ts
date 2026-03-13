@@ -36,7 +36,6 @@ import {
     SET_SHIPPING_METHOD,
     TRANSITION_TO_STATE,
 } from './graphql/shop-definitions';
-import { CREATE_PAYMENT_METHOD } from './payment-method.e2e-spec';
 
 const TEST_METADATA = {
     foo: 'bar',
@@ -652,7 +651,7 @@ describe('ShippingMethod resolver', () => {
 
             // Create a payment method in the test channel
             adminClient.setChannelToken('shipping-test-channel-token');
-            await adminClient.query(CREATE_PAYMENT_METHOD, {
+            await adminClient.query(CREATE_PAYMENT_METHOD_FOR_SHIPPING_TEST, {
                 input: {
                     code: 'test-payment-method',
                     translations: [
@@ -791,6 +790,16 @@ const ASSIGN_SHIPPING_METHODS_TO_CHANNEL = gql`
     mutation AssignShippingMethodsToChannel($input: AssignShippingMethodsToChannelInput!) {
         assignShippingMethodsToChannel(input: $input) {
             id
+            name
+        }
+    }
+`;
+
+const CREATE_PAYMENT_METHOD_FOR_SHIPPING_TEST = gql`
+    mutation CreatePaymentMethodForShippingTest($input: CreatePaymentMethodInput!) {
+        createPaymentMethod(input: $input) {
+            id
+            code
             name
         }
     }
