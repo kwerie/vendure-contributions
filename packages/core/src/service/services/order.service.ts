@@ -94,9 +94,11 @@ import { Promotion } from '../../entity/promotion/promotion.entity';
 import { Refund } from '../../entity/refund/refund.entity';
 import { Session } from '../../entity/session/session.entity';
 import { ShippingLine } from '../../entity/shipping-line/shipping-line.entity';
+import { ShippingMethod } from '../../entity/shipping-method/shipping-method.entity';
 import { Surcharge } from '../../entity/surcharge/surcharge.entity';
 import { User } from '../../entity/user/user.entity';
 import { EventBus } from '../../event-bus/event-bus';
+import { ChangeChannelEvent } from '../../event-bus/events/change-channel-event';
 import { CouponCodeEvent } from '../../event-bus/events/coupon-code-event';
 import { OrderEvent } from '../../event-bus/events/order-event';
 import { OrderLineEvent } from '../../event-bus/events/order-line-event';
@@ -164,7 +166,19 @@ export class OrderService {
         private requestCache: RequestContextCacheService,
         private translator: TranslatorService,
         private stockLevelService: StockLevelService,
-    ) {}
+    ) {
+        this.eventBus.registerBlockingEventHandler({
+            id: 'order-service-remove-shipping-method-from-active-orders',
+            event: ChangeChannelEvent,
+            handler: async event => {
+                if (event.entityType === ShippingMethod && event.type === 'removed') {
+                    await this.removeShippingMethodFromActiveOrders(
+                        event as ChangeChannelEvent<ShippingMethod>,
+                    );
+                }
+            },
+        });
+    }
 
     /**
      * @description
@@ -2190,6 +2204,45 @@ export class OrderService {
                 .relation('shippingLines')
                 .of(order)
                 .add(idToAdd);
+        }
+    }
+
+    private async removeShippingMethodFromActiveOrders(event: ChangeChannelEvent<ShippingMethod>) {
+        const shippingMethodId = event.entity.id;
+        const { ctx } = event;
+
+        const affectedOrders = await this.connection
+            .getRepository(ctx, Order)
+            .createQueryBuilder('order')
+            .innerJoin('order.channels', 'channel', 'channel.id IN (:...channelIds)', {
+                channelIds: event.channelIds,
+            })
+            .innerJoin(
+                'order.shippingLines',
+                'shippingLine',
+                'shippingLine.shippingMethodId = :shippingMethodId',
+                { shippingMethodId },
+            )
+            .where('order.active = :active', { active: true })
+            .getMany();
+
+        if (affectedOrders.length === 0) {
+            return;
+        }
+
+        const orders = await this.connection.getRepository(ctx, Order).find({
+            where: { id: In(affectedOrders.map(o => o.id)) },
+            relations: [
+                'lines',
+                'lines.productVariant',
+                'lines.productVariant.productVariantPrices',
+                'shippingLines',
+                'surcharges',
+            ],
+        });
+
+        for (const order of orders) {
+            await this.applyPriceAdjustments(ctx, order);
         }
     }
 }

@@ -23,7 +23,6 @@ import { assertFound, idsAreEqual } from '../../common/utils';
 import { ConfigService } from '../../config/config.service';
 import { Logger } from '../../config/logger/vendure-logger';
 import { TransactionalConnection } from '../../connection/transactional-connection';
-import { ShippingLine } from '../../entity/shipping-line/shipping-line.entity';
 import { ShippingMethodTranslation } from '../../entity/shipping-method/shipping-method-translation.entity';
 import { ShippingMethod } from '../../entity/shipping-method/shipping-method.entity';
 import { EventBus } from '../../event-bus';
@@ -94,17 +93,31 @@ export class ShippingMethodService {
         shippingMethodId: ID,
         includeDeleted = false,
         relations: RelationPaths<ShippingMethod> = [],
+        filterOnChannel = true,
     ): Promise<Translated<ShippingMethod> | undefined> {
-        const shippingMethod = await this.connection.findOneInChannel(
-            ctx,
-            ShippingMethod,
-            shippingMethodId,
-            ctx.channelId,
-            {
+        let shippingMethod: ShippingMethod | undefined | null;
+
+        if (!filterOnChannel) {
+            shippingMethod = await this.connection.getRepository(ctx, ShippingMethod).findOne({
+                where: {
+                    id: shippingMethodId,
+                    deletedAt: includeDeleted ? undefined : IsNull(),
+                },
                 relations,
-                ...(includeDeleted === false ? { where: { deletedAt: IsNull() } } : {}),
-            },
-        );
+            });
+        } else {
+            shippingMethod = await this.connection.findOneInChannel(
+                ctx,
+                ShippingMethod,
+                shippingMethodId,
+                ctx.channelId,
+                {
+                    relations,
+                    ...(includeDeleted === false ? { where: { deletedAt: IsNull() } } : {}),
+                },
+            );
+        }
+
         return (shippingMethod && this.translator.translate(shippingMethod, ctx)) ?? undefined;
     }
 
@@ -248,8 +261,6 @@ export class ShippingMethodService {
             await this.channelService.removeFromChannels(ctx, ShippingMethod, shippingMethodId, [
                 input.channelId,
             ]);
-
-            await this.removeShippingMethodFromActiveOrders(ctx, input.channelId, shippingMethodId);
         }
         return this.connection
             .findByIdsInChannel(ctx, ShippingMethod, input.shippingMethodIds, ctx.channelId, {})
@@ -311,26 +322,5 @@ export class ShippingMethodService {
             );
         }
         return handler.code;
-    }
-
-    private async removeShippingMethodFromActiveOrders(
-        ctx: RequestContext,
-        channelId: ID,
-        shippingMethodId: ID,
-    ) {
-        const shippingLinesToRemove = await this.connection.getRepository(ctx, ShippingLine).find({
-            where: {
-                shippingMethodId,
-                order: {
-                    channels: { id: channelId },
-                    active: true,
-                },
-            },
-            relations: ['order', 'order.channels'],
-        });
-
-        if (!shippingLinesToRemove.length) return;
-
-        await this.connection.getRepository(ctx, ShippingLine).remove(shippingLinesToRemove);
     }
 }
