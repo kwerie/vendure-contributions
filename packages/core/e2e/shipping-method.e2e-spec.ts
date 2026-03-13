@@ -653,7 +653,7 @@ describe('ShippingMethod resolver', () => {
             adminClient.setChannelToken('shipping-test-channel-token');
             await adminClient.query(CREATE_PAYMENT_METHOD_FOR_SHIPPING_TEST, {
                 input: {
-                    code: 'test-payment-method',
+                    code: testSuccessfulPaymentMethod.code,
                     translations: [
                         { languageCode: LanguageCode.en, name: 'Test Payment Method', description: '' },
                     ],
