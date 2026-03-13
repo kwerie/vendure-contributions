@@ -116,6 +116,7 @@ import { OrderStateMachine } from '../helpers/order-state-machine/order-state-ma
 import { PaymentState } from '../helpers/payment-state-machine/payment-state';
 import { RefundState } from '../helpers/refund-state-machine/refund-state';
 import { RefundStateMachine } from '../helpers/refund-state-machine/refund-state-machine';
+import { RequestContextService } from '../helpers/request-context/request-context.service';
 import { ShippingCalculator } from '../helpers/shipping-calculator/shipping-calculator';
 import { TranslatorService } from '../helpers/translator/translator.service';
 import { isForeignKeyViolationError } from '../helpers/utils/db-errors';
@@ -166,6 +167,7 @@ export class OrderService {
         private requestCache: RequestContextCacheService,
         private translator: TranslatorService,
         private stockLevelService: StockLevelService,
+        private requestContextService: RequestContextService,
     ) {
         this.eventBus.registerBlockingEventHandler({
             id: 'order-service-remove-shipping-method-from-active-orders',
@@ -2209,40 +2211,52 @@ export class OrderService {
 
     private async removeShippingMethodFromActiveOrders(event: ChangeChannelEvent<ShippingMethod>) {
         const shippingMethodId = event.entity.id;
-        const { ctx } = event;
+        for (const channelId of event.channelIds) {
+            const channel = await this.channelService.findOne(event.ctx, channelId);
+            if (!channel) {
+                continue;
+            }
+            // Create a context scoped to the affected channel so that
+            // applyPriceAdjustments -> applyShipping -> findOne will not
+            // find the now-unassigned shipping method in this channel.
+            const ctx = await this.requestContextService.create({
+                apiType: 'admin',
+                channelOrToken: channel.token,
+            });
 
-        const affectedOrders = await this.connection
-            .getRepository(ctx, Order)
-            .createQueryBuilder('order')
-            .innerJoin('order.channels', 'channel', 'channel.id IN (:...channelIds)', {
-                channelIds: event.channelIds,
-            })
-            .innerJoin(
-                'order.shippingLines',
-                'shippingLine',
-                'shippingLine.shippingMethodId = :shippingMethodId',
-                { shippingMethodId },
-            )
-            .where('order.active = :active', { active: true })
-            .getMany();
+            const affectedOrders = await this.connection
+                .getRepository(ctx, Order)
+                .createQueryBuilder('order')
+                .innerJoin('order.channels', 'channel', 'channel.id = :channelId', {
+                    channelId,
+                })
+                .innerJoin(
+                    'order.shippingLines',
+                    'shippingLine',
+                    'shippingLine.shippingMethodId = :shippingMethodId',
+                    { shippingMethodId },
+                )
+                .where('order.active = :active', { active: true })
+                .getMany();
 
-        if (affectedOrders.length === 0) {
-            return;
-        }
+            if (affectedOrders.length === 0) {
+                continue;
+            }
 
-        const orders = await this.connection.getRepository(ctx, Order).find({
-            where: { id: In(affectedOrders.map(o => o.id)) },
-            relations: [
-                'lines',
-                'lines.productVariant',
-                'lines.productVariant.productVariantPrices',
-                'shippingLines',
-                'surcharges',
-            ],
-        });
+            const orders = await this.connection.getRepository(ctx, Order).find({
+                where: { id: In(affectedOrders.map(o => o.id)) },
+                relations: [
+                    'lines',
+                    'lines.productVariant',
+                    'lines.productVariant.productVariantPrices',
+                    'shippingLines',
+                    'surcharges',
+                ],
+            });
 
-        for (const order of orders) {
-            await this.applyPriceAdjustments(ctx, order);
+            for (const order of orders) {
+                await this.applyPriceAdjustments(ctx, order);
+            }
         }
     }
 }
