@@ -36,6 +36,7 @@ import {
     SET_SHIPPING_METHOD,
     TRANSITION_TO_STATE,
 } from './graphql/shop-definitions';
+import { CREATE_PAYMENT_METHOD } from './payment-method.e2e-spec';
 
 const TEST_METADATA = {
     foo: 'bar',
@@ -799,16 +800,6 @@ const REMOVE_SHIPPING_METHODS_FROM_CHANNEL = gql`
     mutation RemoveShippingMethodsFromChannel($input: RemoveShippingMethodsFromChannelInput!) {
         removeShippingMethodsFromChannel(input: $input) {
             id
-            name
-        }
-    }
-`;
-
-const CREATE_PAYMENT_METHOD = gql`
-    mutation CreatePaymentMethod($input: CreatePaymentMethodInput!) {
-        createPaymentMethod(input: $input) {
-            id
-            code
             name
         }
     }
