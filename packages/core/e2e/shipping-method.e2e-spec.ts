@@ -604,117 +604,119 @@ describe('ShippingMethod resolver', () => {
         });
 
         it('recalculates active orders when shipping method is unassigned from channel', async () => {
-            // Create an active order in the new channel with the shipping method
             shopClient.setChannelToken('shipping-test-channel-token');
-            await shopClient.asAnonymousUser();
-            await shopClient.query(ADD_ITEM_TO_ORDER, {
-                productVariantId: 'T_1',
-                quantity: 1,
-            });
-            await shopClient.query(SET_SHIPPING_METHOD, { id: [shippingMethodId] });
+            try {
+                // Create an active order in the new channel with the shipping method
+                await shopClient.asAnonymousUser();
+                await shopClient.query(ADD_ITEM_TO_ORDER, {
+                    productVariantId: 'T_1',
+                    quantity: 1,
+                });
+                await shopClient.query(SET_SHIPPING_METHOD, { id: [shippingMethodId] });
 
-            // Verify shipping line is present and totals include shipping
-            const { activeOrder: orderBefore } = await shopClient.query(GET_ACTIVE_ORDER);
-            expect(orderBefore.shippingLines).toHaveLength(1);
-            expect(orderBefore.shippingLines[0].shippingMethod.id).toBe(shippingMethodId);
-            expect(orderBefore.shipping).toBe(500);
-            expect(orderBefore.total).toBe(Number(orderBefore.subTotal) + 500);
+                // Verify shipping line is present and totals include shipping
+                const { activeOrder: orderBefore } = await shopClient.query(GET_ACTIVE_ORDER);
+                expect(orderBefore.shippingLines).toHaveLength(1);
+                expect(orderBefore.shippingLines[0].shippingMethod.id).toBe(shippingMethodId);
+                expect(orderBefore.shipping).toBe(500);
+                expect(orderBefore.total).toBe(Number(orderBefore.subTotal) + 500);
 
-            // Remove the shipping method from the channel
-            await adminClient.query(REMOVE_SHIPPING_METHODS_FROM_CHANNEL, {
-                input: {
-                    channelId,
-                    shippingMethodIds: [shippingMethodId],
-                },
-            });
+                // Remove the shipping method from the channel
+                await adminClient.query(REMOVE_SHIPPING_METHODS_FROM_CHANNEL, {
+                    input: {
+                        channelId,
+                        shippingMethodIds: [shippingMethodId],
+                    },
+                });
 
-            // Verify the shipping line has been removed and totals recalculated
-            const { activeOrder: orderAfter } = await shopClient.query(GET_ACTIVE_ORDER);
-            expect(orderAfter.shippingLines).toHaveLength(0);
-            expect(orderAfter.shipping).toBe(0);
-            expect(orderAfter.shippingWithTax).toBe(0);
-            expect(orderAfter.total).toBe(orderAfter.subTotal);
-            expect(orderAfter.totalWithTax).toBe(orderAfter.subTotalWithTax);
-
-            // Reset shop client to default channel
-            shopClient.setChannelToken('e2e-default-channel');
+                // Verify the shipping line has been removed and totals recalculated
+                const { activeOrder: orderAfter } = await shopClient.query(GET_ACTIVE_ORDER);
+                expect(orderAfter.shippingLines).toHaveLength(0);
+                expect(orderAfter.shipping).toBe(0);
+                expect(orderAfter.shippingWithTax).toBe(0);
+                expect(orderAfter.total).toBe(orderAfter.subTotal);
+                expect(orderAfter.totalWithTax).toBe(orderAfter.subTotalWithTax);
+            } finally {
+                shopClient.setChannelToken('e2e-default-channel');
+            }
         });
 
         it('historical orders still resolve shipping method after unassignment', async () => {
-            // Re-assign the shipping method to the channel so we can create a completed order
-            await adminClient.query(ASSIGN_SHIPPING_METHODS_TO_CHANNEL, {
-                input: {
-                    channelId,
-                    shippingMethodIds: [shippingMethodId],
-                },
-            });
-
-            // Create a payment method in the test channel
-            adminClient.setChannelToken('shipping-test-channel-token');
-            await adminClient.query(CREATE_PAYMENT_METHOD_FOR_SHIPPING_TEST, {
-                input: {
-                    code: testSuccessfulPaymentMethod.code,
-                    translations: [
-                        { languageCode: LanguageCode.en, name: 'Test Payment Method', description: '' },
-                    ],
-                    enabled: true,
-                    handler: {
-                        code: testSuccessfulPaymentMethod.code,
-                        arguments: [],
+            try {
+                // Re-assign the shipping method to the channel so we can create a completed order
+                await adminClient.query(ASSIGN_SHIPPING_METHODS_TO_CHANNEL, {
+                    input: {
+                        channelId,
+                        shippingMethodIds: [shippingMethodId],
                     },
-                },
-            });
-            adminClient.setChannelToken('e2e-default-channel');
+                });
 
-            // Create and complete an order
-            shopClient.setChannelToken('shipping-test-channel-token');
-            await shopClient.asAnonymousUser();
-            await shopClient.query(ADD_ITEM_TO_ORDER, {
-                productVariantId: 'T_1',
-                quantity: 1,
-            });
-            await shopClient.query(SET_SHIPPING_METHOD, { id: [shippingMethodId] });
-            await shopClient.query(SET_CUSTOMER, {
-                input: {
-                    firstName: 'Test',
-                    lastName: 'Customer',
-                    emailAddress: 'shipping-test@test.com',
-                },
-            });
-            await shopClient.query(SET_SHIPPING_ADDRESS, {
-                input: {
-                    streetLine1: '1 Test Street',
-                    countryCode: 'GB',
-                },
-            });
-            await shopClient.query(TRANSITION_TO_STATE, { state: 'ArrangingPayment' });
-            const { addPaymentToOrder: completedOrder } = await shopClient.query(ADD_PAYMENT, {
-                input: {
-                    method: testSuccessfulPaymentMethod.code,
-                    metadata: {},
-                },
-            });
+                // Create a payment method in the test channel
+                adminClient.setChannelToken('shipping-test-channel-token');
+                await adminClient.query(CREATE_PAYMENT_METHOD_FOR_SHIPPING_TEST, {
+                    input: {
+                        code: testSuccessfulPaymentMethod.code,
+                        translations: [
+                            { languageCode: LanguageCode.en, name: 'Test Payment Method', description: '' },
+                        ],
+                        enabled: true,
+                        handler: {
+                            code: testSuccessfulPaymentMethod.code,
+                            arguments: [],
+                        },
+                    },
+                });
+                adminClient.setChannelToken('e2e-default-channel');
 
-            // Remove the shipping method from the channel again
-            await adminClient.query(REMOVE_SHIPPING_METHODS_FROM_CHANNEL, {
-                input: {
-                    channelId,
-                    shippingMethodIds: [shippingMethodId],
-                },
-            });
+                // Create and complete an order
+                shopClient.setChannelToken('shipping-test-channel-token');
+                await shopClient.asAnonymousUser();
+                await shopClient.query(ADD_ITEM_TO_ORDER, {
+                    productVariantId: 'T_1',
+                    quantity: 1,
+                });
+                await shopClient.query(SET_SHIPPING_METHOD, { id: [shippingMethodId] });
+                await shopClient.query(SET_CUSTOMER, {
+                    input: {
+                        firstName: 'Test',
+                        lastName: 'Customer',
+                        emailAddress: 'shipping-test@test.com',
+                    },
+                });
+                await shopClient.query(SET_SHIPPING_ADDRESS, {
+                    input: {
+                        streetLine1: '1 Test Street',
+                        countryCode: 'GB',
+                    },
+                });
+                await shopClient.query(TRANSITION_TO_STATE, { state: 'ArrangingPayment' });
+                const { addPaymentToOrder: completedOrder } = await shopClient.query(ADD_PAYMENT, {
+                    input: {
+                        method: testSuccessfulPaymentMethod.code,
+                        metadata: {},
+                    },
+                });
 
-            // Verify the historical order still resolves the shipping method
-            adminClient.setChannelToken('shipping-test-channel-token');
-            const { order } = await adminClient.query(GET_ORDER, {
-                id: completedOrder.id,
-            });
-            expect(order.shippingLines).toHaveLength(1);
-            expect(order.shippingLines[0].shippingMethod.id).toBe(shippingMethodId);
-            expect(order.shippingLines[0].shippingMethod.name).toBe('Channel Test Method');
+                // Remove the shipping method from the channel again
+                await adminClient.query(REMOVE_SHIPPING_METHODS_FROM_CHANNEL, {
+                    input: {
+                        channelId,
+                        shippingMethodIds: [shippingMethodId],
+                    },
+                });
 
-            // Reset clients to default channel
-            shopClient.setChannelToken('e2e-default-channel');
-            adminClient.setChannelToken('e2e-default-channel');
+                // Verify the historical order still resolves the shipping method
+                adminClient.setChannelToken('shipping-test-channel-token');
+                const { order } = await adminClient.query(GET_ORDER, {
+                    id: completedOrder.id,
+                });
+                expect(order.shippingLines).toHaveLength(1);
+                expect(order.shippingLines[0].shippingMethod.id).toBe(shippingMethodId);
+                expect(order.shippingLines[0].shippingMethod.name).toBe('Channel Test Method');
+            } finally {
+                shopClient.setChannelToken('e2e-default-channel');
+                adminClient.setChannelToken('e2e-default-channel');
+            }
         });
     });
 });

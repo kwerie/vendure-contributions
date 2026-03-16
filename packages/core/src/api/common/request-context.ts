@@ -325,8 +325,12 @@ export class RequestContext {
      * mutations to the copy itself will not affect the original, but deep mutations
      * (e.g. copy.channel.code = 'new') *will* also affect the original.
      */
-    copy(): RequestContext {
-        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+    copy(channel?: Channel): RequestContext {
+        return Object.assign(
+            Object.create(Object.getPrototypeOf(this)),
+            this,
+            channel ? { _channel: channel } : {},
+        );
     }
 
     /**

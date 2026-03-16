@@ -2211,56 +2211,74 @@ export class OrderService {
         const shippingMethodId = event.entity.id;
         const { ctx } = event;
 
-        const affectedOrders = await this.connection
-            .getRepository(ctx, Order)
-            .createQueryBuilder('order')
-            .innerJoin('order.channels', 'channel', 'channel.id IN (:...channelIds)', {
-                channelIds: event.channelIds,
-            })
-            .innerJoin(
-                'order.shippingLines',
-                'shippingLine',
-                'shippingLine.shippingMethodId = :shippingMethodId',
-                { shippingMethodId },
-            )
-            .where('order.active = :active', { active: true })
-            .getMany();
-
-        if (affectedOrders.length === 0) {
-            return;
-        }
-
-        const orders = await this.connection.getRepository(ctx, Order).find({
-            where: { id: In(affectedOrders.map(o => o.id)) },
-            relations: [
-                'lines',
-                'lines.productVariant',
-                'lines.productVariant.productVariantPrices',
-                'shippingLines',
-                'surcharges',
-            ],
-        });
-
-        for (const order of orders) {
-            // We must manually remove the affected shipping lines because this handler
-            // runs inside the same transaction as the channel removal. The shipping method
-            // is still visible via event.ctx (scoped to the admin's channel), so
-            // applyShipping would not detect the removal on its own.
-            const shippingLinesToRemove = order.shippingLines.filter(sl =>
-                idsAreEqual(sl.shippingMethodId, shippingMethodId),
-            );
-            for (const sl of shippingLinesToRemove) {
-                await this.connection
-                    .getRepository(ctx, Order)
-                    .createQueryBuilder()
-                    .relation('shippingLines')
-                    .of(order)
-                    .remove(sl.id);
+        for (const channelId of event.channelIds) {
+            const channel = await this.channelService.findOne(ctx, channelId);
+            if (!channel) {
+                continue;
             }
-            order.shippingLines = order.shippingLines.filter(
-                sl => !idsAreEqual(sl.shippingMethodId, shippingMethodId),
-            );
-            await this.applyPriceAdjustments(ctx, order);
+            // Create a context scoped to the affected channel so that
+            // applyPriceAdjustments calculates promotions/taxes for the
+            // correct channel rather than the admin's channel.
+            // We use copy() to preserve the transaction from event.ctx.
+            const orderCtx = ctx.copy(channel);
+
+            const affectedOrders = await this.connection
+                .getRepository(orderCtx, Order)
+                .createQueryBuilder('order')
+                .innerJoin('order.channels', 'channel', 'channel.id = :channelId', {
+                    channelId,
+                })
+                .innerJoin(
+                    'order.shippingLines',
+                    'shippingLine',
+                    'shippingLine.shippingMethodId = :shippingMethodId',
+                    { shippingMethodId },
+                )
+                .where('order.active = :active', { active: true })
+                .getMany();
+
+            if (affectedOrders.length === 0) {
+                continue;
+            }
+
+            const orders = await this.connection.getRepository(orderCtx, Order).find({
+                where: { id: In(affectedOrders.map(o => o.id)) },
+                relations: [
+                    'lines',
+                    'lines.productVariant',
+                    'lines.productVariant.productVariantPrices',
+                    'shippingLines',
+                    'surcharges',
+                ],
+            });
+
+            for (const order of orders) {
+                // We must manually remove the affected shipping lines because this handler
+                // runs inside the same transaction as the channel removal. The shipping method
+                // is still visible via the channel-scoped ctx, so applyShipping would not
+                // detect the removal on its own.
+                const shippingLinesToRemove = order.shippingLines.filter(sl =>
+                    idsAreEqual(sl.shippingMethodId, shippingMethodId),
+                );
+                if (shippingLinesToRemove.length) {
+                    const shippingLineIdsToRemove = shippingLinesToRemove.map(sl => sl.id);
+                    // Unlink order lines from the shipping lines about to be deleted
+                    for (const line of order.lines) {
+                        if (
+                            line.shippingLineId &&
+                            shippingLineIdsToRemove.some(id => idsAreEqual(id, line.shippingLineId))
+                        ) {
+                            line.shippingLine = undefined;
+                            line.shippingLineId = undefined;
+                        }
+                    }
+                    await this.connection.getRepository(orderCtx, ShippingLine).remove(shippingLinesToRemove);
+                }
+                order.shippingLines = order.shippingLines.filter(
+                    sl => !idsAreEqual(sl.shippingMethodId, shippingMethodId),
+                );
+                await this.applyPriceAdjustments(orderCtx, order);
+            }
         }
     }
 }
