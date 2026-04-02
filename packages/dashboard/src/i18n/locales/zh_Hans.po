@@ -13,9 +13,8 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:100
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:159
-#: src/lib/components/shared/customer-address-form.tsx:91
+#: src/lib/components/shared/customer-address-form.tsx:103
 msgid "Full Name"
 msgstr "全名"
 
@@ -36,7 +35,7 @@ msgstr "跟踪代码"
 msgid "The selected permissions will be applied to the these channels."
 msgstr "所选权限将应用于这些渠道。"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:249
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:248
 msgid "Product options"
 msgstr "商品选项"
 
@@ -44,17 +43,16 @@ msgstr "商品选项"
 msgid "New Tax Rate"
 msgstr "新税率"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:144
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:150
 msgid "Assign an existing option group or create a new one"
-msgstr ""
+msgstr "分配现有选项组或创建新的选项组"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:33
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:77
 msgid "New role"
 msgstr "新角色"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:128
-#: src/lib/components/shared/customer-address-form.tsx:119
+#: src/lib/components/shared/customer-address-form.tsx:131
 msgid "Apartment, suite, etc."
 msgstr "公寓、套房等"
 
@@ -86,7 +84,7 @@ msgstr "全部切换"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:123
 msgid "Edit JSON value"
-msgstr ""
+msgstr "编辑 JSON 值"
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/default-customer-history-components.tsx:17
 msgid "Using external authentication strategy: {strategy}"
@@ -161,7 +159,7 @@ msgstr "输入自定义原因..."
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:744
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #. placeholder {0}: entityName.toLowerCase()
 #. placeholder {0}: group.name
@@ -241,7 +239,7 @@ msgstr "SKU:"
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:121
 msgid "Add payment"
-msgstr ""
+msgstr "添加付款"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-shipping-method-sheet.tsx:40
 msgid "Test this shipping method by simulating an order to see if it's eligible and what the shipping cost would be."
@@ -274,13 +272,13 @@ msgstr "订单"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:187
 msgid "Select roles"
-msgstr ""
+msgstr "选择角色"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:62
 msgid "Successfully created role"
 msgstr "已成功创建角色"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:455
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:454
 msgid "Are you sure you want to delete this variant?"
 msgstr "确定要删除此变体吗？"
 
@@ -294,7 +292,7 @@ msgstr "创建管理员失败"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:327
 msgid "No"
-msgstr ""
+msgstr "否"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:128
 msgid "Successfully updated product variant"
@@ -304,7 +302,7 @@ msgstr "已成功更新商品变体"
 msgid "Failed to delete {failed} {entityName}: {allErrors}"
 msgstr "删除 {failed} {entityName} 失败：{allErrors}"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:99
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:160
 msgid "Successfully updated product"
 msgstr "已成功更新商品"
 
@@ -340,11 +338,12 @@ msgstr "已成功创建库存位置"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:102
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:303
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:76
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:118
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:167
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:152
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:113
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:78
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:120
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:166
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:180
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:112
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:204
 msgid "Unknown error"
 msgstr "未知错误"
 
@@ -396,9 +395,9 @@ msgstr "退回库存"
 msgid "Visibility"
 msgstr "可见性"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:191
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
 msgid "Product variants"
-msgstr ""
+msgstr "产品变体"
 
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:36
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:85
@@ -417,11 +416,15 @@ msgstr "重命名"
 
 #: src/lib/components/layout/language-dialog.tsx:52
 msgid "Choose your preferred display language and locale settings"
-msgstr ""
+msgstr "选择您偏好的显示语言和区域设置"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:89
+#~ msgid "← Back"
+#~ msgstr ""
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-bulk-actions.tsx:87
 msgid "Successfully removed {successCount} option groups from channel"
-msgstr ""
+msgstr "已成功从渠道中移除 {successCount} 个选项组"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-method-result.tsx:76
 msgid "Shipping method is not eligible for this order"
@@ -435,7 +438,7 @@ msgstr "更新地址失败"
 msgid "Address deleted successfully"
 msgstr "地址已成功删除"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:110
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:109
 #: src/app/routes/_authenticated/_orders/components/order-tax-summary.tsx:17
 msgid "Tax rate"
 msgstr "税率"
@@ -477,9 +480,8 @@ msgstr "成功创建产品选项"
 msgid "Parent product"
 msgstr "父级产品"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:138
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:196
-#: src/lib/components/shared/customer-address-form.tsx:129
+#: src/lib/components/shared/customer-address-form.tsx:141
 msgid "City"
 msgstr "城市"
 
@@ -503,7 +505,7 @@ msgstr "删除链接"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:123
 msgid "This field is readonly"
-msgstr ""
+msgstr "此字段为只读"
 
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:32
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:80
@@ -531,9 +533,9 @@ msgstr "搜索支付方式..."
 msgid "Shipping address unset for order"
 msgstr "订单已取消配送地址"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:294
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:332
 msgid "Create {enabledCount} variants"
-msgstr ""
+msgstr "创建 {enabledCount} 个变体"
 
 #. placeholder {0}: entry.data.paymentId
 #. placeholder {1}: entry.data.to
@@ -550,7 +552,7 @@ msgstr "加载客户历史出错：{0}"
 msgid "Successfully removed {selectionLength} {entityType} from channel"
 msgstr "已成功从渠道中删除 {selectionLength} {entityType}"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:159
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:158
 msgid "Add option value"
 msgstr "添加选项值"
 
@@ -593,7 +595,7 @@ msgstr "角色"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:395
 msgid "Grid view"
-msgstr ""
+msgstr "网格视图"
 
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx:48
 msgid "Failed to delete address"
@@ -615,13 +617,13 @@ msgstr "履行已转换"
 msgid "Are you sure you want to delete {selectionLength} assets?"
 msgstr "确定要删除 {selectionLength} 个资源吗？"
 
-#: src/lib/components/login/login-form.tsx:106
+#: src/lib/components/login/login-form.tsx:105
 msgid "Sign in"
 msgstr "登录"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:398
 msgid "List view"
-msgstr ""
+msgstr "列表视图"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-order-builder.tsx:164
 msgid "Test Order"
@@ -631,9 +633,9 @@ msgstr "测试订单"
 msgid "Select a customer to continue"
 msgstr "选择客户以继续"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:71
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:73
 msgid "Successfully assigned option group"
-msgstr ""
+msgstr "选项组分配成功"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-method-test-result-wrapper.tsx:30
 msgid "Run Test"
@@ -709,7 +711,7 @@ msgstr "下单时间"
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:53
 msgid "Rotating this key will immediately invalidate the current key. Any integrations using it will stop working until updated with the new key."
-msgstr ""
+msgstr "轮换此密钥将立即使当前密钥失效。所有使用该密钥的集成将停止工作，直到更新为新密钥。"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:136
 msgid "The data that has been passed to the job"
@@ -739,8 +741,8 @@ msgstr "完成草稿"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:202
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:170
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:158
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:287
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:349
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:286
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:348
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:165
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:89
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:148
@@ -772,7 +774,7 @@ msgstr "输入此退款结算的交易 ID"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:67
 msgid "Your API Key"
-msgstr ""
+msgstr "您的 API Key"
 
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:310
 msgid "Are you sure you want to delete this draft order?"
@@ -790,7 +792,7 @@ msgstr "找到 {0} 个符合条件的配送方式"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:746
 msgid "Dimensions"
-msgstr ""
+msgstr "尺寸"
 
 #: src/lib/components/ui/password-input.tsx:20
 msgid "Show password"
@@ -801,9 +803,8 @@ msgstr "显示密码"
 msgid "(max: {0})"
 msgstr "(最大: {0})"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:108
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:165
-#: src/lib/components/shared/customer-address-form.tsx:99
+#: src/lib/components/shared/customer-address-form.tsx:111
 msgid "Company"
 msgstr "公司"
 
@@ -836,7 +837,7 @@ msgstr "内容:"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:260
 msgid "Key"
-msgstr ""
+msgstr "密钥"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:355
 #: src/lib/components/shared/navigation-confirmation.tsx:58
@@ -851,7 +852,7 @@ msgstr "创建集合失败"
 msgid "Go to first page"
 msgstr "转到首页"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:107
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:168
 msgid "Failed to create product"
 msgstr "创建商品失败"
 
@@ -874,6 +875,10 @@ msgstr "订单已设置配送地址"
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:173
 msgid "Focal Point"
 msgstr "焦点"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:99
+msgid "Single variant, no options"
+msgstr "单一变体，无选项"
 
 #: src/app/routes/_authenticated/_orders/components/use-transition-order-to-state.tsx:107
 msgid "Select the next state for the order"
@@ -920,7 +925,7 @@ msgstr "更新区域失败"
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:133
 #: src/app/routes/_authenticated/_profile/profile.tsx:112
 #: src/app/routes/_authenticated/_profile/profile.tsx:129
-#: src/lib/components/login/login-form.tsx:94
+#: src/lib/components/login/login-form.tsx:93
 msgid "Password"
 msgstr "密码"
 
@@ -948,7 +953,7 @@ msgstr "配送地址已更改"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:63
 msgid "No products found"
-msgstr ""
+msgstr "未找到产品"
 
 #: src/lib/components/shared/rich-text-editor/table-edit-icons.tsx:193
 msgid "Add row before"
@@ -988,7 +993,7 @@ msgstr "已分配"
 
 #: src/lib/components/layout/nav-user.tsx:102
 msgid "Explore Platform & Cloud"
-msgstr ""
+msgstr "探索 Platform & Cloud"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:86
 msgid "Every 5 seconds"
@@ -998,11 +1003,11 @@ msgstr "每 5 秒"
 msgid "Successfully created collection"
 msgstr "已成功创建集合"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:89
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:88
 #: src/app/routes/_authenticated/_orders/components/shipping-method-selector.tsx:49
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:298
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:299
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:193
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:298
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:208
 #: src/lib/components/layout/language-dialog.tsx:136
 msgid "Price"
 msgstr "价格"
@@ -1015,7 +1020,7 @@ msgstr "草稿订单"
 #: src/app/routes/_authenticated/_system/settings-store.tsx:281
 #: src/app/routes/_authenticated/_system/settings-store.tsx:314
 msgid "Scope"
-msgstr ""
+msgstr "范围"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-method-result.tsx:58
 msgid "Shipping method is eligible for this order"
@@ -1040,7 +1045,7 @@ msgstr "不需要支付或退款"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:108
 msgid "Download as .env file"
-msgstr ""
+msgstr "下载为 .env 文件"
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:154
 msgid "When enabled, a promotion is available in the shop"
@@ -1062,12 +1067,12 @@ msgstr "更新促销失败"
 #: src/lib/components/shared/asset/asset-gallery.tsx:368
 #: src/lib/components/shared/asset/asset-gallery.tsx:380
 msgid "Images"
-msgstr ""
+msgstr "图片"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:158
 msgid "API Keys"
-msgstr ""
+msgstr "API Keys"
 
 #: src/app/routes/_authenticated/_products/components/product-option-select.tsx:64
 msgid "Search {name}..."
@@ -1126,7 +1131,7 @@ msgstr "关"
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
 #: src/app/routes/_authenticated/_system/settings-store.tsx:304
 msgid "Settings Store"
-msgstr ""
+msgstr "设置商店"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:234
 msgid "Queue"
@@ -1173,15 +1178,15 @@ msgstr "未选择项目"
 #. placeholder {0}: selected.length
 #: src/lib/components/shared/asset/asset-gallery.tsx:469
 msgid ", {0} selected"
-msgstr ""
+msgstr "，已选择 {0} 项"
 
 #: src/lib/components/shared/country-selector.tsx:86
 msgid "No countries found"
 msgstr "未找到国家"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:148
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:176
 msgid "Successfully created variants"
-msgstr ""
+msgstr "变体创建成功"
 
 #: src/lib/components/data-input/slug-input.tsx:280
 #: src/lib/components/data-input/slug-input.tsx:282
@@ -1218,9 +1223,9 @@ msgstr "使用全局缺货阈值"
 msgid "Payment state updated successfully"
 msgstr "支付状态已成功更新"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:155
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:161
 msgid "Create new"
-msgstr ""
+msgstr "新建"
 
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:249
 msgid "Refund total"
@@ -1233,10 +1238,10 @@ msgstr "地址已删除"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:195
 msgid "Only roles assigned to your account are available."
-msgstr ""
+msgstr "仅您账户已分配的角色可用。"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:399
-#: src/lib/components/shared/configurable-operation-multi-selector.tsx:267
+#: src/lib/components/shared/configurable-operation-multi-selector.tsx:264
 #: src/lib/components/shared/configurable-operation-selector.tsx:139
 msgid "{buttonText}"
 msgstr "{buttonText}"
@@ -1251,7 +1256,7 @@ msgstr "项目已添加到订单"
 
 #: src/app/routes/_authenticated/_products/components/shared-option-group-warning.tsx:13
 msgid "{productCount, plural, one {This option group is used by one other product. Changes will affect it too.} other {This option group is shared across # products. Changes will affect all of them.}}"
-msgstr ""
+msgstr "{productCount, plural, one {此选项组被另一个产品使用。更改也会影响该产品。} other {此选项组在 # 个产品中共享。更改将影响所有产品。}}"
 
 #: src/lib/components/data-table/views-sheet.tsx:125
 msgid "My Saved Views"
@@ -1269,16 +1274,16 @@ msgstr "创建卖家失败"
 #. placeholder {0}: entityName.toLowerCase()
 #: src/app/common/duplicate-entity-dialog.tsx:87
 msgid "Configure duplication settings for {0}s"
-msgstr ""
+msgstr "配置{0}的复制设置"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:203
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:245
 msgid "Addresses"
 msgstr "地址"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:144
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:143
 msgid "Add a new option value to the {groupName} option group"
-msgstr ""
+msgstr "向 {groupName} 选项组添加新的选项值"
 
 #. placeholder {0}: entry.data.modificationId
 #: src/app/routes/_authenticated/_orders/components/order-history/default-order-history-components.tsx:76
@@ -1294,7 +1299,7 @@ msgid "Channel Languages"
 msgstr "渠道语言"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:137
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:117
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:119
 msgid "Failed to create option group"
 msgstr "创建选项组失败"
 
@@ -1368,7 +1373,7 @@ msgstr "之前"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:745
 msgid "Size"
-msgstr ""
+msgstr "大小"
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
 #: src/lib/components/shared/translatable-form-field.tsx:68
@@ -1387,14 +1392,13 @@ msgstr "最新订单"
 msgid "+ {leftOver} more"
 msgstr "+ {leftOver} 个更多"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:238
-#: src/lib/components/shared/customer-address-form.tsx:229
+#: src/lib/components/shared/customer-address-form.tsx:241
 msgid "Use as the default billing address"
 msgstr "用作默认账单地址"
 
 #: src/app/common/delete-bulk-action.tsx:139
 #: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:41
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:358
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:357
 #: src/lib/components/data-table/use-generated-columns.tsx:405
 #: src/lib/components/data-table/use-generated-columns.tsx:435
 #: src/lib/components/data-table/views-sheet.tsx:270
@@ -1411,7 +1415,7 @@ msgstr "禁用"
 msgid "Collections"
 msgstr "集合"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:226
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:225
 msgid "Add variant"
 msgstr "添加变体"
 
@@ -1517,14 +1521,13 @@ msgstr "转到末页"
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:61
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:203
 #: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx:418
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:250
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:168
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:310
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:347
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:358
 #: src/app/routes/_authenticated/_orders/components/settle-refund-dialog.tsx:71
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:270
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:494
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:493
 #: src/app/routes/_authenticated/_system/settings-store.tsx:140
 #: src/lib/components/data-input/product-multi-selector-input.tsx:370
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx:122
@@ -1535,7 +1538,7 @@ msgstr "转到末页"
 #: src/lib/components/shared/asset/asset-focal-point-editor.tsx:88
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:126
 #: src/lib/components/shared/confirmation-dialog.tsx:42
-#: src/lib/components/shared/customer-address-form.tsx:241
+#: src/lib/components/shared/customer-address-form.tsx:253
 #: src/lib/components/shared/navigation-confirmation.tsx:55
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:208
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:146
@@ -1543,7 +1546,7 @@ msgid "Cancel"
 msgstr "取消"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:127
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:161
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:160
 msgid "Successfully created product variant"
 msgstr "已成功创建商品变体"
 
@@ -1551,9 +1554,8 @@ msgstr "已成功创建商品变体"
 msgid "Refund from this method"
 msgstr "从此方式退款"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:160
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:208
-#: src/lib/components/shared/customer-address-form.tsx:151
+#: src/lib/components/shared/customer-address-form.tsx:163
 msgid "Postal Code"
 msgstr "邮政编码"
 
@@ -1584,9 +1586,9 @@ msgstr "设置自定义字段"
 msgid "Collections"
 msgstr "集合"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:454
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:453
 msgid "Delete variant"
-msgstr ""
+msgstr "删除变体"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:249
 msgid "No modifications made"
@@ -1626,7 +1628,7 @@ msgid "Private collections are not visible in the shop"
 msgstr "私有集合在商店中不可见"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:236
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:132
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:229
 msgid "When enabled, a product is available in the shop"
 msgstr "启用后，商品在商店中可用"
 
@@ -1651,8 +1653,7 @@ msgstr "已禁用"
 msgid "New promotion"
 msgstr "新促销"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:217
-#: src/lib/components/shared/customer-address-form.tsx:208
+#: src/lib/components/shared/customer-address-form.tsx:220
 msgid "Default Shipping Address"
 msgstr "默认配送地址"
 
@@ -1687,6 +1688,10 @@ msgstr "无属性值"
 msgid "A reason for the refund is required"
 msgstr "需要提供退款原因"
 
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:194
+msgid "Could not remove option group"
+msgstr "无法移除选项组"
+
 #: src/app/routes/_authenticated/_tax-categories/tax-categories_.$id.tsx:77
 msgid "Failed to update tax category"
 msgstr "更新税务类别失败"
@@ -1712,7 +1717,7 @@ msgstr "退款已成功完成"
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:138
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:226
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:276
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:122
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:219
 #: src/app/routes/_authenticated/_profile/profile.tsx:84
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
@@ -1755,7 +1760,7 @@ msgstr "支付方式"
 msgid "Edit"
 msgstr "编辑"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:184
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:183
 msgid "Variant updated successfully"
 msgstr "变体已成功更新"
 
@@ -1809,6 +1814,10 @@ msgstr "列设置"
 msgid "Code"
 msgstr "代码"
 
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+msgid "Failed to remove option groups"
+msgstr "移除选项组失败"
+
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-utils.tsx:97
 msgid "Order delivered"
 msgstr "订单已送达"
@@ -1825,9 +1834,9 @@ msgstr "从此渠道的全局可用语言中选择"
 msgid "Are you sure you want to delete this address?"
 msgstr "确定要删除此地址吗？"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:75
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:77
 msgid "Failed to assign option group"
-msgstr ""
+msgstr "分配选项组失败"
 
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:89
 msgid "Failed to update asset"
@@ -1881,7 +1890,7 @@ msgstr "退还运费"
 #: src/app/routes/_authenticated/_system/settings-store.tsx:293
 #: src/app/routes/_authenticated/_system/settings-store.tsx:324
 msgid "Readonly"
-msgstr ""
+msgstr "只读"
 
 #: src/lib/components/data-table/views-sheet.tsx:100
 msgid "Failed to duplicate global view"
@@ -1892,7 +1901,7 @@ msgid "Test Shipping Method"
 msgstr "测试配送方式"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:465
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:235
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:333
 msgid "Facet Values"
 msgstr "属性值"
 
@@ -1913,7 +1922,7 @@ msgstr "{0} 位客户"
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:14
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:25
 msgid "API Keys"
-msgstr ""
+msgstr "API Keys"
 
 #: src/lib/components/shared/language-selector.tsx:52
 msgid "Select a language"
@@ -2296,6 +2305,10 @@ msgstr "第 {0} 页，共 {1} 页"
 msgid "Rate"
 msgstr "费率"
 
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:114
+msgid "Size, colour, etc."
+msgstr "大小、颜色等"
+
 #: src/lib/components/shared/facet-value-selector.tsx:155
 #: src/lib/components/shared/facet-value-selector.tsx:172
 msgid "Browse facets"
@@ -2342,9 +2355,9 @@ msgstr "保存视图"
 msgid "{0} selected"
 msgstr "已选择 {0} 个"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:233
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:239
 msgid "Search option groups..."
-msgstr ""
+msgstr "搜索选项组..."
 
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:168
 msgid "Modify order"
@@ -2371,7 +2384,7 @@ msgstr "订单已设置客户"
 msgid "Facets"
 msgstr "属性"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:196
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:211
 msgid "Stock on Hand"
 msgstr "现有库存"
 
@@ -2392,15 +2405,15 @@ msgstr "新区域"
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:136
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:79
 msgid "New API Key"
-msgstr ""
+msgstr "新建 API Key"
 
 #: src/lib/components/shared/rich-text-editor/table-edit-icons.tsx:164
 msgid "Delete column"
 msgstr "删除列"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:151
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:157
 msgid "Assign existing"
-msgstr ""
+msgstr "分配现有"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:34
 msgid "is null"
@@ -2420,7 +2433,7 @@ msgstr "默认渠道"
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:109
 msgid "Insert a new image with source, title, and dimensions"
-msgstr ""
+msgstr "插入带有来源、标题和尺寸的新图片"
 
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:93
 msgid "Failed to create facet value"
@@ -2493,7 +2506,7 @@ msgstr "更多视图"
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:109
 msgid "Edit the selected image properties"
-msgstr ""
+msgstr "编辑所选图片的属性"
 
 #: src/lib/components/data-table/views-sheet.tsx:49
 msgid "Applied view \"{viewName}\""
@@ -2524,9 +2537,13 @@ msgstr "重新计算运费"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:225
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:482
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:268
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:366
 msgid "Assets"
 msgstr "资源"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:307
+msgid "This will remove all option groups from this product and return to the variant setup choice."
+msgstr "这将移除此产品的所有选项组并返回变体设置选择。"
 
 #: src/app/routes/_authenticated/_orders/components/order-detail-shared.tsx:299
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:277
@@ -2564,13 +2581,13 @@ msgstr "折扣"
 #: src/lib/components/shared/asset/asset-gallery.tsx:367
 #: src/lib/components/shared/asset/asset-gallery.tsx:379
 msgid "All types"
-msgstr ""
+msgstr "所有类型"
 
 #: src/app/routes/_authenticated/_orders/components/draft-order-status.tsx:29
 msgid "Only draft orders can be completed"
 msgstr "只有草稿订单可以完成"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:107
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:168
 msgid "Failed to update product"
 msgstr "更新商品失败"
 
@@ -2601,9 +2618,8 @@ msgstr "渠道"
 msgid "Amount"
 msgstr "金额"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:198
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:242
-#: src/lib/components/shared/customer-address-form.tsx:189
+#: src/lib/components/shared/customer-address-form.tsx:201
 msgid "Phone Number"
 msgstr "电话号码"
 
@@ -2622,7 +2638,7 @@ msgid "Successfully created administrator"
 msgstr "成功创建管理员"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:198
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:217
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:315
 msgid "Product Options"
 msgstr "商品选项"
 
@@ -2630,7 +2646,7 @@ msgstr "商品选项"
 msgid "Select country"
 msgstr "选择国家"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:292
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:330
 msgid "Creating..."
 msgstr "正在创建..."
 
@@ -2638,7 +2654,7 @@ msgstr "正在创建..."
 msgid "Are you sure you want to delete this global view? This action cannot be undone and will affect all users."
 msgstr "确定要删除此全局视图吗？此操作无法撤销，将影响所有用户。"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:487
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:486
 msgid "Force remove option group"
 msgstr "强制移除选项组"
 
@@ -2702,8 +2718,8 @@ msgstr "删除全局视图"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:160
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:138
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:226
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:181
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:122
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:196
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:219
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2735,12 +2751,11 @@ msgstr "从 {0} 到 {1}"
 msgid "Failed to create customer"
 msgstr "创建客户失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:299
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:298
 msgid "Option values"
 msgstr "选项值"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:235
-#: src/lib/components/shared/customer-address-form.tsx:226
+#: src/lib/components/shared/customer-address-form.tsx:238
 msgid "Default Billing Address"
 msgstr "默认账单地址"
 
@@ -2789,7 +2804,7 @@ msgstr "链接 href"
 
 #: src/lib/utils/get-locale-fallback-placeholder.ts:31
 msgid "Fallback: {value}"
-msgstr ""
+msgstr "回退值: {value}"
 
 #: src/app/routes/_authenticated/_orders/components/order-detail-shared.tsx:260
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:30
@@ -2816,6 +2831,8 @@ msgstr "全局视图已成功重命名"
 msgid "No tags selected"
 msgstr "未选择标签"
 
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:310
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:319
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:205
 msgid "Back"
 msgstr "返回"
@@ -2925,7 +2942,8 @@ msgstr "正在删除 {0} 个项目"
 msgid "Track"
 msgstr "跟踪"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:323
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:322
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:331
 msgid "Create variant"
 msgstr "创建变体"
 
@@ -2958,14 +2976,14 @@ msgstr "切换标题列"
 msgid "New Promotion"
 msgstr "新促销"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:152
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:151
 msgid "Option value name"
 msgstr "选项值名称"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:214
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:46
 msgid "Last used"
-msgstr ""
+msgstr "最后使用时间"
 
 #: src/app/routes/_authenticated/_tax-categories/tax-categories_.$id.tsx:112
 msgid "Is default tax category"
@@ -2979,14 +2997,13 @@ msgstr "Slug 已设置"
 msgid "Successfully updated zone"
 msgstr "已成功更新区域"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:146
-#: src/lib/components/shared/customer-address-form.tsx:137
+#: src/lib/components/shared/customer-address-form.tsx:149
 msgid "State/Province"
 msgstr "州/省"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:138
 msgid "Failed to update option group"
-msgstr ""
+msgstr "更新选项组失败"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
 msgid "Channel defaults"
@@ -2998,14 +3015,17 @@ msgstr "创建税务类别失败"
 
 #: src/lib/components/data-table/data-table-filter-dialog.tsx:55
 msgid "Set filter criteria for the {columnId} column"
-msgstr ""
+msgstr "设置 {columnId} 列的筛选条件"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:170
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:217
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:53
-#: src/lib/components/shared/customer-address-form.tsx:161
+#: src/lib/components/shared/customer-address-form.tsx:173
 msgid "Country"
 msgstr "国家"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:97
+msgid "Simple product"
+msgstr "简单产品"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:137
@@ -3014,7 +3034,7 @@ msgstr "作业队列"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:53
 msgid "Please confirm you have saved the API key before closing."
-msgstr ""
+msgstr "请在关闭前确认您已保存 API Key。"
 
 #: src/lib/components/data-table/use-generated-columns.tsx:411
 msgid "Confirm deletion"
@@ -3024,7 +3044,7 @@ msgstr "确认删除"
 msgid "Failed to modify order"
 msgstr "修改订单失败"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:102
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:101
 msgid "Includes tax at {taxRate}%"
 msgstr "含 {taxRate}% 税"
 
@@ -3046,7 +3066,7 @@ msgstr "开始"
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:35
 msgid "Failed to rotate API key"
-msgstr ""
+msgstr "轮换 API Key 失败"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:36
 msgid "in"
@@ -3074,7 +3094,7 @@ msgstr "处理中..."
 #. placeholder {0}: totalItems === 1 ? 'asset' : 'assets'
 #: src/lib/components/shared/asset/asset-gallery.tsx:465
 msgid "{totalItems} {0} found"
-msgstr ""
+msgstr "找到 {totalItems} 个{0}"
 
 #: src/lib/components/date-range-picker.tsx:126
 msgid "Select date range"
@@ -3088,7 +3108,7 @@ msgstr "商品"
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:51
 msgid "Rotate API Key"
-msgstr ""
+msgstr "轮换 API Key"
 
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:62
 msgid "Category"
@@ -3175,7 +3195,7 @@ msgstr "配送"
 msgid "useWidgetDimensions must be used within a DashboardBaseWidget"
 msgstr "useWidgetDimensions 必须在 DashboardBaseWidget 中使用"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:489
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:488
 msgid "This option group is in use by existing variants. Force removing it may affect those variants. Are you sure?"
 msgstr "此选项组正被现有变体使用。强制移除可能会影响这些变体。您确定吗？"
 
@@ -3203,8 +3223,7 @@ msgstr "支付已授权"
 msgid "Successfully updated role"
 msgstr "已成功更新角色"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:181
-#: src/lib/components/shared/customer-address-form.tsx:172
+#: src/lib/components/shared/customer-address-form.tsx:184
 msgid "Select a country"
 msgstr "选择一个国家"
 
@@ -3224,10 +3243,10 @@ msgstr "选择一个地址"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:326
 msgid "Yes"
-msgstr ""
+msgstr "是"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:175
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:149
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:246
 msgid "Slug"
 msgstr "Slug"
 
@@ -3260,7 +3279,7 @@ msgstr "{collectionName} 的集合内容"
 msgid "Shipping method changed"
 msgstr "配送方式已更改"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:124
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:123
 msgid "Tax description"
 msgstr "税项描述"
 
@@ -3288,7 +3307,7 @@ msgstr "完成支付"
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:23
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:216
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:245
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:343
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3300,7 +3319,7 @@ msgstr "运费已退款"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:376
 msgid "Asset type"
-msgstr ""
+msgstr "资源类型"
 
 #: src/app/routes/_authenticated/_stock-locations/stock-locations.tsx:58
 msgid "New Stock Location"
@@ -3314,8 +3333,8 @@ msgstr "失败前已退还 {successfulRefundCount} 笔付款。请查看订单�
 msgid "Select item"
 msgstr "选择项目"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:55
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:115
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:57
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:212
 msgid "New product"
 msgstr "新商品"
 
@@ -3341,9 +3360,9 @@ msgstr "复制 {0}"
 msgid "Failed to update fulfillment state"
 msgstr "更新履行状态失败"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:234
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:233
 msgid "Create a new product variant with options, pricing, and stock"
-msgstr ""
+msgstr "创建包含选项、定价和库存的新产品变体"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:109
 msgid "Private facets are not visible in the shop"
@@ -3360,9 +3379,9 @@ msgstr "选择一个税务类别"
 msgid "Not Running"
 msgstr "未运行"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:261
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:267
 msgid "Assigned"
-msgstr ""
+msgstr "已分配"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:75
 msgid "Heading 1"
@@ -3425,7 +3444,7 @@ msgstr "搜索货币..."
 
 #: src/lib/components/shared/remove-from-channel-bulk-action.tsx:82
 msgid "Remove from channel"
-msgstr ""
+msgstr "从渠道中移除"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:169
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:157
@@ -3483,7 +3502,7 @@ msgstr "无法从活动渠道中移除"
 msgid "Not set"
 msgstr "未设置"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:505
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:504
 msgid "Force remove"
 msgstr "强制移除"
 
@@ -3491,7 +3510,7 @@ msgstr "强制移除"
 msgid "New Channel"
 msgstr "新渠道"
 
-#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:66
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:65
 msgid "Option Group Name"
 msgstr "选项组名称"
 
@@ -3507,7 +3526,7 @@ msgstr "创建客户组失败"
 msgid "Failed to create role"
 msgstr "创建角色失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:143
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:240
 msgid "Product name"
 msgstr "商品名称"
 
@@ -3520,8 +3539,8 @@ msgstr "履行状态已成功更新"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:211
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:38
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:64
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:67
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:54
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:66
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:56
 #: src/app/routes/_authenticated/_products/products.tsx:24
 #: src/app/routes/_authenticated/_products/products.tsx:47
 msgid "Products"
@@ -3533,14 +3552,14 @@ msgid "Address created"
 msgstr "地址已创建"
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:196
-msgid "Add an option group to get started with variants."
-msgstr ""
+#~ msgid "Add an option group to get started with variants."
+#~ msgstr ""
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:32
 msgid "API key rotated successfully"
-msgstr ""
+msgstr "API Key 轮换成功"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:136
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:141
 msgid "Add option group"
 msgstr "添加选项组"
 
@@ -3573,7 +3592,7 @@ msgstr "全局视图已成功复制"
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:210
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:66
 msgid "Created by"
-msgstr ""
+msgstr "创建者"
 
 #: src/app/routes/_authenticated/_product-variants/components/add-currency-dropdown.tsx:35
 msgid "Add a price in another currency"
@@ -3610,8 +3629,7 @@ msgstr "更新库存位置失败"
 msgid "Order shipped"
 msgstr "订单已发货"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:254
-#: src/lib/components/shared/customer-address-form.tsx:245
+#: src/lib/components/shared/customer-address-form.tsx:257
 msgid "Save Address"
 msgstr "保存地址"
 
@@ -3667,7 +3685,7 @@ msgid "Failed to settle refund"
 msgstr "完成退款失败"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:435
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:312
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:311
 msgid "Stock level"
 msgstr "库存水平"
 
@@ -3677,7 +3695,7 @@ msgstr "添加项目"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:108
 msgid "Successfully created API key"
-msgstr ""
+msgstr "API Key 创建成功"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:158
 msgid "Loading preview…"
@@ -3691,15 +3709,15 @@ msgstr "返回搜索"
 msgid "View duplicated successfully"
 msgstr "视图已成功复制"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:316
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:315
 msgid "Remove option group"
 msgstr "移除选项组"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:190
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:77
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:76
 #: src/app/routes/_authenticated/_orders/components/order-tax-summary.tsx:14
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:171
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:165
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:262
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:174
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:94
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:162
@@ -3750,7 +3768,7 @@ msgstr "添加 {0} 的手动付款"
 msgid "is in"
 msgstr "在"
 
-#: src/lib/components/login/login-form.tsx:84
+#: src/lib/components/login/login-form.tsx:83
 msgid "Email"
 msgstr "电子邮件"
 
@@ -3766,7 +3784,7 @@ msgstr "管理此表格的个人保存视图"
 msgid "Filter by tags"
 msgstr "按标签筛选"
 
-#: src/lib/components/login/login-form.tsx:74
+#: src/lib/components/login/login-form.tsx:73
 msgid "Sign in to access the admin dashboard"
 msgstr "登录以访问管理仪表板"
 
@@ -3807,7 +3825,7 @@ msgstr "不包含"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:186
 msgid "Option Group"
-msgstr ""
+msgstr "选项组"
 
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx:132
 msgid "Edit the address details below."
@@ -3834,6 +3852,10 @@ msgstr "您的订单摘要"
 msgid "Upload"
 msgstr "上传"
 
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:112
+msgid "Product with options"
+msgstr "带选项的产品"
+
 #. placeholder {0}: filteredTags.length
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:165
 msgid "Showing all {0} results"
@@ -3843,7 +3865,7 @@ msgstr "显示所有 {0} 个结果"
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:60
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:95
 msgid "Lookup ID"
-msgstr ""
+msgstr "查找 ID"
 
 #. placeholder {0}: list.totalItems - 3
 #: src/app/routes/_authenticated/_facets/facets.tsx:65
@@ -3853,7 +3875,7 @@ msgstr "+ {0} 个更多"
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:45
 msgid "Option Groups"
-msgstr ""
+msgstr "选项组"
 
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:392
 msgid "Custom fields"
@@ -3861,7 +3883,7 @@ msgstr "自定义字段"
 
 #: src/app/routes/_authenticated/_orders/components/order-process-dialog.tsx:85
 msgid "All possible order states and their transitions. The current state is highlighted."
-msgstr ""
+msgstr "所有可能的订单状态及其转换。当前状态已高亮显示。"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:82
@@ -4062,7 +4084,7 @@ msgstr "库存水平"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:121
 msgid "Failed to update API key"
-msgstr ""
+msgstr "更新 API Key 失败"
 
 #: src/lib/framework/dashboard-widget/base-widget.tsx:76
 msgid "{title}"
@@ -4080,7 +4102,7 @@ msgstr "重命名全局视图失败"
 
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:87
 msgid "Insert a new hyperlink with URL and target options"
-msgstr ""
+msgstr "插入带有 URL 和目标选项的新超链接"
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:194
 msgid "Height"
@@ -4126,7 +4148,7 @@ msgstr "可用语言"
 
 #: src/lib/components/data-table/data-table-bulk-actions.tsx:119
 msgid "Reset selection"
-msgstr ""
+msgstr "重置选择"
 
 #: src/app/routes/_authenticated/_orders/components/order-address.tsx:30
 msgid "No address"
@@ -4171,9 +4193,9 @@ msgstr "旧电子邮件："
 msgid "Save a view as \"Global\" to make it available to all users."
 msgstr "将视图保存为\"全局\"以使其对所有用户可用。"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:151
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:179
 msgid "Failed to create variants"
-msgstr ""
+msgstr "创建变体失败"
 
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:133
 msgid "Sets the stock level at which this a variant is considered to be out of stock. Using a negative value enables backorder support. Can be overridden by product variants."
@@ -4182,7 +4204,7 @@ msgstr "设置将此变体视为缺货的库存水平。使用负值可启用延
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:45
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:68
 msgid "Rotate Key"
-msgstr ""
+msgstr "轮换密钥"
 
 #: src/app/routes/_authenticated/_products/components/create-product-variants-dialog.tsx:132
 #~ msgid "Failed to create product variants"
@@ -4197,7 +4219,7 @@ msgstr "隐藏密码"
 msgid "New seller"
 msgstr "新卖家"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:154
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:153
 msgid "e.g., Red, Large, Cotton"
 msgstr "例如：红色、大号、棉质"
 
@@ -4219,7 +4241,7 @@ msgstr "地区"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:438
 msgid "Drop files here to upload"
-msgstr ""
+msgstr "将文件拖放到此处上传"
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:18
 msgid "Verified"
@@ -4229,7 +4251,7 @@ msgstr "已验证"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:82
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:149
 msgid "New option group"
-msgstr ""
+msgstr "新建选项组"
 
 #: src/app/routes/_authenticated/_system/healthchecks.tsx:58
 #~ msgid "Last updated {0}"
@@ -4245,7 +4267,7 @@ msgstr "更新角色失败"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:77
 msgid "This is the only time the full API key will be displayed. Copy or download it now — it cannot be retrieved later."
-msgstr ""
+msgstr "完整的 API Key 仅此一次显示。请立即复制或下载，之后将无法再次获取。"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:104
 msgid "Successfully updated collection"
@@ -4523,7 +4545,7 @@ msgstr "州/省"
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:147
 #: src/app/routes/_authenticated/_payment-methods/payment-methods.tsx:42
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:235
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:131
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:228
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:153
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:115
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:119
@@ -4537,7 +4559,7 @@ msgstr "已启用"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:476
 msgid "Items per page"
-msgstr ""
+msgstr "每页条数"
 
 #: src/app/routes/_authenticated/_zones/zones.tsx:39
 msgid "Edit members"
@@ -4559,7 +4581,7 @@ msgstr "ID"
 msgid "Alerts"
 msgstr "警报"
 
-#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:75
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:74
 msgid "Option Values"
 msgstr "选项值"
 
@@ -4569,15 +4591,15 @@ msgstr "预览更改"
 
 #: src/lib/components/shared/assigned-channels.tsx:52
 msgid "Failed to remove {entityType} from channel"
-msgstr ""
+msgstr "从渠道中移除 {entityType} 失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:192
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:191
 msgid "Variant deleted successfully"
 msgstr "变体已成功删除"
 
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:87
 msgid "Edit the selected link properties"
-msgstr ""
+msgstr "编辑所选链接的属性"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:75
@@ -4601,7 +4623,7 @@ msgstr "计划任务"
 msgid "Are you sure you want to delete this item? This action cannot be undone."
 msgstr "确定要删除此项目吗？此操作无法撤销。"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:343
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:342
 msgid "Variants"
 msgstr "变体"
 
@@ -4618,13 +4640,13 @@ msgstr "设置"
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:151
 msgid "Settings Store"
-msgstr ""
+msgstr "设置商店"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:77
 msgid "Heading 3"
 msgstr "标题 3"
 
-#: src/lib/components/login/login-form.tsx:71
+#: src/lib/components/login/login-form.tsx:70
 msgid "Welcome to Vendure"
 msgstr "欢迎使用 Vendure"
 
@@ -4718,9 +4740,9 @@ msgstr "内容"
 msgid "Failed to convert global view to personal view"
 msgstr "将全局视图转换为个人视图失败"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:164
-msgid "The assigned option groups have no options yet. Add options to your option groups before generating variants."
-msgstr ""
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:185
+#~ msgid "The assigned option groups have no options yet. Add options to your option groups before generating variants."
+#~ msgstr ""
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:155
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:177
@@ -4749,6 +4771,10 @@ msgstr "删除"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:111
 msgid "Failed to update customer"
 msgstr "更新客户失败"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:306
+msgid "Remove option groups?"
+msgstr "移除选项组？"
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:91
 msgid "This is a preview of the collection contents based on the current filter settings. Once you save the collection, the contents will be updated to reflect the new filter settings."
@@ -4797,9 +4823,8 @@ msgstr "预览订单修改"
 msgid "The page will continue with the default query."
 msgstr "页面将继续使用默认查询。"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:118
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:175
-#: src/lib/components/shared/customer-address-form.tsx:109
+#: src/lib/components/shared/customer-address-form.tsx:121
 msgid "Street Address"
 msgstr "街道地址"
 
@@ -4851,7 +4876,7 @@ msgstr "令牌"
 msgid "Fulfilling..."
 msgstr "正在履行..."
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:141
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:147
 msgid "Add option group to product"
 msgstr "将选项组添加到商品"
 
@@ -4874,17 +4899,17 @@ msgstr "创建税率失败"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:118
 msgid "I have saved this API key"
-msgstr ""
+msgstr "我已保存此 API Key"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:244
 msgid "Configure available languages for your store and channels"
 msgstr "为您的商店和渠道配置可用语言"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:99
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:160
 msgid "Successfully created product"
 msgstr "已成功创建商品"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:231
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:230
 msgid "Add product variant"
 msgstr "添加商品变体"
 
@@ -4899,13 +4924,13 @@ msgstr "编辑备注"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:628
 msgid "No assets found. Try adjusting your filters."
-msgstr ""
+msgstr "未找到资源。请尝试调整筛选条件。"
 
-#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:162
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:161
 msgid "Add Option"
 msgstr "添加选项"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:184
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:190
 msgid "Save option group"
 msgstr "保存选项组"
 
@@ -4950,11 +4975,11 @@ msgstr "状态"
 #: src/lib/components/shared/asset/asset-gallery.tsx:370
 #: src/lib/components/shared/asset/asset-gallery.tsx:382
 msgid "Binary"
-msgstr ""
+msgstr "二进制"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:127
 msgid "Successfully updated option group"
-msgstr ""
+msgstr "选项组更新成功"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:43
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:117
@@ -4973,7 +4998,7 @@ msgstr "不含税："
 #~ msgid "Add Stock to Location"
 #~ msgstr "向位置添加库存"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:106
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:105
 msgid "Successfully added option value"
 msgstr "已成功添加选项值"
 
@@ -4981,8 +5006,8 @@ msgstr "已成功添加选项值"
 msgid "Collection moved to new parent"
 msgstr "集合已移至新的父级"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:207
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:216
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:206
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:215
 msgid "Option group removed"
 msgstr "选项组已删除"
 
@@ -5011,7 +5036,7 @@ msgid "Visible to customer"
 msgstr "客户可见"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:126
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:113
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:115
 msgid "Successfully created option group"
 msgstr "已成功创建选项组"
 
@@ -5053,9 +5078,9 @@ msgstr "名"
 msgid "contains"
 msgstr "包含"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:239
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:245
 msgid "No option groups found"
-msgstr ""
+msgstr "未找到选项组"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:91
 msgid "No items found"
@@ -5072,7 +5097,7 @@ msgstr "已履行的项目 ({0})"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:236
 msgid "Value updated"
-msgstr ""
+msgstr "值已更新"
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:28
 msgid "Unverified"
@@ -5130,7 +5155,7 @@ msgstr "客户组"
 
 #: src/lib/components/shared/assigned-channels.tsx:48
 msgid "Successfully removed {entityType} from channel"
-msgstr ""
+msgstr "已成功从渠道中移除 {entityType}"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:81
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:90
@@ -5138,11 +5163,11 @@ msgstr ""
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:81
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:17
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:24
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:279
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:278
 msgid "Option Groups"
 msgstr "选项组"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:134
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:133
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:194
 msgid "Add surcharge"
 msgstr "添加附加费"
@@ -5153,7 +5178,7 @@ msgstr "当前属性值"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:80
 msgid "Page {page} of {totalPages}"
-msgstr ""
+msgstr "第 {page} 页，共 {totalPages} 页"
 
 #: src/lib/components/date-range-picker.tsx:79
 msgctxt "date-range"
@@ -5171,7 +5196,7 @@ msgstr "删除项目"
 #: src/lib/components/shared/asset/asset-gallery.tsx:369
 #: src/lib/components/shared/asset/asset-gallery.tsx:381
 msgid "Video"
-msgstr ""
+msgstr "视频"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:48
 msgid "less than"
@@ -5280,7 +5305,7 @@ msgstr "已成功创建区域"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:268
 msgid "Value"
-msgstr ""
+msgstr "值"
 
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-utils.tsx:105
 msgid "Customer updated"
@@ -5299,7 +5324,7 @@ msgstr "卖家订单"
 msgid "New facet"
 msgstr "新属性"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:317
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:316
 msgid "Are you sure you want to remove this option group from the product?"
 msgstr "您确定要从产品中移除此选项组吗？"
 
@@ -5339,7 +5364,7 @@ msgstr "中等日期"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:169
 msgid "Invalid number"
-msgstr ""
+msgstr "无效数字"
 
 #: src/lib/components/data-table/views-sheet.tsx:152
 msgid "You haven't saved any views yet."
@@ -5351,14 +5376,13 @@ msgstr "确定要删除此视图吗？此操作无法撤销。"
 
 #: src/app/routes/_authenticated/_orders/components/order-process-dialog.tsx:73
 msgid "View order process"
-msgstr ""
+msgstr "查看订单流程"
 
 #: src/lib/components/data-table/views-sheet.tsx:100
 msgid "Failed to duplicate view"
 msgstr "复制视图失败"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:220
-#: src/lib/components/shared/customer-address-form.tsx:211
+#: src/lib/components/shared/customer-address-form.tsx:223
 msgid "Use as the default shipping address"
 msgstr "用作默认配送地址"
 
@@ -5398,7 +5422,7 @@ msgstr "计算器"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-bulk-actions.tsx:78
 msgid "Failed to remove option group from channel: {message}"
-msgstr ""
+msgstr "从渠道中移除选项组失败: {message}"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:134
 msgid "View job data"
@@ -5418,7 +5442,7 @@ msgstr "订单摘要"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:349
 msgid "Search assets..."
-msgstr ""
+msgstr "搜索资源..."
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:114
 msgid "New Facet"
@@ -5479,7 +5503,7 @@ msgstr "新卖家"
 msgid "Edit image"
 msgstr "编辑图片"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:69
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:68
 msgid "Manage Variants"
 msgstr "管理变体"
 
@@ -5538,21 +5562,21 @@ msgstr "客户已添加到组"
 msgid "Seller orders"
 msgstr "卖家订单"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:112
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:111
 msgid "Failed to add option value"
 msgstr "添加选项值失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:141
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:140
 msgid "Add option value to {groupName}"
 msgstr "向 {groupName} 添加选项值"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:83
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:82
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:96
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:271
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:293
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:292
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:195
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:190
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:352
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:205
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:351
 msgid "SKU"
 msgstr "SKU"
 
@@ -5560,7 +5584,7 @@ msgstr "SKU"
 msgid "{totalQuantity} item(s) refunded"
 msgstr "{totalQuantity}件商品已退款"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:283
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:282
 msgid "No option groups defined yet. Add option groups to create different variants of your product (e.g., Size, Color, Material)"
 msgstr "尚未定义选项组。添加选项组以创建商品的不同变体（例如：尺寸、颜色、材质）"
 
@@ -5582,7 +5606,7 @@ msgid "Created at"
 msgstr "创建于"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:137
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:166
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:165
 msgid "Failed to create product variant"
 msgstr "创建商品变体失败"
 
@@ -5627,7 +5651,7 @@ msgstr "退款已完成"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:85
 msgid "API Key"
-msgstr ""
+msgstr "API Key"
 
 #: src/app/common/duplicate-bulk-action.tsx:97
 msgid "Successfully duplicated {count} {entityName}"
@@ -5635,7 +5659,7 @@ msgstr "已成功复制 {count} {entityName}"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:71
 msgid "New Option Group"
-msgstr ""
+msgstr "新建选项组"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:164
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:186
@@ -5648,7 +5672,7 @@ msgstr "支付已完成"
 
 #: src/lib/components/data-table/data-table-active-filters-popover.tsx:27
 msgid "Active filters"
-msgstr ""
+msgstr "活动筛选条件"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:178
 #: src/lib/components/data-table/data-table-active-filters-popover.tsx:54
@@ -5662,7 +5686,7 @@ msgstr "大于"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:125
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:127
 msgid "Add payment to order"
@@ -5670,7 +5694,7 @@ msgstr "向订单添加支付"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:122
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:59
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:239
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:245
 #: src/lib/components/data-input/product-multi-selector-input.tsx:83
 #: src/lib/components/data-input/relation-selector.tsx:427
 #: src/lib/components/shared/country-selector.tsx:86
@@ -5710,11 +5734,11 @@ msgstr "缺货阈值"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:239
 msgid "Failed to update value"
-msgstr ""
+msgstr "更新值失败"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:121
 msgid "Failed to create API key"
-msgstr ""
+msgstr "创建 API Key 失败"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:264
 #: src/app/routes/_authenticated/_orders/components/settle-refund-dialog.tsx:49
@@ -5731,8 +5755,8 @@ msgstr "支付方式为必填项"
 msgid "Failed to add customer to group"
 msgstr "将客户添加到组失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:276
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:182
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:275
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:279
 msgid "Manage variants"
 msgstr "管理变体"
 
@@ -5751,19 +5775,19 @@ msgstr "区域"
 
 #: src/lib/components/shared/seller-selector.tsx:37
 msgid "Search sellers..."
-msgstr ""
+msgstr "搜索卖家..."
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:104
 msgid "Successfully created promotion"
 msgstr "已成功创建促销"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:293
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:292
 msgid "Option"
 msgstr "选项"
 
 #: src/app/routes/_authenticated/_orders/components/order-process-dialog.tsx:82
 msgid "Order process"
-msgstr ""
+msgstr "订单流程"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:194
 msgid "Phone number"
@@ -5774,7 +5798,7 @@ msgstr "电话号码"
 msgid "Private"
 msgstr "私有"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:186
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:201
 msgid "Variant"
 msgstr "变体"
 
@@ -5784,7 +5808,7 @@ msgstr "已成功更新全局设置"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:115
 msgid "Successfully updated API key"
-msgstr ""
+msgstr "API Key 更新成功"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:294
 msgid "These languages will be available for all channels to use"

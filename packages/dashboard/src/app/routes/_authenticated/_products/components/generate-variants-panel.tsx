@@ -1,5 +1,5 @@
 import { MoneyInput } from '@/vdb/components/data-input/money-input.js';
-import { Alert, AlertDescription } from '@/vdb/components/ui/alert.js';
+import { ConfirmationDialog } from '@/vdb/components/shared/confirmation-dialog.js';
 import { Button } from '@/vdb/components/ui/button.js';
 import { Checkbox } from '@/vdb/components/ui/checkbox.js';
 import { Field, FieldError } from '@/vdb/components/ui/field.js';
@@ -7,7 +7,7 @@ import { Input } from '@/vdb/components/ui/input.js';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/vdb/components/ui/table.js';
 import { api } from '@/vdb/graphql/api.js';
 import { useChannel } from '@/vdb/hooks/use-channel.js';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { z, zodResolver } from '@/vdb/lib/zod.js';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useMutation } from '@tanstack/react-query';
 import { Save } from 'lucide-react';
@@ -15,7 +15,6 @@ import { useMemo } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { Form } from '@/vdb/components/ui/form.js';
 import { toast } from 'sonner';
-import { z } from 'zod';
 import { createProductVariantsDocument } from '../products.graphql.js';
 
 interface OptionGroup {
@@ -36,16 +35,38 @@ interface GeneratedVariant {
     optionNames: string[];
 }
 
-const variantSchema = z.object({
-    enabled: z.boolean().default(true),
-    sku: z.string().min(1, { message: 'SKU is required' }),
-    price: z.string().refine(val => !isNaN(Number(val)) && Number(val) >= 0, {
-        message: 'Price must be a positive number',
-    }),
-    stock: z.string().refine(val => !isNaN(Number(val)) && parseInt(val, 10) >= 0, {
-        message: 'Stock must be a non-negative integer',
-    }),
-});
+const variantSchema = z
+    .object({
+        enabled: z.boolean(),
+        sku: z.string(),
+        price: z.string(),
+        stock: z.string(),
+    })
+    .superRefine((data, ctx) => {
+        if (!data.enabled) return;
+        if (!data.sku || data.sku.length === 0) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'SKU is required',
+                path: ['sku'],
+            });
+        }
+        if (data.price !== '' && (Number.isNaN(Number(data.price)) || Number(data.price) < 0)) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'Price must be a non-negative number',
+                path: ['price'],
+            });
+        }
+        const stockNum = Number(data.stock);
+        if (data.stock !== '' && (Number.isNaN(stockNum) || stockNum < 0 || !Number.isInteger(stockNum))) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'Stock must be a non-negative integer',
+                path: ['stock'],
+            });
+        }
+    });
 
 const formSchema = z.object({
     variants: z.record(variantSchema),
@@ -55,7 +76,9 @@ type VariantFormValues = z.infer<typeof formSchema>;
 
 function generateVariantCombinations(optionGroups: OptionGroup[]): GeneratedVariant[] {
     const validGroups = optionGroups.filter(g => g.options.length > 0);
-    if (validGroups.length === 0) return [];
+    if (validGroups.length === 0) {
+        return [{ id: 'default', name: '', optionIds: [], optionNames: [] }];
+    }
 
     const combine = (
         groups: OptionGroup[],
@@ -87,11 +110,16 @@ export function GenerateVariantsPanel({
     productName,
     optionGroups,
     onSuccess,
+    onBack,
 }: Readonly<{
     productId: string;
     productName: string;
     optionGroups: OptionGroup[];
     onSuccess?: () => void;
+    onBack?: {
+        handler: () => void;
+        confirmation?: { title: string; description: string };
+    };
 }>) {
     const { t } = useLingui();
     const { activeChannel } = useChannel();
@@ -157,19 +185,6 @@ export function GenerateVariantsPanel({
     const watchedVariants = useWatch({ control: form.control, name: 'variants' });
     const enabledCount = variants.filter(v => watchedVariants?.[v.id]?.enabled).length;
 
-    if (variants.length === 0) {
-        return (
-            <Alert>
-                <AlertDescription>
-                    <Trans>
-                        The assigned option groups have no options yet. Add options to your option groups
-                        before generating variants.
-                    </Trans>
-                </AlertDescription>
-            </Alert>
-        );
-    }
-
     return (
         <Form {...form}>
             <div className="space-y-4">
@@ -206,12 +221,10 @@ export function GenerateVariantsPanel({
                                             control={form.control}
                                             name={`variants.${variant.id}.enabled`}
                                             render={({ field }) => (
-                                                <Field className="flex items-center space-x-2">
-                                                    <Checkbox
-                                                        checked={field.value}
-                                                        onCheckedChange={field.onChange}
-                                                    />
-                                                </Field>
+                                                <Checkbox
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
                                             )}
                                         />
                                     </TableCell>
@@ -281,18 +294,42 @@ export function GenerateVariantsPanel({
                     </TableBody>
                 </Table>
 
-                <div className="flex justify-end">
+                <div className="flex justify-between items-center">
+                    <div>
+                        {onBack && (
+                            onBack.confirmation ? (
+                                <ConfirmationDialog
+                                    title={onBack.confirmation.title}
+                                    description={onBack.confirmation.description}
+                                    onConfirm={onBack.handler}
+                                >
+                                    <button
+                                        type="button"
+                                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        ← <Trans>Back</Trans>
+                                    </button>
+                                </ConfirmationDialog>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={onBack.handler}
+                                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                                >
+                                    ← <Trans>Back</Trans>
+                                </button>
+                            )
+                        )}
+                    </div>
                     <Button
                         type="button"
                         onClick={handleCreateVariants}
                         disabled={createVariantsMutation.isPending || enabledCount === 0}
                     >
                         <Save className="mr-2 h-4 w-4" />
-                        {createVariantsMutation.isPending ? (
-                            <Trans>Creating...</Trans>
-                        ) : (
-                            <Trans>Create {enabledCount} variants</Trans>
-                        )}
+                        {createVariantsMutation.isPending && <Trans>Creating...</Trans>}
+                        {!createVariantsMutation.isPending && enabledCount === 1 && <Trans>Create variant</Trans>}
+                        {!createVariantsMutation.isPending && enabledCount !== 1 && <Trans>Create {enabledCount} variants</Trans>}
                     </Button>
                 </div>
             </div>
