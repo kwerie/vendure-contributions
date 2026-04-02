@@ -2,6 +2,7 @@
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
 import { ADMIN_API_PATH, API_PORT, SHOP_API_PATH } from '@vendure/common/lib/shared-constants';
+import { OnApplicationBootstrap } from '@nestjs/common';
 import {
     DefaultJobQueuePlugin,
     DefaultLogger,
@@ -9,20 +10,54 @@ import {
     DefaultSearchPlugin,
     dummyPaymentHandler,
     LogLevel,
+    PluginCommonModule,
+    RequestContextService,
     SettingsStoreScopes,
+    SettingsStoreService,
     VendureConfig,
+    VendurePlugin,
 } from '@vendure/core';
 import { DashboardPlugin } from '@vendure/dashboard/plugin';
 import { defaultEmailHandlers, EmailPlugin, FileBasedTemplateLoader } from '@vendure/email-plugin';
 import { GraphiqlPlugin } from '@vendure/graphiql-plugin';
-import { SentryPlugin } from '@vendure/sentry-plugin';
 import { TelemetryPlugin } from '@vendure/telemetry-plugin';
 import 'dotenv/config';
 import path from 'path';
 import { DataSourceOptions } from 'typeorm';
+import { NavModifierPlugin } from './test-plugins/nav-modifier-plugin/nav-modifier-plugin';
+import { FieldTestPlugin } from './test-plugins/field-test/field-test-plugin';
 import { ReviewsPlugin } from './test-plugins/reviews/reviews-plugin';
 
 const IS_INSTRUMENTED = process.env.IS_INSTRUMENTED === 'true';
+
+@VendurePlugin({
+    imports: [PluginCommonModule],
+    configuration: config => {
+        config.settingsStoreFields = {
+            ...config.settingsStoreFields,
+            ReadonlyTest: [
+                { name: 'buildVersion', readonly: true },
+                { name: 'buildMeta', readonly: true },
+            ],
+        };
+        return config;
+    },
+})
+class ReadonlySettingsTestPlugin implements OnApplicationBootstrap {
+    constructor(
+        private settingsStoreService: SettingsStoreService,
+        private requestContextService: RequestContextService,
+    ) {}
+    async onApplicationBootstrap() {
+        const ctx = await this.requestContextService.create({ apiType: 'admin' });
+        await this.settingsStoreService.set(ctx, 'ReadonlyTest.buildVersion', 'v3.5.2' as any);
+        await this.settingsStoreService.set(ctx, 'ReadonlyTest.buildMeta', {
+            buildDate: '2026-03-06',
+            commit: 'd0384f3ed',
+            features: ['settings-store-ui', 'option-groups'],
+        });
+    }
+}
 
 /**
  * Config settings used during development
@@ -47,7 +82,7 @@ export const devConfig: VendureConfig = {
     },
     authOptions: {
         disableAuth: false,
-        tokenMethod: ['bearer', 'cookie'] as const,
+        tokenMethod: ['bearer', 'cookie', 'api-key'] as const,
         requireVerification: true,
         customPermissions: [],
         cookieOptions: {
@@ -84,7 +119,10 @@ export const devConfig: VendureConfig = {
         //     platformFeePercent: 10,
         //     platformFeeSKU: 'FEE',
         // }),
+        ReadonlySettingsTestPlugin,
         ReviewsPlugin,
+        FieldTestPlugin,
+        NavModifierPlugin,
         GraphiqlPlugin.init(),
         AssetServerPlugin.init({
             route: 'assets',
@@ -95,11 +133,6 @@ export const devConfig: VendureConfig = {
         // BullMQJobQueuePlugin.init({}),
         DefaultJobQueuePlugin.init({}),
         // JobQueueTestPlugin.init({ queueCount: 10 }),
-        // ElasticsearchPlugin.init({
-        //     host: 'http://localhost',
-        //     port: 9200,
-        //     bufferUpdates: true,
-        // }),
         DefaultSchedulerPlugin.init({}),
         EmailPlugin.init({
             devMode: true,
@@ -114,13 +147,6 @@ export const devConfig: VendureConfig = {
             },
         }),
         ...(IS_INSTRUMENTED ? [TelemetryPlugin.init({})] : []),
-        ...(process.env.ENABLE_SENTRY === 'true' && process.env.SENTRY_DSN
-            ? [
-                  SentryPlugin.init({
-                      includeErrorTestMutation: true,
-                  }),
-              ]
-            : []),
         // AdminUiPlugin.init({
         //     route: 'admin',
         //     port: 5001,

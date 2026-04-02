@@ -1,27 +1,26 @@
 import { DetailPageButton } from '@/vdb/components/shared/detail-page-button.js';
-import { PermissionGuard } from '@/vdb/components/shared/permission-guard.js';
 import { Button } from '@/vdb/components/ui/button.js';
-import { PageActionBarRight } from '@/vdb/framework/layout-engine/page-layout.js';
+import { ActionBarItem } from '@/vdb/framework/layout-engine/action-bar-item-wrapper.js';
 import { ListPage } from '@/vdb/framework/page/list-page.js';
 import { api } from '@/vdb/graphql/api.js';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { FetchQueryOptions, useQueries, useQueryClient } from '@tanstack/react-query';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { ExpandedState, getExpandedRowModel } from '@tanstack/react-table';
 import { TableOptions } from '@tanstack/table-core';
 import { ResultOf } from 'gql.tada';
 import { Folder, FolderOpen, PlusIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import { RichTextDescriptionCell } from '@/vdb/components/shared/table-cell/order-table-cell-components.js';
-import { Badge } from '@/vdb/components/ui/badge.js';
 import {
     calculateDragTargetPosition,
     calculateSiblingIndex,
     getItemParentId,
     isCircularReference,
 } from '@/vdb/components/data-table/data-table-utils.js';
+import { RichTextDescriptionCell } from '@/vdb/components/shared/table-cell/order-table-cell-components.js';
+import { Badge } from '@/vdb/components/ui/badge.js';
 import { collectionListDocument, moveCollectionDocument } from './collections.graphql.js';
 import {
     AssignCollectionsToChannelBulkAction,
@@ -33,11 +32,30 @@ import {
 import { CollectionContentsSheet } from './components/collection-contents-sheet.js';
 
 
+function parseExpandedParam(expanded?: string): ExpandedState {
+    if (!expanded) return {};
+    const ids = expanded.split(',').filter(Boolean);
+    return Object.fromEntries(ids.map(id => [id, true]));
+}
+
+function serializeExpandedState(expanded: ExpandedState): string | undefined {
+    if (expanded === true) return undefined;
+    const ids = Object.entries(expanded)
+        .filter(([_, v]) => v)
+        .map(([id]) => id);
+    return ids.length > 0 ? ids.join(',') : undefined;
+}
+
 export const Route = createFileRoute('/_authenticated/_collections/collections')({
     component: CollectionListPage,
     loader: () => ({ breadcrumb: () => <Trans>Collections</Trans> }),
+    validateSearch: (search: Record<string, unknown>) => {
+        return {
+            ...search,
+            expanded: (search.expanded as string) || undefined,
+        };
+    },
 });
-
 
 type Collection = ResultOf<typeof collectionListDocument>['collections']['items'][number];
 
@@ -61,14 +79,36 @@ function isLoadMoreRow(row: CollectionOrLoadMore): row is LoadMoreRow {
 function CollectionListPage() {
     const { t } = useLingui();
     const queryClient = useQueryClient();
-    const [expanded, setExpanded] = useState<ExpandedState>({});
+    const routeSearch = Route.useSearch();
+    const navigate = useNavigate({ from: Route.fullPath });
+    const [expanded, setExpandedState] = useState<ExpandedState>(() => parseExpandedParam(routeSearch.expanded));
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [accumulatedChildren, setAccumulatedChildren] = useState<
         Record<string, { items: Collection[]; totalItems: number }>
     >({});
     const [nextPageToFetch, setNextPageToFetch] = useState<Record<string, number>>({});
 
-    useQueries({
+    const setExpanded = useCallback((updater: ExpandedState | ((prev: ExpandedState) => ExpandedState)) => {
+        setExpandedState(prev => {
+            const next = typeof updater === 'function' ? updater(prev) : updater;
+            navigate({
+                search: (old: Record<string, unknown>) => ({
+                    ...old,
+                    expanded: serializeExpandedState(next),
+                }),
+                replace: true,
+            });
+            return next;
+        });
+    }, [navigate]);
+
+    // NOTE: queryFn must be pure (no setState side effects) because TanStack Query
+    // skips queryFn entirely when data is served from cache (staleTime: 5min). If we
+    // called setAccumulatedChildren inside queryFn, a re-mounted component would get
+    // cache hits but accumulatedChildren would never be populated, so children wouldn't
+    // render. Instead we sync via useEffect below, which fires for both cache hits and
+    // fresh fetches.
+    const firstPageChildQueries = useQueries({
         queries: expanded === true ? [] : Object.entries(expanded)
             .filter(([collectionId]) => !accumulatedChildren[collectionId])
             .map(([collectionId]) => {
@@ -84,21 +124,35 @@ function CollectionListPage() {
                                 skip: 0,
                             },
                         });
-                        setAccumulatedChildren(prev => ({
-                            ...prev,
-                            [collectionId]: {
-                                items: result.collections.items,
-                                totalItems: result.collections.totalItems,
-                            },
-                        }));
-                        return result;
+                        return {
+                            collectionId,
+                            items: result.collections.items,
+                            totalItems: result.collections.totalItems,
+                        };
                     },
                     staleTime: 1000 * 60 * 5,
                 } satisfies FetchQueryOptions;
             }),
     });
 
-    useQueries({
+    useEffect(() => {
+        const newChildren: Record<string, { items: Collection[]; totalItems: number }> = {};
+        let hasNew = false;
+        for (const query of firstPageChildQueries) {
+            if (query.data && !accumulatedChildren[query.data.collectionId]) {
+                newChildren[query.data.collectionId] = {
+                    items: query.data.items as Collection[],
+                    totalItems: query.data.totalItems,
+                };
+                hasNew = true;
+            }
+        }
+        if (hasNew) {
+            setAccumulatedChildren(prev => ({ ...prev, ...newChildren }));
+        }
+    }, [firstPageChildQueries]);
+
+    const pagedChildQueries = useQueries({
         queries: Object.entries(nextPageToFetch)
             .filter(([_, page]) => page > 0)
             .map(([collectionId, page]) => {
@@ -114,27 +168,48 @@ function CollectionListPage() {
                                 skip: page * CHILDREN_PAGE_SIZE,
                             },
                         });
-                        setAccumulatedChildren(prev => {
-                            const existing = prev[collectionId];
-                            if (!existing) return prev;
-                            return {
-                                ...prev,
-                                [collectionId]: {
-                                    items: [...existing.items, ...result.collections.items],
-                                    totalItems: result.collections.totalItems,
-                                },
-                            };
-                        });
-                        setNextPageToFetch(prev => {
-                            const { [collectionId]: _, ...rest } = prev;
-                            return rest;
-                        });
-                        return result;
+                        return {
+                            collectionId,
+                            items: result.collections.items,
+                            totalItems: result.collections.totalItems,
+                        };
                     },
                     staleTime: 1000 * 60 * 5,
                 } satisfies FetchQueryOptions;
             }),
     });
+
+    useEffect(() => {
+        let hasUpdates = false;
+        const childUpdates: Record<string, { items: Collection[]; totalItems: number }> = {};
+        const fetchedPages: string[] = [];
+        for (const query of pagedChildQueries) {
+            if (!query.data) continue;
+            const { collectionId, items, totalItems } = query.data as {
+                collectionId: string;
+                items: Collection[];
+                totalItems: number;
+            };
+            if (accumulatedChildren[collectionId]) {
+                childUpdates[collectionId] = {
+                    items: [...accumulatedChildren[collectionId].items, ...items],
+                    totalItems,
+                };
+                fetchedPages.push(collectionId);
+                hasUpdates = true;
+            }
+        }
+        if (hasUpdates) {
+            setAccumulatedChildren(prev => ({ ...prev, ...childUpdates }));
+            setNextPageToFetch(prev => {
+                const next = { ...prev };
+                for (const id of fetchedPages) {
+                    delete next[id];
+                }
+                return next;
+            });
+        }
+    }, [pagedChildQueries]);
 
     const addSubCollections = (data: Collection[]): CollectionOrLoadMore[] => {
         const allRows: CollectionOrLoadMore[] = [];
@@ -226,6 +301,13 @@ function CollectionListPage() {
                 },
             });
 
+            // Remove query cache entries BEFORE clearing accumulated children
+            // to prevent stale cached data from being synced back by the useEffect.
+            queryClient.removeQueries({ queryKey: ['childCollections', sourceParentId] });
+            if (targetParentId !== sourceParentId) {
+                queryClient.removeQueries({ queryKey: ['childCollections', targetParentId] });
+            }
+
             setAccumulatedChildren(prev => {
                 const newState = { ...prev };
                 delete newState[sourceParentId];
@@ -235,19 +317,11 @@ function CollectionListPage() {
                 return newState;
             });
 
-            const queriesToInvalidate = [
-                queryClient.invalidateQueries({ queryKey: ['childCollections', sourceParentId] }),
-                queryClient.invalidateQueries({ queryKey: ['PaginatedListDataTable'] }),
-            ];
+            await queryClient.invalidateQueries({ queryKey: ['PaginatedListDataTable'] });
 
             if (targetParentId === sourceParentId) {
-                await Promise.all(queriesToInvalidate);
                 toast.success(t`Collection position updated`);
             } else {
-                queriesToInvalidate.push(
-                    queryClient.invalidateQueries({ queryKey: ['childCollections', targetParentId] })
-                );
-                await Promise.all(queriesToInvalidate);
                 toast.success(t`Collection moved to new parent`);
             }
         } catch (error) {
@@ -277,6 +351,8 @@ function CollectionListPage() {
             customizeColumns={{
                 name: {
                     meta: {
+                        // This column needs the following fields to always be available
+                        // in order to correctly render.
                         dependencies: ['children', 'breadcrumbs'],
                     },
                     cell: ({ row }) => {
@@ -291,6 +367,7 @@ function CollectionListPage() {
                                 <Button
                                     size="icon"
                                     variant="secondary"
+                                    aria-label={isExpanded ? 'Collapse' : 'Expand'}
                                     onClick={row.getToggleExpandedHandler()}
                                     disabled={!hasChildren}
                                     className={!hasChildren ? 'opacity-20' : ''}
@@ -329,7 +406,7 @@ function CollectionListPage() {
                                 collectionId={row.original.id}
                                 collectionName={row.original.name}
                             >
-                                <Trans>{row.original.productVariantCount} variants</Trans>
+                                <Trans>{row.original.productVariantCount as number} variants</Trans>
                             </CollectionContentsSheet>
                         );
                     },
@@ -357,6 +434,7 @@ function CollectionListPage() {
             }}
             defaultColumnOrder={[
                 'featuredAsset',
+                'children',
                 'name',
                 'slug',
                 'breadcrumbs',
@@ -378,6 +456,11 @@ function CollectionListPage() {
                 options.meta = {
                     ...options.meta,
                     resetExpanded: () => setExpanded({}),
+                    refreshChildCaches: () => {
+                        queryClient.removeQueries({ queryKey: ['childCollections'] });
+                        queryClient.removeQueries({ queryKey: ['PaginatedListDataTable'] });
+                        setAccumulatedChildren({});
+                    },
                     isUtilityRow: (row: { original: CollectionOrLoadMore }) => isLoadMoreRow(row.original),
                     renderUtilityRow: (row: { original: CollectionOrLoadMore }) => {
                         const original = row.original as LoadMoreRow;
@@ -418,41 +501,25 @@ function CollectionListPage() {
             }}
             route={Route}
             bulkActions={[
-                {
-                    component: AssignCollectionsToChannelBulkAction,
-                    order: 100,
-                },
-                {
-                    component: RemoveCollectionsFromChannelBulkAction,
-                    order: 200,
-                },
-                {
-                    component: DuplicateCollectionsBulkAction,
-                    order: 300,
-                },
-                {
-                    component: MoveCollectionsBulkAction,
-                    order: 400,
-                },
-                {
-                    component: DeleteCollectionsBulkAction,
-                    order: 500,
-                },
+                [
+                    { component: AssignCollectionsToChannelBulkAction, order: 100 },
+                    { component: RemoveCollectionsFromChannelBulkAction, order: 200 },
+                    { component: DuplicateCollectionsBulkAction, order: 300 },
+                    { component: MoveCollectionsBulkAction, order: 400 },
+                ],
+                [
+                    { component: DeleteCollectionsBulkAction },
+                ],
             ]}
             onReorder={handleReorder}
             disableDragAndDrop={!!searchTerm}
         >
-            <PageActionBarRight>
-                <PermissionGuard requires={['CreateCollection', 'CreateCatalog']}>
-                    <Button asChild>
-                        <Link to="./new">
-                            <PlusIcon className="mr-2 h-4 w-4" />
-                            <Trans>New Collection</Trans>
-                        </Link>
-                    </Button>
-                </PermissionGuard>
-            </PageActionBarRight>
+            <ActionBarItem itemId="create-button" requiresPermission={['CreateCollection', 'CreateCatalog']}>
+                <Button render={<Link to="./new" />}>
+                    <PlusIcon className="mr-2 h-4 w-4" />
+                    <Trans>New Collection</Trans>
+                </Button>
+            </ActionBarItem>
         </ListPage>
     );
 }
-

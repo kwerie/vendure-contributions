@@ -68,7 +68,7 @@ function TargetAlert({
     collectionNameCache,
 }: Readonly<TargetAlertProps>) {
     return (
-        <Alert className={selectedCollectionId ? 'border-blue-200 bg-blue-50' : 'opacity-50'}>
+        <Alert className={selectedCollectionId ? 'border-primary/30 bg-primary/10' : 'opacity-50'}>
             <Folder className="h-4 w-4" />
             <AlertDescription>
                 {selectedCollectionId ? (
@@ -284,7 +284,8 @@ export function MoveCollectionsDialog({
             toast.success(t`Collections moved successfully`);
             queryClient.invalidateQueries({ queryKey: collectionForMoveKey });
             queryClient.invalidateQueries({ queryKey: childCollectionsForMoveKey() });
-            queryClient.invalidateQueries({ queryKey: ['PaginatedListDataTable'] });
+            // Remove child caches BEFORE invalidating the main list to prevent
+            // stale cached children from being synced back (same race as drag-reorder).
             onResetExpanded?.();
             onSuccess?.();
             onOpenChange(false);

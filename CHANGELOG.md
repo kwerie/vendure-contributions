@@ -1,3 +1,86 @@
+## 3.6.0 (2026-03-31)
+
+
+#### Features
+
+* **asset-server-plugin** Allow specifying encoding for AssetStorageStrategy (#3926) ([842a7df](https://github.com/vendurehq/vendure/commit/842a7df)), closes [#3926](https://github.com/vendurehq/vendure/issues/3926)
+* **cli** Add codemod command for Radix to Base UI dashboard migration (#4536) ([bcf5711](https://github.com/vendurehq/vendure/commit/bcf5711)), closes [#4536](https://github.com/vendurehq/vendure/issues/4536)
+* **core** Add anonymous telemetry collection module (#4192) ([4d092d1](https://github.com/vendurehq/vendure/commit/4d092d1)), closes [#4192](https://github.com/vendurehq/vendure/issues/4192)
+* **core** Add collectionIds and collectionSlugs filters to default search plugin (#3945) ([82fcf0f](https://github.com/vendurehq/vendure/commit/82fcf0f)), closes [#3945](https://github.com/vendurehq/vendure/issues/3945)
+* **core** Add configurable OrderTaxCalculationStrategy (#4376) ([6d53fa9](https://github.com/vendurehq/vendure/commit/6d53fa9)), closes [#4376](https://github.com/vendurehq/vendure/issues/4376)
+* **core** Add EntityAccessControlStrategy for row-level access control (#4451) ([96e40cc](https://github.com/vendurehq/vendure/commit/96e40cc)), closes [#4451](https://github.com/vendurehq/vendure/issues/4451)
+* **core** Add migrateAssetTranslationData() helper for v3.6 upgrade (#4584) ([99d237b](https://github.com/vendurehq/vendure/commit/99d237b)), closes [#4584](https://github.com/vendurehq/vendure/issues/4584)
+* **core** Add Shop API mutation to set order currency code (#4466) ([7f246a6](https://github.com/vendurehq/vendure/commit/7f246a6)), closes [#4466](https://github.com/vendurehq/vendure/issues/4466)
+* **core** Allow async `OrderMergeStrategy` (#4436) ([cc58504](https://github.com/vendurehq/vendure/commit/cc58504)), closes [#4436](https://github.com/vendurehq/vendure/issues/4436)
+* **core** API Key support (#3815) ([c4e0d99](https://github.com/vendurehq/vendure/commit/c4e0d99)), closes [#3815](https://github.com/vendurehq/vendure/issues/3815)
+* **core** Expand telemetry with strategy, integration and feature adoption data (#4554) ([52f8f45](https://github.com/vendurehq/vendure/commit/52f8f45)), closes [#4554](https://github.com/vendurehq/vendure/issues/4554)
+* **core** Introduce BootstrappedEvent to signal server readiness (#4498) ([d3459c0](https://github.com/vendurehq/vendure/commit/d3459c0)), closes [#4498](https://github.com/vendurehq/vendure/issues/4498)
+* **core** Make ProductOptionGroup & ProductOption shared and channel-aware (#4469) ([d0384f3](https://github.com/vendurehq/vendure/commit/d0384f3)), closes [#4469](https://github.com/vendurehq/vendure/issues/4469)
+* **core** New `onBeforeAppListen` to operate on Nest app before listen (#4383) ([2b5a887](https://github.com/vendurehq/vendure/commit/2b5a887)), closes [#4383](https://github.com/vendurehq/vendure/issues/4383)
+* **core** Support shared product option groups in CSV import (#4503) ([0808146](https://github.com/vendurehq/vendure/commit/0808146)), closes [#4503](https://github.com/vendurehq/vendure/issues/4503)
+* **dashboard** Add API keys management UI (#4583) ([29ad666](https://github.com/vendurehq/vendure/commit/29ad666)), closes [#4583](https://github.com/vendurehq/vendure/issues/4583)
+* **dashboard** Add Option Groups management page (#4483) ([80ef477](https://github.com/vendurehq/vendure/commit/80ef477)), closes [#4483](https://github.com/vendurehq/vendure/issues/4483)
+* **dashboard** Add Settings Store management page (#4473) ([61f790d](https://github.com/vendurehq/vendure/commit/61f790d)), closes [#4473](https://github.com/vendurehq/vendure/issues/4473)
+* **dashboard** Add toolbarItems extension point to app shell header (#4496) ([6fe1a67](https://github.com/vendurehq/vendure/commit/6fe1a67)), closes [#4496](https://github.com/vendurehq/vendure/issues/4496)
+* **dashboard** Allow component-based alert actions for hook access (#4526) ([7702114](https://github.com/vendurehq/vendure/commit/7702114)), closes [#4526](https://github.com/vendurehq/vendure/issues/4526)
+* **dashboard** Improved extensibility of ActionBar (#4049) ([f6184b6](https://github.com/vendurehq/vendure/commit/f6184b6)), closes [#4049](https://github.com/vendurehq/vendure/issues/4049)
+* **dashboard** Support function form for navSections (#4491) ([5e1cad3](https://github.com/vendurehq/vendure/commit/5e1cad3)), closes [#4491](https://github.com/vendurehq/vendure/issues/4491)
+* **dashboard** Translation fallback placeholders for translatable fields (#4549) ([411b21e](https://github.com/vendurehq/vendure/commit/411b21e)), closes [#4549](https://github.com/vendurehq/vendure/issues/4549)
+* **dashboard** Upgrade Vite from v6 to v7 (#4514) ([47dc168](https://github.com/vendurehq/vendure/commit/47dc168)), closes [#4514](https://github.com/vendurehq/vendure/issues/4514)
+* **email-plugin** Add support for asynchronous email generators (#3976) ([3ae219b](https://github.com/vendurehq/vendure/commit/3ae219b)), closes [#3976](https://github.com/vendurehq/vendure/issues/3976)
+
+#### Fixes
+
+* **core** Allow admin re-creation after soft-delete (#4543) ([f4029ef](https://github.com/vendurehq/vendure/commit/f4029ef)), closes [#4543](https://github.com/vendurehq/vendure/issues/4543)
+* **core** Migrate entity-event e2e test to typed document pattern ([6f51232](https://github.com/vendurehq/vendure/commit/6f51232))
+* **core** Server-side translation field-level fallback for empty values (#4551) ([d94ac75](https://github.com/vendurehq/vendure/commit/d94ac75)), closes [#4551](https://github.com/vendurehq/vendure/issues/4551)
+* **dashboard** Add shared-types and shared-utils to Vite optimizeDeps (#4520) ([1614ee3](https://github.com/vendurehq/vendure/commit/1614ee3)), closes [#4520](https://github.com/vendurehq/vendure/issues/4520)
+* **dashboard** Align styling with design system tokens (#4575) ([9e81c36](https://github.com/vendurehq/vendure/commit/9e81c36)), closes [#4575](https://github.com/vendurehq/vendure/issues/4575)
+* **dashboard** Display custom fields on product variant prices (#4180) ([d34804c](https://github.com/vendurehq/vendure/commit/d34804c)), closes [#4180](https://github.com/vendurehq/vendure/issues/4180)
+* **dashboard** Fix ambiguous export of ActionBarItem ([7106e3a](https://github.com/vendurehq/vendure/commit/7106e3a))
+* **dashboard** Fix collection expand e2e test for minor branch ([0eba4fc](https://github.com/vendurehq/vendure/commit/0eba4fc))
+* **dashboard** Fix component styling regressions from Base UI migration (#4552) ([ad4305c](https://github.com/vendurehq/vendure/commit/ad4305c)), closes [#4552](https://github.com/vendurehq/vendure/issues/4552)
+* **dashboard** Fix merge issues ([6dec164](https://github.com/vendurehq/vendure/commit/6dec164))
+* **dashboard** Follow transitive dependencies in plugin discovery (#4545) ([79b5454](https://github.com/vendurehq/vendure/commit/79b5454)), closes [#4545](https://github.com/vendurehq/vendure/issues/4545)
+* **dashboard** Hide dev mode ring offset when not hovered (#4558) ([ea34144](https://github.com/vendurehq/vendure/commit/ea34144)), closes [#4558](https://github.com/vendurehq/vendure/issues/4558)
+* **dashboard** Use aria-label for collection expand button in e2e tests ([1af90cd](https://github.com/vendurehq/vendure/commit/1af90cd))
+* **job-queue-plugin** Update ioredis to 5.9.3 to match bullmq dependency ([239196c](https://github.com/vendurehq/vendure/commit/239196c))
+
+## <small>3.5.6 (2026-03-30)</small>
+
+
+#### Fixes
+
+* **core** Make OrderService.mergeOrders atomic and concurrency-safe (#4488) ([c3bc80f](https://github.com/vendurehq/vendure/commit/c3bc80f)), closes [#4488](https://github.com/vendurehq/vendure/issues/4488)
+* **core** Remove stale shipping lines when shipping method no longer exists (#4487) ([3be14c8](https://github.com/vendurehq/vendure/commit/3be14c8)), closes [#4487](https://github.com/vendurehq/vendure/issues/4487)
+* **core** Use schema-qualified table paths in EXISTS subqueries (#4501) ([7781742](https://github.com/vendurehq/vendure/commit/7781742)), closes [#4501](https://github.com/vendurehq/vendure/issues/4501)
+* **core** Widen TranslationInput languageCode to accept string literal unions (#4534) ([cd50fba](https://github.com/vendurehq/vendure/commit/cd50fba)), closes [#4534](https://github.com/vendurehq/vendure/issues/4534)
+* **dashboard**  MoneyInput component to handle focus state and onChange (#4586) ([e07a1a6](https://github.com/vendurehq/vendure/commit/e07a1a6)), closes [#4586](https://github.com/vendurehq/vendure/issues/4586)
+* **dashboard** Add missing i18n translations and CI sync check (#4578) ([9b310fd](https://github.com/vendurehq/vendure/commit/9b310fd)), closes [#4578](https://github.com/vendurehq/vendure/issues/4578)
+* **dashboard** Add nested address custom field in customer detail (#4546) ([cfcab42](https://github.com/vendurehq/vendure/commit/cfcab42)), closes [#4546](https://github.com/vendurehq/vendure/issues/4546)
+* **dashboard** Channel cache invalidation after update (#4461) ([be8b7b0](https://github.com/vendurehq/vendure/commit/be8b7b0)), closes [#4461](https://github.com/vendurehq/vendure/issues/4461)
+* **dashboard** Detect plugins compiled with tslib importHelpers (#4518) ([4b49c30](https://github.com/vendurehq/vendure/commit/4b49c30)), closes [#4518](https://github.com/vendurehq/vendure/issues/4518)
+* **dashboard** Display product options on variant detail page (#4187) ([6c556de](https://github.com/vendurehq/vendure/commit/6c556de)), closes [#4187](https://github.com/vendurehq/vendure/issues/4187)
+* **dashboard** Display variant creation errors and list query errors (#4460) ([0dc2bfe](https://github.com/vendurehq/vendure/commit/0dc2bfe)), closes [#4460](https://github.com/vendurehq/vendure/issues/4460)
+* **dashboard** Fix payment and fulfillment state icons in non-English locales (#4454) ([8b0d6b1](https://github.com/vendurehq/vendure/commit/8b0d6b1)), closes [#4454](https://github.com/vendurehq/vendure/issues/4454) [#4454](https://github.com/vendurehq/vendure/issues/4454)
+* **dashboard** Fix validation & UX issues in product variant option groups (#4458) ([a635eb2](https://github.com/vendurehq/vendure/commit/a635eb2)), closes [#4458](https://github.com/vendurehq/vendure/issues/4458)
+* **dashboard** Forward all ControllerProps in FormFieldWrapper (#4513) ([abb7ba5](https://github.com/vendurehq/vendure/commit/abb7ba5)), closes [#4513](https://github.com/vendurehq/vendure/issues/4513)
+* **dashboard** Pass correct currency prop to Money component in order table (#4541) ([a8227cf](https://github.com/vendurehq/vendure/commit/a8227cf)), closes [#4541](https://github.com/vendurehq/vendure/issues/4541)
+* **dashboard** Persist collection tree expanded state in URL search params (#4509) ([8f133ca](https://github.com/vendurehq/vendure/commit/8f133ca)), closes [#4509](https://github.com/vendurehq/vendure/issues/4509)
+* **dashboard** Replace ts.createProgram with per-file transpilation to prevent OOM (#4561) ([c06959e](https://github.com/vendurehq/vendure/commit/c06959e)), closes [#4561](https://github.com/vendurehq/vendure/issues/4561)
+* **dashboard** Set channel token before query invalidation (#4472) ([57b1b35](https://github.com/vendurehq/vendure/commit/57b1b35)), closes [#4472](https://github.com/vendurehq/vendure/issues/4472)
+* **dashboard** Show hover card for collapsed sidebar nav sections (#4440) ([281190f](https://github.com/vendurehq/vendure/commit/281190f)), closes [#4440](https://github.com/vendurehq/vendure/issues/4440)
+* **dashboard** Treat args with defaultValue as valid in ConfigurableOperationInput (#4462) ([1f92dd2](https://github.com/vendurehq/vendure/commit/1f92dd2)), closes [#4462](https://github.com/vendurehq/vendure/issues/4462)
+* **dashboard** Update breadcrumb reactively after entity mutation (#4512) ([86a9799](https://github.com/vendurehq/vendure/commit/86a9799)), closes [#4512](https://github.com/vendurehq/vendure/issues/4512)
+* **dashboard** Use null instead of undefined when clearing relation custom fields (#4495) ([d6e148c](https://github.com/vendurehq/vendure/commit/d6e148c)), closes [#4495](https://github.com/vendurehq/vendure/issues/4495)
+* **dashboard** Use tsconfig baseUrl as source root for monorepo pathAdapters (#4570) ([0f758a3](https://github.com/vendurehq/vendure/commit/0f758a3)), closes [#4570](https://github.com/vendurehq/vendure/issues/4570)
+* **dashboard** Wrap faceted filters to prevent horizontal overflow (#4467) ([ff485a6](https://github.com/vendurehq/vendure/commit/ff485a6)), closes [#4467](https://github.com/vendurehq/vendure/issues/4467)
+
+#### Features
+
+* **core** Add `dashboard` option to hide custom fields from Dashboard UI (#4544) ([8ee63e6](https://github.com/vendurehq/vendure/commit/8ee63e6)), closes [#4544](https://github.com/vendurehq/vendure/issues/4544)
+* **dashboard** Add Hungarian translations (#4423) ([57530f8](https://github.com/vendurehq/vendure/commit/57530f8)), closes [#4423](https://github.com/vendurehq/vendure/issues/4423)
+
 ## <small>3.5.5 (2026-02-27)</small>
 
 

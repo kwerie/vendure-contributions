@@ -1,5 +1,6 @@
 import { LanguageCode } from '@vendure/common/lib/generated-types';
 import {
+    DEFAULT_APIKEY_HEADER_KEY,
     DEFAULT_AUTH_TOKEN_HEADER_KEY,
     DEFAULT_CHANNEL_TOKEN_KEY,
     SUPER_ADMIN_USER_IDENTIFIER,
@@ -7,17 +8,18 @@ import {
 } from '@vendure/common/lib/shared-constants';
 import { randomBytes } from 'crypto';
 
-import { TypeORMHealthCheckStrategy } from '../health-check/typeorm-health-check-strategy';
 import { InMemoryJobQueueStrategy } from '../job-queue/in-memory-job-queue-strategy';
 import { InMemoryJobBufferStorageStrategy } from '../job-queue/job-buffer/in-memory-job-buffer-storage-strategy';
 import { NoopSchedulerStrategy } from '../scheduler/noop-scheduler-strategy';
 import { cleanSessionsTask } from '../scheduler/tasks/clean-sessions-task';
 
+import { RandomBytesApiKeyStrategy } from './api-key-strategy/random-bytes-api-key-strategy';
 import { DefaultAssetImportStrategy } from './asset-import-strategy/default-asset-import-strategy';
 import { DefaultAssetNamingStrategy } from './asset-naming-strategy/default-asset-naming-strategy';
 import { NoAssetPreviewStrategy } from './asset-preview-strategy/no-asset-preview-strategy';
 import { NoAssetStorageStrategy } from './asset-storage-strategy/no-asset-storage-strategy';
 import { BcryptPasswordHashingStrategy } from './auth/bcrypt-password-hashing-strategy';
+import { DefaultEntityAccessControlStrategy } from './auth/default-entity-access-control-strategy';
 import { DefaultPasswordValidationStrategy } from './auth/default-password-validation-strategy';
 import { DefaultVerificationTokenStrategy } from './auth/default-verification-token-strategy';
 import { NativeAuthenticationStrategy } from './auth/native-authentication-strategy';
@@ -56,6 +58,7 @@ import { defaultShippingEligibilityChecker } from './shipping-method/default-shi
 import { DefaultShippingLineAssignmentStrategy } from './shipping-method/default-shipping-line-assignment-strategy';
 import { InMemoryCacheStrategy } from './system/in-memory-cache-strategy';
 import { NoopInstrumentationStrategy } from './system/noop-instrumentation-strategy';
+import { DefaultOrderTaxCalculationStrategy } from './tax/default-order-tax-calculation-strategy';
 import { DefaultTaxLineCalculationStrategy } from './tax/default-tax-line-calculation-strategy';
 import { DefaultTaxZoneStrategy } from './tax/default-tax-zone-strategy';
 import { RuntimeVendureConfig } from './vendure-config';
@@ -103,6 +106,7 @@ export const defaultConfig: RuntimeVendureConfig = {
             sameSite: 'lax',
         },
         authTokenHeaderKey: DEFAULT_AUTH_TOKEN_HEADER_KEY,
+        apiKeyHeaderKey: DEFAULT_APIKEY_HEADER_KEY,
         sessionDuration: '1y',
         sessionCacheStrategy: new DefaultSessionCacheStrategy(),
         sessionCacheTTL: 300,
@@ -114,10 +118,13 @@ export const defaultConfig: RuntimeVendureConfig = {
         },
         shopAuthenticationStrategy: [new NativeAuthenticationStrategy()],
         adminAuthenticationStrategy: [new NativeAuthenticationStrategy()],
+        adminApiKeyStrategy: new RandomBytesApiKeyStrategy(),
+        shopApiKeyStrategy: new RandomBytesApiKeyStrategy(),
         customPermissions: [],
         passwordHashingStrategy: new BcryptPasswordHashingStrategy(),
         passwordValidationStrategy: new DefaultPasswordValidationStrategy({ minLength: 4, maxLength: 72 }),
         verificationTokenStrategy: new DefaultVerificationTokenStrategy(),
+        entityAccessControlStrategy: new DefaultEntityAccessControlStrategy(),
     },
     catalogOptions: {
         collectionFilters: defaultCollectionFilters,
@@ -189,6 +196,7 @@ export const defaultConfig: RuntimeVendureConfig = {
     taxOptions: {
         taxZoneStrategy: new DefaultTaxZoneStrategy(),
         taxLineCalculationStrategy: new DefaultTaxLineCalculationStrategy(),
+        orderTaxCalculationStrategy: new DefaultOrderTaxCalculationStrategy(),
     },
     importExportOptions: {
         importAssetsDir: __dirname,
@@ -208,6 +216,7 @@ export const defaultConfig: RuntimeVendureConfig = {
     customFields: {
         Address: [],
         Administrator: [],
+        ApiKey: [],
         Asset: [],
         Channel: [],
         Collection: [],
@@ -246,7 +255,7 @@ export const defaultConfig: RuntimeVendureConfig = {
     plugins: [],
     systemOptions: {
         cacheStrategy: new InMemoryCacheStrategy({ cacheSize: 10_000 }),
-        healthChecks: [new TypeORMHealthCheckStrategy()],
+        healthChecks: [],
         errorHandlers: [],
         instrumentationStrategy: new NoopInstrumentationStrategy(),
     },
