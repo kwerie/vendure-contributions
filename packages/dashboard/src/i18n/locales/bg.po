@@ -13,9 +13,8 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: @lingui/cli\n"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:100
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:159
-#: src/lib/components/shared/customer-address-form.tsx:91
+#: src/lib/components/shared/customer-address-form.tsx:103
 msgid "Full Name"
 msgstr "Пълно име"
 
@@ -36,7 +35,7 @@ msgstr "Проследяващ код"
 msgid "The selected permissions will be applied to the these channels."
 msgstr "Избраните разрешения ще бъдат приложени към тези канали."
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:249
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:248
 msgid "Product options"
 msgstr "Продуктови опции"
 
@@ -44,17 +43,16 @@ msgstr "Продуктови опции"
 msgid "New Tax Rate"
 msgstr "Нова данъчна ставка"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:144
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:150
 msgid "Assign an existing option group or create a new one"
-msgstr ""
+msgstr "Присвоете съществуваща група опции или създайте нова"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:33
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:77
 msgid "New role"
 msgstr "Нова роля"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:128
-#: src/lib/components/shared/customer-address-form.tsx:119
+#: src/lib/components/shared/customer-address-form.tsx:131
 msgid "Apartment, suite, etc."
 msgstr "Апартамент, офис и др."
 
@@ -86,7 +84,7 @@ msgstr "Превключване на всички"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:123
 msgid "Edit JSON value"
-msgstr ""
+msgstr "Редактиране на JSON стойност"
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/default-customer-history-components.tsx:17
 msgid "Using external authentication strategy: {strategy}"
@@ -161,7 +159,7 @@ msgstr "Въведете персонализирана причина..."
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:744
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #. placeholder {0}: entityName.toLowerCase()
 #. placeholder {0}: group.name
@@ -241,7 +239,7 @@ msgstr "SKU:"
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:121
 msgid "Add payment"
-msgstr ""
+msgstr "Добавяне на плащане"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-shipping-method-sheet.tsx:40
 msgid "Test this shipping method by simulating an order to see if it's eligible and what the shipping cost would be."
@@ -274,13 +272,13 @@ msgstr "Поръчки"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:187
 msgid "Select roles"
-msgstr ""
+msgstr "Избор на роли"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:62
 msgid "Successfully created role"
 msgstr "Успешно създадена роля"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:455
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:454
 msgid "Are you sure you want to delete this variant?"
 msgstr "Сигурни ли сте, че искате да изтриете този вариант?"
 
@@ -297,7 +295,7 @@ msgstr "Неуспешно създаване на администратор"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:327
 msgid "No"
-msgstr ""
+msgstr "Не"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:128
 msgid "Successfully updated product variant"
@@ -307,7 +305,7 @@ msgstr "Успешно актуализиран вариант на продук
 msgid "Failed to delete {failed} {entityName}: {allErrors}"
 msgstr "Неуспешно изтриване на {failed} {entityName}: {allErrors}"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:99
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:160
 msgid "Successfully updated product"
 msgstr "Успешно актуализиран продукт"
 
@@ -343,11 +341,12 @@ msgstr "Успешно създадено складово местополож�
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:102
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:303
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:76
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:118
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:167
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:152
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:113
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:78
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:120
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:166
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:180
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:112
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:204
 msgid "Unknown error"
 msgstr "Неизвестна грешка"
 
@@ -402,9 +401,9 @@ msgstr "Върни в наличност"
 msgid "Visibility"
 msgstr "Видимост"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:191
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
 msgid "Product variants"
-msgstr ""
+msgstr "Варианти на продукта"
 
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:36
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:85
@@ -423,11 +422,15 @@ msgstr "Преименуване"
 
 #: src/lib/components/layout/language-dialog.tsx:52
 msgid "Choose your preferred display language and locale settings"
-msgstr ""
+msgstr "Изберете предпочитания език за показване и регионални настройки"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:89
+#~ msgid "← Back"
+#~ msgstr ""
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-bulk-actions.tsx:87
 msgid "Successfully removed {successCount} option groups from channel"
-msgstr ""
+msgstr "Успешно премахнати {successCount} групи опции от канала"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-method-result.tsx:76
 msgid "Shipping method is not eligible for this order"
@@ -441,7 +444,7 @@ msgstr "Неуспешно актуализиране на адреса"
 msgid "Address deleted successfully"
 msgstr "Адресът е изтрит успешно"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:110
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:109
 #: src/app/routes/_authenticated/_orders/components/order-tax-summary.tsx:17
 msgid "Tax rate"
 msgstr "Данъчна ставка"
@@ -483,9 +486,8 @@ msgstr "Успешно създадена продуктова опция"
 msgid "Parent product"
 msgstr "Основен продукт"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:138
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:196
-#: src/lib/components/shared/customer-address-form.tsx:129
+#: src/lib/components/shared/customer-address-form.tsx:141
 msgid "City"
 msgstr "Град"
 
@@ -509,7 +511,7 @@ msgstr "Премахване на връзката"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:123
 msgid "This field is readonly"
-msgstr ""
+msgstr "Това поле е само за четене"
 
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:32
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:80
@@ -537,9 +539,9 @@ msgstr "Търсете начини на плащане..."
 msgid "Shipping address unset for order"
 msgstr "Адресът за доставка не е зададен за поръчка"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:294
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:332
 msgid "Create {enabledCount} variants"
-msgstr ""
+msgstr "Създаване на {enabledCount} варианта"
 
 #. placeholder {0}: entry.data.paymentId
 #. placeholder {1}: entry.data.to
@@ -556,7 +558,7 @@ msgstr "Грешка при зареждането на клиентската �
 msgid "Successfully removed {selectionLength} {entityType} from channel"
 msgstr "Успешно премахна {selectionLength} {entityType} от канала"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:159
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:158
 msgid "Add option value"
 msgstr "Добавете стойност на опцията"
 
@@ -599,7 +601,7 @@ msgstr "Роли"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:395
 msgid "Grid view"
-msgstr ""
+msgstr "Изглед мрежа"
 
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx:48
 msgid "Failed to delete address"
@@ -621,13 +623,13 @@ msgstr "Изпълнението е прехвърлено"
 msgid "Are you sure you want to delete {selectionLength} assets?"
 msgstr "Сигурни ли сте, че искате да изтриете {selectionLength} медийни файла?"
 
-#: src/lib/components/login/login-form.tsx:106
+#: src/lib/components/login/login-form.tsx:105
 msgid "Sign in"
 msgstr "Вход"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:398
 msgid "List view"
-msgstr ""
+msgstr "Изглед списък"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-order-builder.tsx:164
 msgid "Test Order"
@@ -637,9 +639,9 @@ msgstr "Тестова поръчка"
 msgid "Select a customer to continue"
 msgstr "Изберете клиент, за да продължите"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:71
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:73
 msgid "Successfully assigned option group"
-msgstr ""
+msgstr "Групата опции е успешно присвоена"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-method-test-result-wrapper.tsx:30
 msgid "Run Test"
@@ -715,7 +717,7 @@ msgstr "Поставен при"
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:53
 msgid "Rotating this key will immediately invalidate the current key. Any integrations using it will stop working until updated with the new key."
-msgstr ""
+msgstr "Ротацията на този ключ незабавно ще обезсили текущия ключ. Всички интеграции, които го използват, ще спрат да работят, докато не бъдат актуализирани с новия ключ."
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:136
 msgid "The data that has been passed to the job"
@@ -745,8 +747,8 @@ msgstr "Приключи черновата"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:202
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:170
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:158
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:287
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:349
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:286
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:348
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:165
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:89
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:148
@@ -778,7 +780,7 @@ msgstr "Въведете ID на транзакцията за това възс
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:67
 msgid "Your API Key"
-msgstr ""
+msgstr "Вашият API Key"
 
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:310
 msgid "Are you sure you want to delete this draft order?"
@@ -796,7 +798,7 @@ msgstr "Намерен е {0} отговарящ на условията мет�
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:746
 msgid "Dimensions"
-msgstr ""
+msgstr "Размери"
 
 #: src/lib/components/ui/password-input.tsx:20
 msgid "Show password"
@@ -807,9 +809,8 @@ msgstr "Покажи парола"
 msgid "(max: {0})"
 msgstr "(макс: {0})"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:108
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:165
-#: src/lib/components/shared/customer-address-form.tsx:99
+#: src/lib/components/shared/customer-address-form.tsx:111
 msgid "Company"
 msgstr "Компания"
 
@@ -842,7 +843,7 @@ msgstr "Съдържание:"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:260
 msgid "Key"
-msgstr ""
+msgstr "Ключ"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:355
 #: src/lib/components/shared/navigation-confirmation.tsx:58
@@ -857,7 +858,7 @@ msgstr "Неуспешно създаване на колекция"
 msgid "Go to first page"
 msgstr "Към първа страница"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:107
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:168
 msgid "Failed to create product"
 msgstr "Неуспешно създаване на продукт"
 
@@ -880,6 +881,10 @@ msgstr "Зададен адрес за доставка за поръчка"
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:173
 msgid "Focal Point"
 msgstr "Фокусна точка"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:99
+msgid "Single variant, no options"
+msgstr "Единичен вариант, без опции"
 
 #: src/app/routes/_authenticated/_orders/components/use-transition-order-to-state.tsx:107
 msgid "Select the next state for the order"
@@ -926,7 +931,7 @@ msgstr "Неуспешно актуализиране на зоната"
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:133
 #: src/app/routes/_authenticated/_profile/profile.tsx:112
 #: src/app/routes/_authenticated/_profile/profile.tsx:129
-#: src/lib/components/login/login-form.tsx:94
+#: src/lib/components/login/login-form.tsx:93
 msgid "Password"
 msgstr "Парола"
 
@@ -954,7 +959,7 @@ msgstr "Адресът за доставка е променен"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:63
 msgid "No products found"
-msgstr ""
+msgstr "Няма намерени продукти"
 
 #: src/lib/components/shared/rich-text-editor/table-edit-icons.tsx:193
 msgid "Add row before"
@@ -994,7 +999,7 @@ msgstr "Разпределени"
 
 #: src/lib/components/layout/nav-user.tsx:102
 msgid "Explore Platform & Cloud"
-msgstr ""
+msgstr "Разгледайте Platform & Cloud"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:86
 msgid "Every 5 seconds"
@@ -1004,11 +1009,11 @@ msgstr "На всеки 5 секунди"
 msgid "Successfully created collection"
 msgstr "Успешно създадена колекция"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:89
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:88
 #: src/app/routes/_authenticated/_orders/components/shipping-method-selector.tsx:49
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:298
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:299
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:193
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:298
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:208
 #: src/lib/components/layout/language-dialog.tsx:136
 msgid "Price"
 msgstr "Цена"
@@ -1021,7 +1026,7 @@ msgstr "Чернова на поръчка"
 #: src/app/routes/_authenticated/_system/settings-store.tsx:281
 #: src/app/routes/_authenticated/_system/settings-store.tsx:314
 msgid "Scope"
-msgstr ""
+msgstr "Обхват"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-method-result.tsx:58
 msgid "Shipping method is eligible for this order"
@@ -1046,7 +1051,7 @@ msgstr "Не се изисква плащане или възстановява�
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:108
 msgid "Download as .env file"
-msgstr ""
+msgstr "Изтегляне като .env файл"
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:154
 msgid "When enabled, a promotion is available in the shop"
@@ -1068,12 +1073,12 @@ msgstr "Неуспешно актуализиране на промоцията"
 #: src/lib/components/shared/asset/asset-gallery.tsx:368
 #: src/lib/components/shared/asset/asset-gallery.tsx:380
 msgid "Images"
-msgstr ""
+msgstr "Изображения"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:158
 msgid "API Keys"
-msgstr ""
+msgstr "API Keys"
 
 #: src/app/routes/_authenticated/_products/components/product-option-select.tsx:64
 msgid "Search {name}..."
@@ -1132,7 +1137,7 @@ msgstr "Изкл"
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
 #: src/app/routes/_authenticated/_system/settings-store.tsx:304
 msgid "Settings Store"
-msgstr ""
+msgstr "Настройки на магазина"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:234
 msgid "Queue"
@@ -1179,15 +1184,15 @@ msgstr "Няма избрани елементи"
 #. placeholder {0}: selected.length
 #: src/lib/components/shared/asset/asset-gallery.tsx:469
 msgid ", {0} selected"
-msgstr ""
+msgstr ", {0} избрани"
 
 #: src/lib/components/shared/country-selector.tsx:86
 msgid "No countries found"
 msgstr "Няма намерени държави"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:148
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:176
 msgid "Successfully created variants"
-msgstr ""
+msgstr "Вариантите са създадени успешно"
 
 #: src/lib/components/data-input/slug-input.tsx:280
 #: src/lib/components/data-input/slug-input.tsx:282
@@ -1224,9 +1229,9 @@ msgstr "Използвайте глобалния праг за изчерпва
 msgid "Payment state updated successfully"
 msgstr "Състоянието на плащането е актуализирано успешно"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:155
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:161
 msgid "Create new"
-msgstr ""
+msgstr "Създаване на нов"
 
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:249
 msgid "Refund total"
@@ -1239,10 +1244,10 @@ msgstr "Адресът е изтрит"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:195
 msgid "Only roles assigned to your account are available."
-msgstr ""
+msgstr "Налични са само ролите, присвоени на вашия акаунт."
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:399
-#: src/lib/components/shared/configurable-operation-multi-selector.tsx:267
+#: src/lib/components/shared/configurable-operation-multi-selector.tsx:264
 #: src/lib/components/shared/configurable-operation-selector.tsx:139
 msgid "{buttonText}"
 msgstr "{buttonText}"
@@ -1257,7 +1262,7 @@ msgstr "Артикулът е добавен към поръчката"
 
 #: src/app/routes/_authenticated/_products/components/shared-option-group-warning.tsx:13
 msgid "{productCount, plural, one {This option group is used by one other product. Changes will affect it too.} other {This option group is shared across # products. Changes will affect all of them.}}"
-msgstr ""
+msgstr "{productCount, plural, one {Тази група опции се използва от един друг продукт. Промените ще засегнат и него.} other {Тази група опции е споделена между # продукта. Промените ще засегнат всички.}}"
 
 #: src/lib/components/data-table/views-sheet.tsx:125
 msgid "My Saved Views"
@@ -1275,16 +1280,16 @@ msgstr "Неуспешно създаване на продавач"
 #. placeholder {0}: entityName.toLowerCase()
 #: src/app/common/duplicate-entity-dialog.tsx:87
 msgid "Configure duplication settings for {0}s"
-msgstr ""
+msgstr "Конфигуриране на настройките за дублиране на {0}s"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:203
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:245
 msgid "Addresses"
 msgstr "Адреси"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:144
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:143
 msgid "Add a new option value to the {groupName} option group"
-msgstr ""
+msgstr "Добавяне на нова стойност на опция към групата опции {groupName}"
 
 #. placeholder {0}: entry.data.modificationId
 #: src/app/routes/_authenticated/_orders/components/order-history/default-order-history-components.tsx:76
@@ -1300,7 +1305,7 @@ msgid "Channel Languages"
 msgstr "Езици на канала"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:137
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:117
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:119
 msgid "Failed to create option group"
 msgstr "Неуспешно създаване на група опции"
 
@@ -1374,7 +1379,7 @@ msgstr "преди"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:745
 msgid "Size"
-msgstr ""
+msgstr "Размер"
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
 #: src/lib/components/shared/translatable-form-field.tsx:68
@@ -1393,14 +1398,13 @@ msgstr "Последни поръчки"
 msgid "+ {leftOver} more"
 msgstr "+ още {leftOver}"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:238
-#: src/lib/components/shared/customer-address-form.tsx:229
+#: src/lib/components/shared/customer-address-form.tsx:241
 msgid "Use as the default billing address"
 msgstr "Използвайте като адрес за фактуриране по подразбиране"
 
 #: src/app/common/delete-bulk-action.tsx:139
 #: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:41
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:358
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:357
 #: src/lib/components/data-table/use-generated-columns.tsx:405
 #: src/lib/components/data-table/use-generated-columns.tsx:435
 #: src/lib/components/data-table/views-sheet.tsx:270
@@ -1417,7 +1421,7 @@ msgstr "Деактивиране"
 msgid "Collections"
 msgstr "Колекции"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:226
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:225
 msgid "Add variant"
 msgstr "Добавяне на вариант"
 
@@ -1529,14 +1533,13 @@ msgstr "Към последната страница"
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:61
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:203
 #: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx:418
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:250
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:168
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:310
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:347
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:358
 #: src/app/routes/_authenticated/_orders/components/settle-refund-dialog.tsx:71
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:270
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:494
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:493
 #: src/app/routes/_authenticated/_system/settings-store.tsx:140
 #: src/lib/components/data-input/product-multi-selector-input.tsx:370
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx:122
@@ -1547,7 +1550,7 @@ msgstr "Към последната страница"
 #: src/lib/components/shared/asset/asset-focal-point-editor.tsx:88
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:126
 #: src/lib/components/shared/confirmation-dialog.tsx:42
-#: src/lib/components/shared/customer-address-form.tsx:241
+#: src/lib/components/shared/customer-address-form.tsx:253
 #: src/lib/components/shared/navigation-confirmation.tsx:55
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:208
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:146
@@ -1555,7 +1558,7 @@ msgid "Cancel"
 msgstr "Отказ"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:127
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:161
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:160
 msgid "Successfully created product variant"
 msgstr "Успешно създаден вариант на продукта"
 
@@ -1563,9 +1566,8 @@ msgstr "Успешно създаден вариант на продукта"
 msgid "Refund from this method"
 msgstr "Възстановяване от този метод"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:160
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:208
-#: src/lib/components/shared/customer-address-form.tsx:151
+#: src/lib/components/shared/customer-address-form.tsx:163
 msgid "Postal Code"
 msgstr "Пощенски код"
 
@@ -1596,9 +1598,9 @@ msgstr "Задайте потребителски полета"
 msgid "Collections"
 msgstr "Колекции"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:454
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:453
 msgid "Delete variant"
-msgstr ""
+msgstr "Изтриване на вариант"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:249
 msgid "No modifications made"
@@ -1638,7 +1640,7 @@ msgid "Private collections are not visible in the shop"
 msgstr "В магазина не се виждат частни колекции"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:236
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:132
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:229
 msgid "When enabled, a product is available in the shop"
 msgstr "Когато е активирано, даден продукт е наличен в магазина"
 
@@ -1663,8 +1665,7 @@ msgstr "Забранено"
 msgid "New promotion"
 msgstr "Нова промоция"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:217
-#: src/lib/components/shared/customer-address-form.tsx:208
+#: src/lib/components/shared/customer-address-form.tsx:220
 msgid "Default Shipping Address"
 msgstr "Адрес за доставка по подразбиране"
 
@@ -1702,6 +1703,10 @@ msgstr "Няма атрибутни стойности"
 msgid "A reason for the refund is required"
 msgstr "Необходима е причина за възстановяването"
 
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:194
+msgid "Could not remove option group"
+msgstr "Групата опции не може да бъде премахната"
+
 #: src/app/routes/_authenticated/_tax-categories/tax-categories_.$id.tsx:77
 msgid "Failed to update tax category"
 msgstr "Неуспешно актуализиране на данъчната категория"
@@ -1727,7 +1732,7 @@ msgstr "Възстановяването е приключено успешно"
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:138
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:226
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:276
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:122
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:219
 #: src/app/routes/_authenticated/_profile/profile.tsx:84
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
@@ -1770,7 +1775,7 @@ msgstr "Начин на плащане"
 msgid "Edit"
 msgstr "Редакция"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:184
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:183
 msgid "Variant updated successfully"
 msgstr "Вариантът е актуализиран успешно"
 
@@ -1824,6 +1829,10 @@ msgstr "Настройки на колони"
 msgid "Code"
 msgstr "Код"
 
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+msgid "Failed to remove option groups"
+msgstr "Неуспешно премахване на групи опции"
+
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-utils.tsx:97
 msgid "Order delivered"
 msgstr "Поръчката е доставена"
@@ -1840,9 +1849,9 @@ msgstr "Изберете от глобално наличните езици з�
 msgid "Are you sure you want to delete this address?"
 msgstr "Сигурни ли сте, че искате да изтриете този адрес?"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:75
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:77
 msgid "Failed to assign option group"
-msgstr ""
+msgstr "Неуспешно присвояване на група опции"
 
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:89
 msgid "Failed to update asset"
@@ -1899,7 +1908,7 @@ msgstr "Възстанови доставка"
 #: src/app/routes/_authenticated/_system/settings-store.tsx:293
 #: src/app/routes/_authenticated/_system/settings-store.tsx:324
 msgid "Readonly"
-msgstr ""
+msgstr "Само за четене"
 
 #: src/lib/components/data-table/views-sheet.tsx:100
 msgid "Failed to duplicate global view"
@@ -1910,7 +1919,7 @@ msgid "Test Shipping Method"
 msgstr "Тестване на метод за доставка"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:465
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:235
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:333
 msgid "Facet Values"
 msgstr "Атрибутни стойности"
 
@@ -1931,7 +1940,7 @@ msgstr "{0} клиенти"
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:14
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:25
 msgid "API Keys"
-msgstr ""
+msgstr "API Keys"
 
 #: src/lib/components/shared/language-selector.tsx:52
 msgid "Select a language"
@@ -2314,6 +2323,10 @@ msgstr "Страница {0} от {1}"
 msgid "Rate"
 msgstr "Ставка"
 
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:114
+msgid "Size, colour, etc."
+msgstr "Размер, цвят и т.н."
+
 #: src/lib/components/shared/facet-value-selector.tsx:155
 #: src/lib/components/shared/facet-value-selector.tsx:172
 msgid "Browse facets"
@@ -2360,9 +2373,9 @@ msgstr "Запазване на изгледа"
 msgid "{0} selected"
 msgstr "{0} избрани"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:233
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:239
 msgid "Search option groups..."
-msgstr ""
+msgstr "Търсене на групи опции..."
 
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:168
 msgid "Modify order"
@@ -2389,7 +2402,7 @@ msgstr "Клиентът е настроен за поръчка"
 msgid "Facets"
 msgstr "Атрибути"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:196
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:211
 msgid "Stock on Hand"
 msgstr "Склад на ръка"
 
@@ -2410,15 +2423,15 @@ msgstr "Нова зона"
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:136
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:79
 msgid "New API Key"
-msgstr ""
+msgstr "Нов API Key"
 
 #: src/lib/components/shared/rich-text-editor/table-edit-icons.tsx:164
 msgid "Delete column"
 msgstr "Изтриване на колона"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:151
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:157
 msgid "Assign existing"
-msgstr ""
+msgstr "Присвояване на съществуващ"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:34
 msgid "is null"
@@ -2438,7 +2451,7 @@ msgstr "Канал по подразбиране"
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:109
 msgid "Insert a new image with source, title, and dimensions"
-msgstr ""
+msgstr "Вмъкване на ново изображение с източник, заглавие и размери"
 
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:93
 msgid "Failed to create facet value"
@@ -2510,7 +2523,7 @@ msgstr "Още гледания"
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:109
 msgid "Edit the selected image properties"
-msgstr ""
+msgstr "Редактиране на свойствата на избраното изображение"
 
 #: src/lib/components/data-table/views-sheet.tsx:49
 msgid "Applied view \"{viewName}\""
@@ -2541,9 +2554,13 @@ msgstr "Преизчисляване на доставката"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:225
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:482
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:268
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:366
 msgid "Assets"
 msgstr "Медия"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:307
+msgid "This will remove all option groups from this product and return to the variant setup choice."
+msgstr "Това ще премахне всички групи опции от този продукт и ще се върне към избора за настройка на варианти."
 
 #: src/app/routes/_authenticated/_orders/components/order-detail-shared.tsx:299
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:277
@@ -2581,13 +2598,13 @@ msgstr "Отстъпка"
 #: src/lib/components/shared/asset/asset-gallery.tsx:367
 #: src/lib/components/shared/asset/asset-gallery.tsx:379
 msgid "All types"
-msgstr ""
+msgstr "Всички типове"
 
 #: src/app/routes/_authenticated/_orders/components/draft-order-status.tsx:29
 msgid "Only draft orders can be completed"
 msgstr "Само черновите на поръчки могат да бъдат завършени"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:107
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:168
 msgid "Failed to update product"
 msgstr "Неуспешно актуализиране на продукта"
 
@@ -2618,9 +2635,8 @@ msgstr "Канал"
 msgid "Amount"
 msgstr "Сума"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:198
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:242
-#: src/lib/components/shared/customer-address-form.tsx:189
+#: src/lib/components/shared/customer-address-form.tsx:201
 msgid "Phone Number"
 msgstr "Телефонен номер"
 
@@ -2639,7 +2655,7 @@ msgid "Successfully created administrator"
 msgstr "Успешно създаден администратор"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:198
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:217
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:315
 msgid "Product Options"
 msgstr "Опции на продукта"
 
@@ -2647,7 +2663,7 @@ msgstr "Опции на продукта"
 msgid "Select country"
 msgstr "Изберете държава"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:292
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:330
 msgid "Creating..."
 msgstr "Създава се..."
 
@@ -2655,7 +2671,7 @@ msgstr "Създава се..."
 msgid "Are you sure you want to delete this global view? This action cannot be undone and will affect all users."
 msgstr "Сигурни ли сте, че искате да изтриете този глобален изглед? Това действие не може да бъде отменено и ще засегне всички потребители."
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:487
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:486
 msgid "Force remove option group"
 msgstr "Принудително премахване на група опции"
 
@@ -2722,8 +2738,8 @@ msgstr "Изтриване на глобалния изглед"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:160
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:138
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:226
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:181
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:122
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:196
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:219
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2755,12 +2771,11 @@ msgstr "От {0} до {1}"
 msgid "Failed to create customer"
 msgstr "Неуспешно създаване на клиент"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:299
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:298
 msgid "Option values"
 msgstr "Стойности на опциите"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:235
-#: src/lib/components/shared/customer-address-form.tsx:226
+#: src/lib/components/shared/customer-address-form.tsx:238
 msgid "Default Billing Address"
 msgstr "Адрес за фактуриране по подразбиране"
 
@@ -2809,7 +2824,7 @@ msgstr "Линк href"
 
 #: src/lib/utils/get-locale-fallback-placeholder.ts:31
 msgid "Fallback: {value}"
-msgstr ""
+msgstr "Резервна стойност: {value}"
 
 #: src/app/routes/_authenticated/_orders/components/order-detail-shared.tsx:260
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:30
@@ -2836,6 +2851,8 @@ msgstr "Глобалният изглед е преименуван успешн
 msgid "No tags selected"
 msgstr "Няма избрани етикети"
 
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:310
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:319
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:205
 msgid "Back"
 msgstr "Назад"
@@ -2945,7 +2962,8 @@ msgstr "Премахване на {0} елемент(а)"
 msgid "Track"
 msgstr "Проследяване"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:323
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:322
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:331
 msgid "Create variant"
 msgstr "Създай вариант"
 
@@ -2978,14 +2996,14 @@ msgstr "Превключване на заглавната колона"
 msgid "New Promotion"
 msgstr "Нова промоция"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:152
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:151
 msgid "Option value name"
 msgstr "Име на стойността на опцията"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:214
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:46
 msgid "Last used"
-msgstr ""
+msgstr "Последно използван"
 
 #: src/app/routes/_authenticated/_tax-categories/tax-categories_.$id.tsx:112
 msgid "Is default tax category"
@@ -2999,14 +3017,13 @@ msgstr "Slug е настроен"
 msgid "Successfully updated zone"
 msgstr "Успешно актуализирана зона"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:146
-#: src/lib/components/shared/customer-address-form.tsx:137
+#: src/lib/components/shared/customer-address-form.tsx:149
 msgid "State/Province"
 msgstr "Област/провинция"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:138
 msgid "Failed to update option group"
-msgstr ""
+msgstr "Неуспешно актуализиране на група опции"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
 msgid "Channel defaults"
@@ -3018,14 +3035,17 @@ msgstr "Неуспешно създаване на данъчна категор
 
 #: src/lib/components/data-table/data-table-filter-dialog.tsx:55
 msgid "Set filter criteria for the {columnId} column"
-msgstr ""
+msgstr "Задаване на критерии за филтриране за колона {columnId}"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:170
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:217
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:53
-#: src/lib/components/shared/customer-address-form.tsx:161
+#: src/lib/components/shared/customer-address-form.tsx:173
 msgid "Country"
 msgstr "Държава"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:97
+msgid "Simple product"
+msgstr "Прост продукт"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:137
@@ -3034,7 +3054,7 @@ msgstr "Опашка от задачи"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:53
 msgid "Please confirm you have saved the API key before closing."
-msgstr ""
+msgstr "Моля, потвърдете, че сте запазили API key преди затваряне."
 
 #: src/lib/components/data-table/use-generated-columns.tsx:411
 msgid "Confirm deletion"
@@ -3044,7 +3064,7 @@ msgstr "Потвърдете изтриването"
 msgid "Failed to modify order"
 msgstr "Неуспешна промяна на поръчката"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:102
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:101
 msgid "Includes tax at {taxRate}%"
 msgstr "Включва данък от {taxRate}%"
 
@@ -3066,7 +3086,7 @@ msgstr "начало"
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:35
 msgid "Failed to rotate API key"
-msgstr ""
+msgstr "Неуспешна ротация на API key"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:36
 msgid "in"
@@ -3094,7 +3114,7 @@ msgstr "Обработка..."
 #. placeholder {0}: totalItems === 1 ? 'asset' : 'assets'
 #: src/lib/components/shared/asset/asset-gallery.tsx:465
 msgid "{totalItems} {0} found"
-msgstr ""
+msgstr "Намерени {totalItems} {0}"
 
 #: src/lib/components/date-range-picker.tsx:126
 msgid "Select date range"
@@ -3108,7 +3128,7 @@ msgstr "Продукт"
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:51
 msgid "Rotate API Key"
-msgstr ""
+msgstr "Ротация на API Key"
 
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:62
 msgid "Category"
@@ -3195,7 +3215,7 @@ msgstr "Доставка"
 msgid "useWidgetDimensions must be used within a DashboardBaseWidget"
 msgstr "useWidgetDimensions трябва да се използва в рамките на DashboardBaseWidget"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:489
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:488
 msgid "This option group is in use by existing variants. Force removing it may affect those variants. Are you sure?"
 msgstr "Тази група опции се използва от съществуващи варианти. Принудителното й премахване може да ги засегне. Сигурни ли сте?"
 
@@ -3223,8 +3243,7 @@ msgstr "Разрешено плащане"
 msgid "Successfully updated role"
 msgstr "Успешно актуализирана роля"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:181
-#: src/lib/components/shared/customer-address-form.tsx:172
+#: src/lib/components/shared/customer-address-form.tsx:184
 msgid "Select a country"
 msgstr "Изберете държава"
 
@@ -3244,10 +3263,10 @@ msgstr "Изберете адрес"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:326
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:175
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:149
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:246
 msgid "Slug"
 msgstr "Slug"
 
@@ -3280,7 +3299,7 @@ msgstr "Съдържание на колекция за {collectionName}"
 msgid "Shipping method changed"
 msgstr "Методът на доставка е променен"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:124
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:123
 msgid "Tax description"
 msgstr "Описание на данък"
 
@@ -3308,7 +3327,7 @@ msgstr "Приклюи плащане"
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:23
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:216
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:245
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:343
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3320,7 +3339,7 @@ msgstr "Доставката е възстановена"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:376
 msgid "Asset type"
-msgstr ""
+msgstr "Тип на ресурса"
 
 #: src/app/routes/_authenticated/_stock-locations/stock-locations.tsx:58
 msgid "New Stock Location"
@@ -3334,8 +3353,8 @@ msgstr "{successfulRefundCount} плащане(я) възстановени пр
 msgid "Select item"
 msgstr "Изберете елемент"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:55
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:115
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:57
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:212
 msgid "New product"
 msgstr "Нов продукт"
 
@@ -3361,9 +3380,9 @@ msgstr "Дублиране на {0}"
 msgid "Failed to update fulfillment state"
 msgstr "Неуспешно актуализиране на състоянието на изпълнение"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:234
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:233
 msgid "Create a new product variant with options, pricing, and stock"
-msgstr ""
+msgstr "Създаване на нов вариант на продукт с опции, ценообразуване и наличност"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:109
 msgid "Private facets are not visible in the shop"
@@ -3380,9 +3399,9 @@ msgstr "Изберете данъчна категория"
 msgid "Not Running"
 msgstr "Не работи"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:261
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:267
 msgid "Assigned"
-msgstr ""
+msgstr "Присвоен"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:75
 msgid "Heading 1"
@@ -3445,7 +3464,7 @@ msgstr "Търсене на валути..."
 
 #: src/lib/components/shared/remove-from-channel-bulk-action.tsx:82
 msgid "Remove from channel"
-msgstr ""
+msgstr "Премахване от канал"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:169
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:157
@@ -3503,7 +3522,7 @@ msgstr "Не може да се премахне от активния кана�
 msgid "Not set"
 msgstr "Не е зададено"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:505
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:504
 msgid "Force remove"
 msgstr "Принудително премахване"
 
@@ -3511,7 +3530,7 @@ msgstr "Принудително премахване"
 msgid "New Channel"
 msgstr "Нов канал"
 
-#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:66
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:65
 msgid "Option Group Name"
 msgstr "Име на група опции"
 
@@ -3527,7 +3546,7 @@ msgstr "Неуспешно създаване на клиентска група
 msgid "Failed to create role"
 msgstr "Неуспешно създаване на роля"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:143
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:240
 msgid "Product name"
 msgstr "Име на продукта"
 
@@ -3540,8 +3559,8 @@ msgstr "Състоянието на изпълнение е актуализир
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:211
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:38
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:64
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:67
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:54
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:66
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:56
 #: src/app/routes/_authenticated/_products/products.tsx:24
 #: src/app/routes/_authenticated/_products/products.tsx:47
 msgid "Products"
@@ -3553,14 +3572,14 @@ msgid "Address created"
 msgstr "Адресът е създаден"
 
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:196
-msgid "Add an option group to get started with variants."
-msgstr ""
+#~ msgid "Add an option group to get started with variants."
+#~ msgstr ""
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:32
 msgid "API key rotated successfully"
-msgstr ""
+msgstr "Ротацията на API key е успешна"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:136
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:141
 msgid "Add option group"
 msgstr "Добавете група опции"
 
@@ -3593,7 +3612,7 @@ msgstr "Глобалният изглед е дублиран успешно"
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:210
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:66
 msgid "Created by"
-msgstr ""
+msgstr "Създаден от"
 
 #: src/app/routes/_authenticated/_product-variants/components/add-currency-dropdown.tsx:35
 msgid "Add a price in another currency"
@@ -3630,8 +3649,7 @@ msgstr "Неуспешно актуализиране на складовото 
 msgid "Order shipped"
 msgstr "Поръчката е изпратена"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:254
-#: src/lib/components/shared/customer-address-form.tsx:245
+#: src/lib/components/shared/customer-address-form.tsx:257
 msgid "Save Address"
 msgstr "Запазване на адреса"
 
@@ -3687,7 +3705,7 @@ msgid "Failed to settle refund"
 msgstr "Неуспешно възстановяване на сумата"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:435
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:312
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:311
 msgid "Stock level"
 msgstr "Ниво на склад"
 
@@ -3697,7 +3715,7 @@ msgstr "Добавете елемент"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:108
 msgid "Successfully created API key"
-msgstr ""
+msgstr "API key е създаден успешно"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:158
 msgid "Loading preview…"
@@ -3711,15 +3729,15 @@ msgstr "Назад към търсенето"
 msgid "View duplicated successfully"
 msgstr "Прегледът е дублиран успешно"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:316
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:315
 msgid "Remove option group"
 msgstr "Премахване на група опции"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:190
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:77
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:76
 #: src/app/routes/_authenticated/_orders/components/order-tax-summary.tsx:14
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:171
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:165
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:262
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:174
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:94
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:162
@@ -3770,7 +3788,7 @@ msgstr "Добавете ръчно плащане на {0}"
 msgid "is in"
 msgstr "е в"
 
-#: src/lib/components/login/login-form.tsx:84
+#: src/lib/components/login/login-form.tsx:83
 msgid "Email"
 msgstr "Имейл"
 
@@ -3786,7 +3804,7 @@ msgstr "Управлявайте личните си запазени изгле
 msgid "Filter by tags"
 msgstr "Филтриране по тагове"
 
-#: src/lib/components/login/login-form.tsx:74
+#: src/lib/components/login/login-form.tsx:73
 msgid "Sign in to access the admin dashboard"
 msgstr "Влезте за достъп до администраторското табло"
 
@@ -3827,7 +3845,7 @@ msgstr "не съдържа"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:186
 msgid "Option Group"
-msgstr ""
+msgstr "Група опции"
 
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx:132
 msgid "Edit the address details below."
@@ -3854,6 +3872,10 @@ msgstr "Резюме на вашите поръчки"
 msgid "Upload"
 msgstr "Качване"
 
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:112
+msgid "Product with options"
+msgstr "Продукт с опции"
+
 #. placeholder {0}: filteredTags.length
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:165
 msgid "Showing all {0} results"
@@ -3863,7 +3885,7 @@ msgstr "Показани са всички {0} резултати"
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:60
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:95
 msgid "Lookup ID"
-msgstr ""
+msgstr "Идентификатор за търсене"
 
 #. placeholder {0}: list.totalItems - 3
 #: src/app/routes/_authenticated/_facets/facets.tsx:65
@@ -3873,7 +3895,7 @@ msgstr "+ още {0}"
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:45
 msgid "Option Groups"
-msgstr ""
+msgstr "Групи опции"
 
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:392
 msgid "Custom fields"
@@ -3881,7 +3903,7 @@ msgstr "Персонализирани полета"
 
 #: src/app/routes/_authenticated/_orders/components/order-process-dialog.tsx:85
 msgid "All possible order states and their transitions. The current state is highlighted."
-msgstr ""
+msgstr "Всички възможни състояния на поръчката и техните преходи. Текущото състояние е маркирано."
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:82
@@ -4085,7 +4107,7 @@ msgstr "Нива на склад"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:121
 msgid "Failed to update API key"
-msgstr ""
+msgstr "Неуспешно актуализиране на API key"
 
 #: src/lib/framework/dashboard-widget/base-widget.tsx:76
 msgid "{title}"
@@ -4103,7 +4125,7 @@ msgstr "Неуспешно преименуване на глобалния из
 
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:87
 msgid "Insert a new hyperlink with URL and target options"
-msgstr ""
+msgstr "Вмъкване на нова хипервръзка с URL и опции за цел"
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:194
 msgid "Height"
@@ -4149,7 +4171,7 @@ msgstr "Налични езици"
 
 #: src/lib/components/data-table/data-table-bulk-actions.tsx:119
 msgid "Reset selection"
-msgstr ""
+msgstr "Нулиране на избора"
 
 #: src/app/routes/_authenticated/_orders/components/order-address.tsx:30
 msgid "No address"
@@ -4194,9 +4216,9 @@ msgstr "Стар имейл:"
 msgid "Save a view as \"Global\" to make it available to all users."
 msgstr "Запазете изглед като „Глобален“, за да го направите достъпен за всички потребители."
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:151
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:179
 msgid "Failed to create variants"
-msgstr ""
+msgstr "Неуспешно създаване на варианти"
 
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:133
 msgid "Sets the stock level at which this a variant is considered to be out of stock. Using a negative value enables backorder support. Can be overridden by product variants."
@@ -4205,7 +4227,7 @@ msgstr "Задава нивото на наличност, при което т�
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:45
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:68
 msgid "Rotate Key"
-msgstr ""
+msgstr "Ротация на ключ"
 
 #: src/app/routes/_authenticated/_products/components/create-product-variants-dialog.tsx:132
 #~ msgid "Failed to create product variants"
@@ -4223,7 +4245,7 @@ msgstr "Скриване на паролата"
 msgid "New seller"
 msgstr "Нов продавач"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:154
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:153
 msgid "e.g., Red, Large, Cotton"
 msgstr "напр. Червено, Голямо, Памук"
 
@@ -4245,7 +4267,7 @@ msgstr "Региони"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:438
 msgid "Drop files here to upload"
-msgstr ""
+msgstr "Пуснете файлове тук за качване"
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:18
 msgid "Verified"
@@ -4255,7 +4277,7 @@ msgstr "Проверен"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:82
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:149
 msgid "New option group"
-msgstr ""
+msgstr "Нова група опции"
 
 #: src/app/routes/_authenticated/_system/healthchecks.tsx:58
 #~ msgid "Last updated {0}"
@@ -4271,7 +4293,7 @@ msgstr "Неуспешно актуализиране на ролята"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:77
 msgid "This is the only time the full API key will be displayed. Copy or download it now — it cannot be retrieved later."
-msgstr ""
+msgstr "Това е единственият път, в който пълният API key ще бъде показан. Копирайте го или го изтеглете сега — по-късно няма да може да бъде извлечен."
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:104
 msgid "Successfully updated collection"
@@ -4552,7 +4574,7 @@ msgstr "Област / провинция"
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:147
 #: src/app/routes/_authenticated/_payment-methods/payment-methods.tsx:42
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:235
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:131
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:228
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:153
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:115
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:119
@@ -4566,7 +4588,7 @@ msgstr "Активирано"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:476
 msgid "Items per page"
-msgstr ""
+msgstr "Елементи на страница"
 
 #: src/app/routes/_authenticated/_zones/zones.tsx:39
 msgid "Edit members"
@@ -4588,7 +4610,7 @@ msgstr "ID"
 msgid "Alerts"
 msgstr "Известия"
 
-#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:75
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:74
 msgid "Option Values"
 msgstr "Стойности на опциите"
 
@@ -4598,15 +4620,15 @@ msgstr "Преглед на промените"
 
 #: src/lib/components/shared/assigned-channels.tsx:52
 msgid "Failed to remove {entityType} from channel"
-msgstr ""
+msgstr "Неуспешно премахване на {entityType} от канал"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:192
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:191
 msgid "Variant deleted successfully"
 msgstr "Вариантът е изтрит успешно"
 
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:87
 msgid "Edit the selected link properties"
-msgstr ""
+msgstr "Редактиране на свойствата на избраната връзка"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:75
@@ -4630,7 +4652,7 @@ msgstr "Планирани задачи"
 msgid "Are you sure you want to delete this item? This action cannot be undone."
 msgstr "Сигурни ли сте, че искате да изтриете този елемент? Това действие не може да бъде отменено."
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:343
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:342
 msgid "Variants"
 msgstr "Варианти"
 
@@ -4647,13 +4669,13 @@ msgstr "Настройки"
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:151
 msgid "Settings Store"
-msgstr ""
+msgstr "Настройки на магазина"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:77
 msgid "Heading 3"
 msgstr "Заглавие 3"
 
-#: src/lib/components/login/login-form.tsx:71
+#: src/lib/components/login/login-form.tsx:70
 msgid "Welcome to Vendure"
 msgstr "Добре дошли във Venudre"
 
@@ -4747,9 +4769,9 @@ msgstr "Съдържание"
 msgid "Failed to convert global view to personal view"
 msgstr "Неуспешно преобразуване на глобален изглед в личен изглед"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:164
-msgid "The assigned option groups have no options yet. Add options to your option groups before generating variants."
-msgstr ""
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:185
+#~ msgid "The assigned option groups have no options yet. Add options to your option groups before generating variants."
+#~ msgstr ""
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:155
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:177
@@ -4778,6 +4800,10 @@ msgstr "Премахнете"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:111
 msgid "Failed to update customer"
 msgstr "Неуспешно актуализиране на клиента"
+
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:306
+msgid "Remove option groups?"
+msgstr "Премахване на групи опции?"
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:91
 msgid "This is a preview of the collection contents based on the current filter settings. Once you save the collection, the contents will be updated to reflect the new filter settings."
@@ -4826,9 +4852,8 @@ msgstr "Преглед на модификациите на поръчката"
 msgid "The page will continue with the default query."
 msgstr "Страницата ще продължи със заявката по подразбиране."
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:118
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:175
-#: src/lib/components/shared/customer-address-form.tsx:109
+#: src/lib/components/shared/customer-address-form.tsx:121
 msgid "Street Address"
 msgstr "Улица"
 
@@ -4880,7 +4905,7 @@ msgstr "Токен"
 msgid "Fulfilling..."
 msgstr "Изпълнение..."
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:141
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:147
 msgid "Add option group to product"
 msgstr "Добавете група опции към продукта"
 
@@ -4903,17 +4928,17 @@ msgstr "Неуспешно създаване на данъчна ставка"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:118
 msgid "I have saved this API key"
-msgstr ""
+msgstr "Запазих този API key"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:244
 msgid "Configure available languages for your store and channels"
 msgstr "Конфигурирайте наличните езици за вашия магазин и канали"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:99
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:160
 msgid "Successfully created product"
 msgstr "Успешно създаден продукт"
 
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:231
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:230
 msgid "Add product variant"
 msgstr "Добавяне на вариант на продукта"
 
@@ -4928,13 +4953,13 @@ msgstr "Редакция на бележка"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:628
 msgid "No assets found. Try adjusting your filters."
-msgstr ""
+msgstr "Няма намерени ресурси. Опитайте да промените филтрите."
 
-#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:162
+#: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:161
 msgid "Add Option"
 msgstr "Добавяне на опция"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:184
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:190
 msgid "Save option group"
 msgstr "Запазете група опции"
 
@@ -4979,11 +5004,11 @@ msgstr "Статус"
 #: src/lib/components/shared/asset/asset-gallery.tsx:370
 #: src/lib/components/shared/asset/asset-gallery.tsx:382
 msgid "Binary"
-msgstr ""
+msgstr "Двоичен"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:127
 msgid "Successfully updated option group"
-msgstr ""
+msgstr "Групата опции е актуализирана успешно"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:43
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:117
@@ -5002,7 +5027,7 @@ msgstr "пр. данък:"
 #~ msgid "Add Stock to Location"
 #~ msgstr "Добавете склад към местоположение"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:106
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:105
 msgid "Successfully added option value"
 msgstr "Успешно добавена стойност на опцията"
 
@@ -5010,8 +5035,8 @@ msgstr "Успешно добавена стойност на опцията"
 msgid "Collection moved to new parent"
 msgstr "Колекцията е преместена в нов родител"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:207
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:216
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:206
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:215
 msgid "Option group removed"
 msgstr "Групата опции е премахната"
 
@@ -5043,7 +5068,7 @@ msgid "Visible to customer"
 msgstr "Видимо за клиента"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:126
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:113
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:115
 msgid "Successfully created option group"
 msgstr "Успешно създадена група опции"
 
@@ -5085,9 +5110,9 @@ msgstr "Първо име"
 msgid "contains"
 msgstr "съдържа"
 
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:239
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:245
 msgid "No option groups found"
-msgstr ""
+msgstr "Няма намерени групи опции"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:91
 msgid "No items found"
@@ -5104,7 +5129,7 @@ msgstr "Изпълнени елементи ({0})"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:236
 msgid "Value updated"
-msgstr ""
+msgstr "Стойността е актуализирана"
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:28
 msgid "Unverified"
@@ -5162,7 +5187,7 @@ msgstr "Групи клиенти"
 
 #: src/lib/components/shared/assigned-channels.tsx:48
 msgid "Successfully removed {entityType} from channel"
-msgstr ""
+msgstr "{entityType} е успешно премахнат от канала"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:81
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:90
@@ -5170,11 +5195,11 @@ msgstr ""
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:81
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:17
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:24
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:279
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:278
 msgid "Option Groups"
 msgstr "Групи опции"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:134
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:133
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:194
 msgid "Add surcharge"
 msgstr "Добави надценка"
@@ -5185,7 +5210,7 @@ msgstr "Текущи атрибутни стойности"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:80
 msgid "Page {page} of {totalPages}"
-msgstr ""
+msgstr "Страница {page} от {totalPages}"
 
 #: src/lib/components/date-range-picker.tsx:79
 msgctxt "date-range"
@@ -5203,7 +5228,7 @@ msgstr "Премахване на елемент"
 #: src/lib/components/shared/asset/asset-gallery.tsx:369
 #: src/lib/components/shared/asset/asset-gallery.tsx:381
 msgid "Video"
-msgstr ""
+msgstr "Видео"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:48
 msgid "less than"
@@ -5312,7 +5337,7 @@ msgstr "Успешно създадена зона"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:268
 msgid "Value"
-msgstr ""
+msgstr "Стойност"
 
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-utils.tsx:105
 msgid "Customer updated"
@@ -5331,7 +5356,7 @@ msgstr "Поръчка на продавача"
 msgid "New facet"
 msgstr "Нов аспект"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:317
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:316
 msgid "Are you sure you want to remove this option group from the product?"
 msgstr "Сигурни ли сте, че искате да премахнете тази група опции от продукта?"
 
@@ -5371,7 +5396,7 @@ msgstr "Средна дата"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:169
 msgid "Invalid number"
-msgstr ""
+msgstr "Невалидно число"
 
 #: src/lib/components/data-table/views-sheet.tsx:152
 msgid "You haven't saved any views yet."
@@ -5383,14 +5408,13 @@ msgstr "Сигурни ли сте, че искате да изтриете то
 
 #: src/app/routes/_authenticated/_orders/components/order-process-dialog.tsx:73
 msgid "View order process"
-msgstr ""
+msgstr "Преглед на процеса на поръчката"
 
 #: src/lib/components/data-table/views-sheet.tsx:100
 msgid "Failed to duplicate view"
 msgstr "Неуспешно дублиране на изглед"
 
-#: src/app/routes/_authenticated/_customers/components/customer-address-form.tsx:220
-#: src/lib/components/shared/customer-address-form.tsx:211
+#: src/lib/components/shared/customer-address-form.tsx:223
 msgid "Use as the default shipping address"
 msgstr "Използвайте като адрес за доставка по подразбиране"
 
@@ -5430,7 +5454,7 @@ msgstr "Калкулатор"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-bulk-actions.tsx:78
 msgid "Failed to remove option group from channel: {message}"
-msgstr ""
+msgstr "Неуспешно премахване на група опции от канал: {message}"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:134
 msgid "View job data"
@@ -5450,7 +5474,7 @@ msgstr "Резюме на поръчките"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:349
 msgid "Search assets..."
-msgstr ""
+msgstr "Търсене на ресурси..."
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:114
 msgid "New Facet"
@@ -5511,7 +5535,7 @@ msgstr "Нов продавач"
 msgid "Edit image"
 msgstr "Редакция на изображението"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:69
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:68
 msgid "Manage Variants"
 msgstr "Управление на варианти"
 
@@ -5572,21 +5596,21 @@ msgstr "Клиентът е добавен към групата"
 msgid "Seller orders"
 msgstr "Поръчки на продавача"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:112
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:111
 msgid "Failed to add option value"
 msgstr "Неуспешно добавяне на стойност на опцията"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:141
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:140
 msgid "Add option value to {groupName}"
 msgstr "Добавете стойност на опция към {groupName}"
 
-#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:83
+#: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:82
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:96
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:271
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:293
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:292
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:195
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:190
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:352
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:205
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:351
 msgid "SKU"
 msgstr "SKU"
 
@@ -5594,7 +5618,7 @@ msgstr "SKU"
 msgid "{totalQuantity} item(s) refunded"
 msgstr "{totalQuantity} артикул(и) възстановен(и)"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:283
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:282
 msgid "No option groups defined yet. Add option groups to create different variants of your product (e.g., Size, Color, Material)"
 msgstr "Все още няма дефинирани групи опции. Добавете групи опции, за да създадете различни варианти на вашия продукт (напр. Размер, Цвят, Материал)"
 
@@ -5619,7 +5643,7 @@ msgid "Created at"
 msgstr "Създаден на"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:137
-#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:166
+#: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:165
 msgid "Failed to create product variant"
 msgstr "Неуспешно създаване на вариант на продукта"
 
@@ -5664,7 +5688,7 @@ msgstr "Възстановяването е приключено"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:85
 msgid "API Key"
-msgstr ""
+msgstr "API Key"
 
 #: src/app/common/duplicate-bulk-action.tsx:97
 msgid "Successfully duplicated {count} {entityName}"
@@ -5672,7 +5696,7 @@ msgstr "Успешно дублирани {count} {entityName}"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:71
 msgid "New Option Group"
-msgstr ""
+msgstr "Нова група опции"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:164
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:186
@@ -5685,7 +5709,7 @@ msgstr "Плащането е приключено"
 
 #: src/lib/components/data-table/data-table-active-filters-popover.tsx:27
 msgid "Active filters"
-msgstr ""
+msgstr "Активни филтри"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:178
 #: src/lib/components/data-table/data-table-active-filters-popover.tsx:54
@@ -5699,7 +5723,7 @@ msgstr "е по-голямо от"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:125
 msgid "Close"
-msgstr ""
+msgstr "Затваряне"
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:127
 msgid "Add payment to order"
@@ -5707,7 +5731,7 @@ msgstr "Добавете плащане към поръчката"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:122
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:59
-#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:239
+#: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:245
 #: src/lib/components/data-input/product-multi-selector-input.tsx:83
 #: src/lib/components/data-input/relation-selector.tsx:427
 #: src/lib/components/shared/country-selector.tsx:86
@@ -5747,11 +5771,11 @@ msgstr "Праг за изчерпани количества"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:239
 msgid "Failed to update value"
-msgstr ""
+msgstr "Неуспешно актуализиране на стойност"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:121
 msgid "Failed to create API key"
-msgstr ""
+msgstr "Неуспешно създаване на API key"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:264
 #: src/app/routes/_authenticated/_orders/components/settle-refund-dialog.tsx:49
@@ -5768,8 +5792,8 @@ msgstr "Изисква се начин на плащане"
 msgid "Failed to add customer to group"
 msgstr "Неуспешно добавяне на клиент към групата"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:276
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:182
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:275
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:279
 msgid "Manage variants"
 msgstr "Управление на варианти"
 
@@ -5788,19 +5812,19 @@ msgstr "Зони"
 
 #: src/lib/components/shared/seller-selector.tsx:37
 msgid "Search sellers..."
-msgstr ""
+msgstr "Търсене на продавачи..."
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:104
 msgid "Successfully created promotion"
 msgstr "Успешно създадена промоция"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:293
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:292
 msgid "Option"
 msgstr "Опция"
 
 #: src/app/routes/_authenticated/_orders/components/order-process-dialog.tsx:82
 msgid "Order process"
-msgstr ""
+msgstr "Процес на поръчката"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:194
 msgid "Phone number"
@@ -5811,7 +5835,7 @@ msgstr "Телефонен номер"
 msgid "Private"
 msgstr "Частно"
 
-#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:186
+#: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:201
 msgid "Variant"
 msgstr "Вариант"
 
@@ -5821,7 +5845,7 @@ msgstr "Успешно актуализирани глобални настро�
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:115
 msgid "Successfully updated API key"
-msgstr ""
+msgstr "API key е актуализиран успешно"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:294
 msgid "These languages will be available for all channels to use"
