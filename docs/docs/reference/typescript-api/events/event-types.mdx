@@ -73,6 +73,29 @@ class AdministratorEvent extends VendureEntityEvent<Administrator, Administrator
 
 
 </div>
+<GenerationInfo sourceFile="packages/core/src/event-bus/events/api-key-event.ts" sourceLine="18" packageName="@vendure/core" since="3.6.0" />
+
+This event is fired whenever a [ApiKey](/reference/typescript-api/entities/api-key#apikey) is added, updated or deleted.
+
+```ts title="Signature"
+class ApiKeyEvent extends VendureEntityEvent<ApiKey, ApiKeyInputTypes> {
+    constructor(ctx: RequestContext, entity: ApiKey, type: 'created' | 'updated' | 'deleted', input?: ApiKeyInputTypes)
+}
+```
+* Extends: [`VendureEntityEvent`](/reference/typescript-api/events/vendure-entity-event#vendureentityevent)`<`[`ApiKey`](/reference/typescript-api/entities/api-key#apikey)`, ApiKeyInputTypes>`
+
+
+
+<div className="members-wrapper">
+
+### constructor
+
+<MemberInfo kind="method" type={`(ctx: <a href='/reference/typescript-api/request/request-context#requestcontext'>RequestContext</a>, entity: <a href='/reference/typescript-api/entities/api-key#apikey'>ApiKey</a>, type: 'created' | 'updated' | 'deleted', input?: ApiKeyInputTypes) => ApiKeyEvent`}   />
+
+
+
+
+</div>
 <GenerationInfo sourceFile="packages/core/src/event-bus/events/asset-channel-event.ts" sourceLine="15" packageName="@vendure/core" />
 
 This event is fired whenever an [Asset](/reference/typescript-api/entities/asset#asset) is assigned or removed
@@ -146,6 +169,34 @@ class AttemptedLoginEvent extends VendureEvent {
 ### constructor
 
 <MemberInfo kind="method" type={`(ctx: <a href='/reference/typescript-api/request/request-context#requestcontext'>RequestContext</a>, strategy: string, identifier?: string) => AttemptedLoginEvent`}   />
+
+
+
+
+</div>
+<GenerationInfo sourceFile="packages/core/src/event-bus/events/bootstrapped-event.ts" sourceLine="16" packageName="@vendure/core" since="3.5.6" />
+
+This event is fired when vendure finished bootstrapping.
+For the server and worker process, this happens after the welcome message is logged.
+
+Use this event to preload data into the cache or perform other startup logic that would otherwise * block
+the bootstrapping process and slow down server start time. To avoid missing this event, subscribers should
+be registered during module initialization \(for example in `OnApplicationBootstrap`\), not after `bootstrap\(\)` resolves.
+
+```ts title="Signature"
+class BootstrappedEvent extends VendureEvent {
+    constructor()
+}
+```
+* Extends: [`VendureEvent`](/reference/typescript-api/events/vendure-event#vendureevent)
+
+
+
+<div className="members-wrapper">
+
+### constructor
+
+<MemberInfo kind="method" type={`() => BootstrappedEvent`}   />
 
 
 

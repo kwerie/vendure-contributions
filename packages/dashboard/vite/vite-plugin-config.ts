@@ -66,7 +66,10 @@ export function viteConfigPlugin({ packageRoot }: { packageRoot: string }): Plug
                     '@/components > react-dropzone',
                     '@/components > @tiptap/react', // https://github.com/fawmi/vue-google-maps/issues/148#issuecomment-1235143844
                     '@vendure/common/lib/generated-types',
-                    '@radix-ui/react-portal > react-dom',
+                    '@vendure/common/lib/shared-types',
+                    '@vendure/common/lib/shared-utils',
+                    'use-sync-external-store/shim',
+                    'use-sync-external-store/shim/with-selector',
                     '@messageformat/parser',
                 ],
             };

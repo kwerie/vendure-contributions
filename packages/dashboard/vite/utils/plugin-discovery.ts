@@ -10,7 +10,8 @@ import * as ts from 'typescript';
 import { Logger, PluginInfo, TransformTsConfigPathMappingsFn } from '../types.js';
 
 import { PackageScannerConfig } from './compiler.js';
-import { findTsConfigPaths, TsConfigPathsConfig } from './tsconfig-utils.js';
+import { resolvePathAliasImports, resolveSourceFile } from './import-resolution.js';
+import { findTsConfigPaths } from './tsconfig-utils.js';
 
 export async function discoverPlugins({
     vendureConfigPath,
@@ -26,11 +27,13 @@ export async function discoverPlugins({
     pluginPackageScanner?: PackageScannerConfig;
 }): Promise<PluginInfo[]> {
     const plugins: PluginInfo[] = [];
+    const nodeModulesRoot =
+        pluginPackageScanner?.nodeModulesRoot ?? guessNodeModulesRoot(vendureConfigPath, logger);
 
     // Analyze source files to find local plugins and package imports
     const { localPluginLocations, packageImports } = await analyzeSourceFiles(
         vendureConfigPath,
-        pluginPackageScanner?.nodeModulesRoot ?? guessNodeModulesRoot(vendureConfigPath, logger),
+        nodeModulesRoot,
         logger,
         transformTsConfigPathMappings,
     );
@@ -40,11 +43,15 @@ export async function discoverPlugins({
     logger.debug(
         `[discoverPlugins] Found ${packageImports.length} package imports: ${JSON.stringify(packageImports, null, 2)}`,
     );
+    const expandedImports = await expandPackageImports(packageImports, nodeModulesRoot, logger);
+    logger.debug(
+        `[discoverPlugins] Expanded to ${expandedImports.length} packages: ${JSON.stringify(expandedImports, null, 2)}`,
+    );
 
     const filePaths = await findVendurePluginFiles({
         logger,
-        nodeModulesRoot: pluginPackageScanner?.nodeModulesRoot,
-        packageGlobs: packageImports.map(pkg => pkg + '/**/*.js'),
+        nodeModulesRoot,
+        packageGlobs: expandedImports.map(pkg => pkg + '/**/*.js'),
         outputPath,
         vendureConfigPath,
     });
@@ -155,6 +162,70 @@ function getDecoratorObjectProps(decorator: any): any[] {
     return [];
 }
 
+/**
+ * Expands the list of package imports by checking each package's `dependencies`
+ * for additional Vendure plugin packages. This handles the "meta-package" pattern
+ * where a single package re-exports/configures multiple plugins internally.
+ *
+ * Only goes one level deep (not recursive) to keep the cost predictable — the
+ * typical meta-package directly lists its plugin sub-packages as dependencies.
+ * A transitive dep is included only if it depends on `@vendure/core` (in its
+ * own dependencies or peerDependencies), which is a strong signal for a Vendure plugin.
+ *
+ * Note: This resolves packages via filesystem paths under `nodeModulesRoot`.
+ * Under Yarn PnP or pnpm strict isolation, transitive deps may not be resolvable
+ * at the expected paths. In those cases, the expansion gracefully finds nothing.
+ */
+async function expandPackageImports(
+    packageImports: string[],
+    nodeModulesRoot: string,
+    logger: Logger,
+): Promise<string[]> {
+    const expanded = new Set(packageImports);
+
+    for (const pkg of packageImports) {
+        let pkgJson: any;
+        try {
+            pkgJson = await fs.readJson(path.join(nodeModulesRoot, pkg, 'package.json'));
+        } catch (e) {
+            logger.debug(
+                `[expandPackageImports] Could not read package.json for ${pkg}: ${e instanceof Error ? e.message : String(e)}`,
+            );
+            continue;
+        }
+        const deps = Object.keys(pkgJson.dependencies ?? {});
+
+        await Promise.all(
+            deps.map(async dep => {
+                if (expanded.has(dep) || dep.startsWith('@vendure/')) return;
+
+                let depPkgJson: any;
+                try {
+                    depPkgJson = await fs.readJson(path.join(nodeModulesRoot, dep, 'package.json'));
+                } catch {
+                    logger.debug(
+                        `[expandPackageImports] Could not read package.json for transitive dep ${dep} (via ${pkg})`,
+                    );
+                    return;
+                }
+                const allDeps = {
+                    ...depPkgJson.dependencies,
+                    ...depPkgJson.peerDependencies,
+                };
+
+                if ('@vendure/core' in allDeps) {
+                    logger.debug(
+                        `[expandPackageImports] Found transitive Vendure package: ${dep} (via ${pkg})`,
+                    );
+                    expanded.add(dep);
+                }
+            }),
+        );
+    }
+
+    return Array.from(expanded);
+}
+
 async function isSymlinkedLocalPackage(
     packageName: string,
     nodeModulesRoot: string,
@@ -262,7 +333,7 @@ export async function analyzeSourceFiles(
                             }
                         }
                         // Handle path aliases and local imports
-                        const pathAliasImports = getPotentialPathAliasImportPaths(importPath, tsConfigInfo);
+                        const pathAliasImports = resolvePathAliasImports(importPath, tsConfigInfo);
                         if (pathAliasImports.length) {
                             importsToFollow.push(...pathAliasImports);
                         }
@@ -284,35 +355,11 @@ export async function analyzeSourceFiles(
 
             await visit(sourceFile);
 
-            // Follow imports
+            // Follow imports using shared resolution logic
             for (const importPath of importsToFollow) {
-                // Try all possible file paths
-                const possiblePaths = [
-                    importPath + '.ts',
-                    importPath + '.js',
-                    path.join(importPath, 'index.ts'),
-                    path.join(importPath, 'index.js'),
-                    importPath,
-                ];
-                if (importPath.endsWith('.js')) {
-                    possiblePaths.push(importPath.replace(/.js$/, '.ts'));
-                }
-                // Try each possible path
-                let found = false;
-                for (const possiblePath of possiblePaths) {
-                    const possiblePathExists = await fs.pathExists(possiblePath);
-                    if (possiblePathExists) {
-                        await processFile(possiblePath);
-                        found = true;
-                        break;
-                    }
-                }
-
-                // If none of the file paths worked, try the raw import path
-                // (it might be a directory)
-                const tryRawPath = !found && (await fs.pathExists(importPath));
-                if (tryRawPath) {
-                    await processFile(importPath);
+                const resolved = await resolveSourceFile(importPath);
+                if (resolved) {
+                    await processFile(resolved);
                 }
             }
         } catch (e) {
@@ -357,26 +404,6 @@ function getNpmPackageNameFromImport(importPath: string): string | undefined {
             : importPath.split('/')[0];
         return packageName;
     }
-}
-
-function getPotentialPathAliasImportPaths(importPath: string, tsConfigInfo?: TsConfigPathsConfig) {
-    const importsToFollow: string[] = [];
-    if (!tsConfigInfo) {
-        return importsToFollow;
-    }
-    for (const [alias, patterns] of Object.entries(tsConfigInfo.paths)) {
-        const aliasPattern = alias.replace(/\*$/, '');
-        if (importPath.startsWith(aliasPattern)) {
-            const relativePart = importPath.slice(aliasPattern.length);
-            // Try each pattern
-            for (const pattern of patterns) {
-                const resolvedPattern = pattern.replace(/\*$/, '');
-                const resolvedPath = path.resolve(tsConfigInfo.baseUrl, resolvedPattern, relativePart);
-                importsToFollow.push(resolvedPath);
-            }
-        }
-    }
-    return importsToFollow;
 }
 
 function getDecoratorName(decorator: ts.Decorator): string | undefined {
@@ -449,27 +476,13 @@ export async function findVendurePluginFiles({
         const results = await Promise.all(
             batch.map(async file => {
                 try {
-                    // Try reading just first 3000 bytes first - most imports are at the top
                     const fileHandle = await open(file, 'r');
                     try {
-                        const buffer = Buffer.alloc(3000);
-                        const { bytesRead } = await fileHandle.read(buffer, 0, 3000, 0);
-                        let content = buffer.toString('utf8', 0, bytesRead);
-
-                        // Quick check for common indicators
+                        const buffer = Buffer.alloc(5000);
+                        const { bytesRead } = await fileHandle.read(buffer, 0, 5000, 0);
+                        const content = buffer.toString('utf8', 0, bytesRead);
                         if (content.includes('@vendure/core')) {
                             return file;
-                        }
-
-                        // If we find a promising indicator but no definitive match,
-                        // read more of the file
-                        if (content.includes('@vendure') || content.includes('VendurePlugin')) {
-                            const largerBuffer = Buffer.alloc(5000);
-                            const { bytesRead: moreBytes } = await fileHandle.read(largerBuffer, 0, 5000, 0);
-                            content = largerBuffer.toString('utf8', 0, moreBytes);
-                            if (content.includes('@vendure/core')) {
-                                return file;
-                            }
                         }
                     } finally {
                         await fileHandle.close();

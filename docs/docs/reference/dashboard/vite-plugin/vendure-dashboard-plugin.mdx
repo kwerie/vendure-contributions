@@ -181,6 +181,7 @@ vendureDashboardPlugin({
 interface PathAdapter {
     getCompiledConfigPath?: GetCompiledConfigPathFn;
     transformTsConfigPathMappings?: TransformTsConfigPathMappingsFn;
+    sourceRoot?: string;
 }
 ```
 
@@ -196,10 +197,25 @@ A function to determine the path to the compiled Vendure config file.
 <MemberInfo kind="property" type={`TransformTsConfigPathMappingsFn`}   />
 
 
+### sourceRoot
+
+<MemberInfo kind="property" type={`string`}  since="3.6.0"  />
+
+The root directory used to compute relative output paths when compiling
+TypeScript files. Compiled files preserve their directory structure
+relative to this root.
+
+In monorepos this should typically be set to the workspace root (where
+the base `tsconfig.json` lives), so that a config file at
+`apps/server/src/vendure-config.ts` outputs to
+`{outputPath}/apps/server/src/vendure-config.js`.
+
+Defaults to the directory containing the `vendureConfigPath` file,
+which places the compiled config at the output root.
 
 
 </div>
-<GenerationInfo sourceFile="packages/dashboard/vite/vite-plugin-ui-config.ts" sourceLine="19" packageName="@vendure/dashboard" since="3.4.0" />
+<GenerationInfo sourceFile="packages/dashboard/vite/vite-plugin-ui-config.ts" sourceLine="23" packageName="@vendure/dashboard" since="3.4.0" />
 
 Options used by the [vendureDashboardPlugin](/reference/dashboard/vite-plugin/vendure-dashboard-plugin#venduredashboardplugin) to configure how the Dashboard
 connects to the Vendure Admin API
@@ -258,7 +274,7 @@ setting of the server's `apiOptions.channelTokenKey` config option.
 
 
 </div>
-<GenerationInfo sourceFile="packages/dashboard/vite/vite-plugin-ui-config.ts" sourceLine="81" packageName="@vendure/dashboard" since="3.4.0" />
+<GenerationInfo sourceFile="packages/dashboard/vite/vite-plugin-ui-config.ts" sourceLine="85" packageName="@vendure/dashboard" since="3.4.0" />
 
 Options used by the [vendureDashboardPlugin](/reference/dashboard/vite-plugin/vendure-dashboard-plugin#venduredashboardplugin) to configure aspects of the
 Dashboard UI behaviour.
@@ -302,7 +318,7 @@ An array of locales to be used on Admin UI.
 
 
 </div>
-<GenerationInfo sourceFile="packages/dashboard/vite/vite-plugin-ui-config.ts" sourceLine="124" packageName="@vendure/dashboard" since="3.4.0" />
+<GenerationInfo sourceFile="packages/dashboard/vite/vite-plugin-ui-config.ts" sourceLine="128" packageName="@vendure/dashboard" since="3.4.0" />
 
 Options used by the [vendureDashboardPlugin](/reference/dashboard/vite-plugin/vendure-dashboard-plugin#venduredashboardplugin) to configure order-related
 Dashboard UI behaviour.
@@ -325,7 +341,7 @@ If not provided, default reasons will be used.
 
 
 </div>
-<GenerationInfo sourceFile="packages/dashboard/vite/vite-plugin-ui-config.ts" sourceLine="143" packageName="@vendure/dashboard" since="3.4.0" />
+<GenerationInfo sourceFile="packages/dashboard/vite/vite-plugin-ui-config.ts" sourceLine="147" packageName="@vendure/dashboard" since="3.4.0" />
 
 Options used by the [vendureDashboardPlugin](/reference/dashboard/vite-plugin/vendure-dashboard-plugin#venduredashboardplugin) to configure aspects of the
 Dashboard UI behaviour.

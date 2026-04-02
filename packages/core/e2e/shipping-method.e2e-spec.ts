@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { DeletionResult, LanguageCode } from '@vendure/common/lib/generated-types';
 import {
     defaultShippingCalculator,
     defaultShippingEligibilityChecker,
     ShippingCalculator,
 } from '@vendure/core';
-import { createTestEnvironment } from '@vendure/testing';
-import gql from 'graphql-tag';
+import { createErrorResultGuard, createTestEnvironment, ErrorResultGuard } from '@vendure/testing';
 import path from 'path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
@@ -14,27 +14,26 @@ import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-conf
 import { manualFulfillmentHandler } from '../src/config/fulfillment/manual-fulfillment-handler';
 
 import { testSuccessfulPaymentMethod } from './fixtures/test-payment-methods';
-import { SHIPPING_METHOD_FRAGMENT } from './graphql/fragments';
-import * as Codegen from './graphql/generated-e2e-admin-types';
-import { DeletionResult, LanguageCode } from './graphql/generated-e2e-admin-types';
+import { shippingMethodFragment } from './graphql/fragments-admin';
+import { graphql, ResultOf } from './graphql/graphql-admin';
 import {
-    ASSIGN_PRODUCTVARIANT_TO_CHANNEL,
-    CREATE_CHANNEL,
-    CREATE_SHIPPING_METHOD,
-    DELETE_SHIPPING_METHOD,
-    GET_ORDER,
-    GET_SHIPPING_METHOD_LIST,
-    UPDATE_SHIPPING_METHOD,
+    assignProductVariantToChannelDocument,
+    createChannelDocument,
+    createShippingMethodDocument,
+    deleteShippingMethodDocument,
+    getOrderDocument,
+    getShippingMethodListDocument,
+    updateShippingMethodDocument,
 } from './graphql/shared-definitions';
 import {
-    ADD_ITEM_TO_ORDER,
-    ADD_PAYMENT,
-    GET_ACTIVE_ORDER,
-    GET_ACTIVE_SHIPPING_METHODS,
-    SET_CUSTOMER,
-    SET_SHIPPING_ADDRESS,
-    SET_SHIPPING_METHOD,
-    TRANSITION_TO_STATE,
+    addItemToOrderDocument,
+    addPaymentDocument,
+    getActiveOrderDocument,
+    getActiveShippingMethodsDocument,
+    setCustomerDocument,
+    setShippingAddressDocument,
+    setShippingMethodDocument,
+    transitionToStateDocument,
 } from './graphql/shop-definitions';
 
 const TEST_METADATA = {
@@ -55,6 +54,13 @@ const calculatorWithMetadata = new ShippingCalculator({
         };
     },
 });
+const shippingMethodGuard: ErrorResultGuard<
+    NonNullable<ResultOf<typeof getShippingMethodDocument>['shippingMethod']>
+> = createErrorResultGuard(input => !!input);
+
+const activeShippingMethodsGuard: ErrorResultGuard<
+    NonNullable<Array<ResultOf<typeof getActiveShippingMethodsDocument>['activeShippingMethods']>>
+> = createErrorResultGuard(input => input.length > 0);
 
 describe('ShippingMethod resolver', () => {
     const { server, adminClient, shopClient } = createTestEnvironment({
@@ -90,8 +96,7 @@ describe('ShippingMethod resolver', () => {
     });
 
     it('shippingEligibilityCheckers', async () => {
-        const { shippingEligibilityCheckers } =
-            await adminClient.query<Codegen.GetEligibilityCheckersQuery>(GET_ELIGIBILITY_CHECKERS);
+        const { shippingEligibilityCheckers } = await adminClient.query(getEligibilityCheckersDocument);
 
         expect(shippingEligibilityCheckers).toEqual([
             {
@@ -113,7 +118,7 @@ describe('ShippingMethod resolver', () => {
     });
 
     it('shippingCalculators', async () => {
-        const { shippingCalculators } = await adminClient.query<Codegen.GetCalculatorsQuery>(GET_CALCULATORS);
+        const { shippingCalculators } = await adminClient.query(getCalculatorsDocument);
 
         expect(shippingCalculators).toEqual([
             {
@@ -176,8 +181,7 @@ describe('ShippingMethod resolver', () => {
     });
 
     it('shippingMethods', async () => {
-        const { shippingMethods } =
-            await adminClient.query<Codegen.GetShippingMethodListQuery>(GET_SHIPPING_METHOD_LIST);
+        const { shippingMethods } = await adminClient.query(getShippingMethodListDocument);
         expect(shippingMethods.totalItems).toEqual(3);
         expect(shippingMethods.items[0].code).toBe('standard-shipping');
         expect(shippingMethods.items[1].code).toBe('express-shipping');
@@ -185,20 +189,15 @@ describe('ShippingMethod resolver', () => {
     });
 
     it('shippingMethod', async () => {
-        const { shippingMethod } = await adminClient.query<
-            Codegen.GetShippingMethodQuery,
-            Codegen.GetShippingMethodQueryVariables
-        >(GET_SHIPPING_METHOD, {
+        const { shippingMethod } = await adminClient.query(getShippingMethodDocument, {
             id: 'T_1',
         });
-        expect(shippingMethod!.code).toBe('standard-shipping');
+        shippingMethodGuard.assertSuccess(shippingMethod);
+        expect(shippingMethod.code).toBe('standard-shipping');
     });
 
     it('createShippingMethod', async () => {
-        const { createShippingMethod } = await adminClient.query<
-            Codegen.CreateShippingMethodMutation,
-            Codegen.CreateShippingMethodMutationVariables
-        >(CREATE_SHIPPING_METHOD, {
+        const { createShippingMethod } = await adminClient.query(createShippingMethodDocument, {
             input: {
                 code: 'new-method',
                 fulfillmentHandler: manualFulfillmentHandler.code,
@@ -241,10 +240,7 @@ describe('ShippingMethod resolver', () => {
     });
 
     it('testShippingMethod', async () => {
-        const { testShippingMethod } = await adminClient.query<
-            Codegen.TestShippingMethodQuery,
-            Codegen.TestShippingMethodQueryVariables
-        >(TEST_SHIPPING_METHOD, {
+        const { testShippingMethod } = await adminClient.query(testShippingMethodDocument, {
             input: {
                 calculator: {
                     code: calculatorWithMetadata.code,
@@ -278,10 +274,7 @@ describe('ShippingMethod resolver', () => {
     });
 
     it('testEligibleShippingMethods', async () => {
-        const { testEligibleShippingMethods } = await adminClient.query<
-            Codegen.TestEligibleMethodsQuery,
-            Codegen.TestEligibleMethodsQueryVariables
-        >(TEST_ELIGIBLE_SHIPPING_METHODS, {
+        const { testEligibleShippingMethods } = await adminClient.query(testEligibleShippingMethodsDocument, {
             input: {
                 lines: [{ productVariantId: 'T_1', quantity: 1 }],
                 shippingAddress: {
@@ -329,10 +322,7 @@ describe('ShippingMethod resolver', () => {
     });
 
     it('updateShippingMethod', async () => {
-        const { updateShippingMethod } = await adminClient.query<
-            Codegen.UpdateShippingMethodMutation,
-            Codegen.UpdateShippingMethodMutationVariables
-        >(UPDATE_SHIPPING_METHOD, {
+        const { updateShippingMethod } = await adminClient.query(updateShippingMethodDocument, {
             input: {
                 id: 'T_4',
                 translations: [{ languageCode: LanguageCode.en, name: 'changed method', description: '' }],
@@ -343,14 +333,10 @@ describe('ShippingMethod resolver', () => {
     });
 
     it('deleteShippingMethod', async () => {
-        const listResult1 =
-            await adminClient.query<Codegen.GetShippingMethodListQuery>(GET_SHIPPING_METHOD_LIST);
+        const listResult1 = await adminClient.query(getShippingMethodListDocument);
         expect(listResult1.shippingMethods.items.map(i => i.id)).toEqual(['T_1', 'T_2', 'T_3', 'T_4']);
 
-        const { deleteShippingMethod } = await adminClient.query<
-            Codegen.DeleteShippingMethodMutation,
-            Codegen.DeleteShippingMethodMutationVariables
-        >(DELETE_SHIPPING_METHOD, {
+        const { deleteShippingMethod } = await adminClient.query(deleteShippingMethodDocument, {
             id: 'T_4',
         });
 
@@ -359,17 +345,13 @@ describe('ShippingMethod resolver', () => {
             message: null,
         });
 
-        const listResult2 =
-            await adminClient.query<Codegen.GetShippingMethodListQuery>(GET_SHIPPING_METHOD_LIST);
+        const listResult2 = await adminClient.query(getShippingMethodListDocument);
         expect(listResult2.shippingMethods.items.map(i => i.id)).toEqual(['T_1', 'T_2', 'T_3']);
     });
 
     describe('argument ordering', () => {
         it('createShippingMethod corrects order of arguments', async () => {
-            const { createShippingMethod } = await adminClient.query<
-                Codegen.CreateShippingMethodMutation,
-                Codegen.CreateShippingMethodMutationVariables
-            >(CREATE_SHIPPING_METHOD, {
+            const { createShippingMethod } = await adminClient.query(createShippingMethodDocument, {
                 input: {
                     code: 'new-method',
                     fulfillmentHandler: manualFulfillmentHandler.code,
@@ -405,10 +387,7 @@ describe('ShippingMethod resolver', () => {
         });
 
         it('updateShippingMethod corrects order of arguments', async () => {
-            const { updateShippingMethod } = await adminClient.query<
-                Codegen.UpdateShippingMethodMutation,
-                Codegen.UpdateShippingMethodMutationVariables
-            >(UPDATE_SHIPPING_METHOD, {
+            const { updateShippingMethod } = await adminClient.query(updateShippingMethodDocument, {
                 input: {
                     id: 'T_5',
                     translations: [],
@@ -434,10 +413,7 @@ describe('ShippingMethod resolver', () => {
         });
 
         it('get shippingMethod preserves correct ordering', async () => {
-            const { shippingMethod } = await adminClient.query<
-                Codegen.GetShippingMethodQuery,
-                Codegen.GetShippingMethodQueryVariables
-            >(GET_SHIPPING_METHOD, {
+            const { shippingMethod } = await adminClient.query(getShippingMethodDocument, {
                 id: 'T_5',
             });
 
@@ -449,10 +425,7 @@ describe('ShippingMethod resolver', () => {
         });
 
         it('testShippingMethod corrects order of arguments', async () => {
-            const { testShippingMethod } = await adminClient.query<
-                Codegen.TestShippingMethodQuery,
-                Codegen.TestShippingMethodQueryVariables
-            >(TEST_SHIPPING_METHOD, {
+            const { testShippingMethod } = await adminClient.query(testShippingMethodDocument, {
                 input: {
                     calculator: {
                         code: defaultShippingCalculator.code,
@@ -492,23 +465,16 @@ describe('ShippingMethod resolver', () => {
 
     it('returns only active shipping methods', async () => {
         // Arrange: Delete all existing shipping methods using deleteShippingMethod
-        const { shippingMethods } =
-            await adminClient.query<Codegen.GetShippingMethodListQuery>(GET_SHIPPING_METHOD_LIST);
+        const { shippingMethods } = await adminClient.query(getShippingMethodListDocument);
 
         for (const method of shippingMethods.items) {
-            await adminClient.query<
-                Codegen.DeleteShippingMethodMutation,
-                Codegen.DeleteShippingMethodMutationVariables
-            >(DELETE_SHIPPING_METHOD, {
+            await adminClient.query(deleteShippingMethodDocument, {
                 id: method.id,
             });
         }
 
         // Create a new active shipping method
-        const { createShippingMethod } = await adminClient.query<
-            Codegen.CreateShippingMethodMutation,
-            Codegen.CreateShippingMethodMutationVariables
-        >(CREATE_SHIPPING_METHOD, {
+        await adminClient.query(createShippingMethodDocument, {
             input: {
                 code: 'active-method',
                 fulfillmentHandler: manualFulfillmentHandler.code,
@@ -531,8 +497,9 @@ describe('ShippingMethod resolver', () => {
         });
 
         // Act: Query active shipping methods
-        const { activeShippingMethods } = await shopClient.query(GET_ACTIVE_SHIPPING_METHODS);
+        const { activeShippingMethods } = await shopClient.query(getActiveShippingMethodsDocument);
 
+        activeShippingMethodsGuard.assertSuccess(activeShippingMethods);
         // Assert: Ensure only the new active method is returned
         expect(activeShippingMethods).toHaveLength(1);
         expect(activeShippingMethods[0].code).toBe('active-method');
@@ -547,7 +514,7 @@ describe('ShippingMethod resolver', () => {
 
         beforeAll(async () => {
             // Create a new channel
-            const { createChannel } = await adminClient.query(CREATE_CHANNEL, {
+            const { createChannel } = await adminClient.query(createChannelDocument, {
                 input: {
                     code: 'shipping-test-channel',
                     token: 'shipping-test-channel-token',
@@ -561,10 +528,7 @@ describe('ShippingMethod resolver', () => {
             channelId = createChannel.id;
 
             // Create a shipping method and assign it to the new channel
-            const { createShippingMethod } = await adminClient.query<
-                Codegen.CreateShippingMethodMutation,
-                Codegen.CreateShippingMethodMutationVariables
-            >(CREATE_SHIPPING_METHOD, {
+            const { createShippingMethod } = await adminClient.query(createShippingMethodDocument, {
                 input: {
                     code: 'channel-test-method',
                     fulfillmentHandler: manualFulfillmentHandler.code,
@@ -587,7 +551,7 @@ describe('ShippingMethod resolver', () => {
             });
             shippingMethodId = createShippingMethod.id;
 
-            await adminClient.query(ASSIGN_SHIPPING_METHODS_TO_CHANNEL, {
+            await adminClient.query(assignShippingMethodsToChannelDocument, {
                 input: {
                     channelId,
                     shippingMethodIds: [shippingMethodId],
@@ -595,7 +559,7 @@ describe('ShippingMethod resolver', () => {
             });
 
             // Assign product variant to the new channel
-            await adminClient.query(ASSIGN_PRODUCTVARIANT_TO_CHANNEL, {
+            await adminClient.query(assignProductVariantToChannelDocument, {
                 input: {
                     channelId,
                     productVariantIds: ['T_1'],
@@ -608,21 +572,21 @@ describe('ShippingMethod resolver', () => {
             try {
                 // Create an active order in the new channel with the shipping method
                 await shopClient.asAnonymousUser();
-                await shopClient.query(ADD_ITEM_TO_ORDER, {
+                await shopClient.query(addItemToOrderDocument, {
                     productVariantId: 'T_1',
                     quantity: 1,
                 });
-                await shopClient.query(SET_SHIPPING_METHOD, { id: [shippingMethodId] });
+                await shopClient.query(setShippingMethodDocument, { id: [shippingMethodId] });
 
                 // Verify shipping line is present and totals include shipping
-                const { activeOrder: orderBefore } = await shopClient.query(GET_ACTIVE_ORDER);
+                const { activeOrder: orderBefore } = await shopClient.query(getActiveOrderDocument);
                 expect(orderBefore.shippingLines).toHaveLength(1);
                 expect(orderBefore.shippingLines[0].shippingMethod.id).toBe(shippingMethodId);
                 expect(orderBefore.shipping).toBe(500);
                 expect(orderBefore.total).toBe(Number(orderBefore.subTotal) + 500);
 
                 // Remove the shipping method from the channel
-                await adminClient.query(REMOVE_SHIPPING_METHODS_FROM_CHANNEL, {
+                await adminClient.query(removeShippingMethodsFromChannelDocument, {
                     input: {
                         channelId,
                         shippingMethodIds: [shippingMethodId],
@@ -630,7 +594,7 @@ describe('ShippingMethod resolver', () => {
                 });
 
                 // Verify the shipping line has been removed and totals recalculated
-                const { activeOrder: orderAfter } = await shopClient.query(GET_ACTIVE_ORDER);
+                const { activeOrder: orderAfter } = await shopClient.query(getActiveOrderDocument);
                 expect(orderAfter.shippingLines).toHaveLength(0);
                 expect(orderAfter.shipping).toBe(0);
                 expect(orderAfter.shippingWithTax).toBe(0);
@@ -644,7 +608,7 @@ describe('ShippingMethod resolver', () => {
         it('historical orders still resolve shipping method after unassignment', async () => {
             try {
                 // Re-assign the shipping method to the channel so we can create a completed order
-                await adminClient.query(ASSIGN_SHIPPING_METHODS_TO_CHANNEL, {
+                await adminClient.query(assignShippingMethodsToChannelDocument, {
                     input: {
                         channelId,
                         shippingMethodIds: [shippingMethodId],
@@ -653,7 +617,7 @@ describe('ShippingMethod resolver', () => {
 
                 // Create a payment method in the test channel
                 adminClient.setChannelToken('shipping-test-channel-token');
-                await adminClient.query(CREATE_PAYMENT_METHOD_FOR_SHIPPING_TEST, {
+                await adminClient.query(createPaymentMethodForShippingTestDocument, {
                     input: {
                         code: testSuccessfulPaymentMethod.code,
                         translations: [
@@ -671,26 +635,26 @@ describe('ShippingMethod resolver', () => {
                 // Create and complete an order
                 shopClient.setChannelToken('shipping-test-channel-token');
                 await shopClient.asAnonymousUser();
-                await shopClient.query(ADD_ITEM_TO_ORDER, {
+                await shopClient.query(addItemToOrderDocument, {
                     productVariantId: 'T_1',
                     quantity: 1,
                 });
-                await shopClient.query(SET_SHIPPING_METHOD, { id: [shippingMethodId] });
-                await shopClient.query(SET_CUSTOMER, {
+                await shopClient.query(setShippingMethodDocument, { id: [shippingMethodId] });
+                await shopClient.query(setCustomerDocument, {
                     input: {
                         firstName: 'Test',
                         lastName: 'Customer',
                         emailAddress: 'shipping-test@test.com',
                     },
                 });
-                await shopClient.query(SET_SHIPPING_ADDRESS, {
+                await shopClient.query(setShippingAddressDocument, {
                     input: {
                         streetLine1: '1 Test Street',
                         countryCode: 'GB',
                     },
                 });
-                await shopClient.query(TRANSITION_TO_STATE, { state: 'ArrangingPayment' });
-                const { addPaymentToOrder: completedOrder } = await shopClient.query(ADD_PAYMENT, {
+                await shopClient.query(transitionToStateDocument, { state: 'ArrangingPayment' });
+                const { addPaymentToOrder: completedOrder } = await shopClient.query(addPaymentDocument, {
                     input: {
                         method: testSuccessfulPaymentMethod.code,
                         metadata: {},
@@ -698,7 +662,7 @@ describe('ShippingMethod resolver', () => {
                 });
 
                 // Remove the shipping method from the channel again
-                await adminClient.query(REMOVE_SHIPPING_METHODS_FROM_CHANNEL, {
+                await adminClient.query(removeShippingMethodsFromChannelDocument, {
                     input: {
                         channelId,
                         shippingMethodIds: [shippingMethodId],
@@ -707,7 +671,7 @@ describe('ShippingMethod resolver', () => {
 
                 // Verify the historical order still resolves the shipping method
                 adminClient.setChannelToken('shipping-test-channel-token');
-                const { order } = await adminClient.query(GET_ORDER, {
+                const { order } = await adminClient.query(getOrderDocument, {
                     id: completedOrder.id,
                 });
                 expect(order.shippingLines).toHaveLength(1);
@@ -721,16 +685,18 @@ describe('ShippingMethod resolver', () => {
     });
 });
 
-const GET_SHIPPING_METHOD = gql`
-    query GetShippingMethod($id: ID!) {
-        shippingMethod(id: $id) {
-            ...ShippingMethod
+const getShippingMethodDocument = graphql(
+    `
+        query GetShippingMethod($id: ID!) {
+            shippingMethod(id: $id) {
+                ...ShippingMethod
+            }
         }
-    }
-    ${SHIPPING_METHOD_FRAGMENT}
-`;
+    `,
+    [shippingMethodFragment],
+);
 
-const GET_ELIGIBILITY_CHECKERS = gql`
+const getEligibilityCheckersDocument = graphql(`
     query GetEligibilityCheckers {
         shippingEligibilityCheckers {
             code
@@ -744,9 +710,9 @@ const GET_ELIGIBILITY_CHECKERS = gql`
             }
         }
     }
-`;
+`);
 
-const GET_CALCULATORS = gql`
+const getCalculatorsDocument = graphql(`
     query GetCalculators {
         shippingCalculators {
             code
@@ -760,9 +726,9 @@ const GET_CALCULATORS = gql`
             }
         }
     }
-`;
+`);
 
-const TEST_SHIPPING_METHOD = gql`
+const testShippingMethodDocument = graphql(`
     query TestShippingMethod($input: TestShippingMethodInput!) {
         testShippingMethod(input: $input) {
             eligible
@@ -773,9 +739,9 @@ const TEST_SHIPPING_METHOD = gql`
             }
         }
     }
-`;
+`);
 
-export const TEST_ELIGIBLE_SHIPPING_METHODS = gql`
+export const testEligibleShippingMethodsDocument = graphql(`
     query TestEligibleMethods($input: TestEligibleShippingMethodsInput!) {
         testEligibleShippingMethods(input: $input) {
             id
@@ -786,18 +752,18 @@ export const TEST_ELIGIBLE_SHIPPING_METHODS = gql`
             metadata
         }
     }
-`;
+`);
 
-const ASSIGN_SHIPPING_METHODS_TO_CHANNEL = gql`
+const assignShippingMethodsToChannelDocument = graphql(`
     mutation AssignShippingMethodsToChannel($input: AssignShippingMethodsToChannelInput!) {
         assignShippingMethodsToChannel(input: $input) {
             id
             name
         }
     }
-`;
+`);
 
-const CREATE_PAYMENT_METHOD_FOR_SHIPPING_TEST = gql`
+const createPaymentMethodForShippingTestDocument = graphql(`
     mutation CreatePaymentMethodForShippingTest($input: CreatePaymentMethodInput!) {
         createPaymentMethod(input: $input) {
             id
@@ -805,13 +771,13 @@ const CREATE_PAYMENT_METHOD_FOR_SHIPPING_TEST = gql`
             name
         }
     }
-`;
+`);
 
-const REMOVE_SHIPPING_METHODS_FROM_CHANNEL = gql`
+const removeShippingMethodsFromChannelDocument = graphql(`
     mutation RemoveShippingMethodsFromChannel($input: RemoveShippingMethodsFromChannelInput!) {
         removeShippingMethodsFromChannel(input: $input) {
             id
             name
         }
     }
-`;
+`);

@@ -62,9 +62,9 @@ export class FacetValueService {
     ): Promise<Array<Translated<FacetValue>>> {
         const [repository, languageCode, channelLanguageCode] =
             ctxOrLang instanceof RequestContext
-                ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  [
+                ? [
                       this.connection.getRepository(ctxOrLang, FacetValue),
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                       lang!,
                       ctxOrLang.channel.defaultLanguageCode,
                   ]

@@ -114,10 +114,10 @@ export class FacetService {
         const relations = ['values', 'values.facet'];
         const [repository, facetCode, languageCode, channelLanguageCode] =
             ctxOrFacetCode instanceof RequestContext
-                ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  [
+                ? [
                       this.connection.getRepository(ctxOrFacetCode, Facet),
                       facetCodeOrLang,
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                       lang!,
                       ctxOrFacetCode.channel.defaultLanguageCode,
                   ]

@@ -36,10 +36,10 @@ import { VendureEntity } from '../../entity/base/base.entity';
 // prettier-ignore
 export type DefaultValueType<T extends CustomFieldType | StructFieldType> =
     T extends 'string' | 'localeString' | 'text' | 'localeText' ? string :
-        T extends 'int' | 'float' ? number :
-            T extends 'boolean' ? boolean :
-                T extends 'datetime' ? Date :
-                    T extends 'relation' ? any : never;
+    T extends 'int' | 'float' ? number :
+    T extends 'boolean' ? boolean :
+    T extends 'datetime' ? Date :
+    T extends 'relation' ? any : never;
 
 export type BaseTypedCustomFieldConfig<T extends CustomFieldType, C extends CustomField> = Omit<
     C,
@@ -72,7 +72,24 @@ export type BaseTypedCustomFieldConfig<T extends CustomFieldType, C extends Cust
      * @since 3.4.0
      */
     deprecated?: boolean | string;
-    ui?: UiComponentConfig<DefaultFormComponentId | string>;
+    /**
+     * @description
+     * Configuration for the UI component used to render this custom field.
+     *
+     * The `dashboard` property can be set to `false` to hide this custom field
+     * from the Dashboard (React admin UI). The field will be excluded from the
+     * Dashboard's auto-generated queries, mutations, and form controls, but will
+     * remain available in the Admin and Shop GraphQL APIs.
+     *
+     * This is useful for fields that are set programmatically by plugins and should
+     * not be displayed to admin users.
+     *
+     * @example
+     * ```ts
+     * ui: { dashboard: false }
+     * ```
+     */
+    ui?: UiComponentConfig<DefaultFormComponentId | string> | { dashboard?: boolean };
 };
 
 /**
@@ -273,6 +290,7 @@ export type CustomFieldConfig =
 export type CustomFields = {
     Address?: CustomFieldConfig[];
     Administrator?: CustomFieldConfig[];
+    ApiKey?: CustomFieldConfig[];
     Asset?: CustomFieldConfig[];
     Channel?: CustomFieldConfig[];
     Collection?: CustomFieldConfig[];
