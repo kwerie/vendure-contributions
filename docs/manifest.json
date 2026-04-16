@@ -1,7 +1,7 @@
 {
   "id": "core",
   "name": "Vendure Core Documentation",
-  "version": "3.6.1",
+  "version": "3.6.2",
   "vendureVersion": "v3",
   "navigation": [
     {
@@ -599,10 +599,10 @@
               "title": "Relation Selectors",
               "slug": "relation-selectors",
               "file": "docs/guides/extending-the-dashboard/custom-form-components/relation-selectors.mdx",
-              "lastModified": "2026-03-23T10:11:25+01:00"
+              "lastModified": "2026-04-13T10:27:51+02:00"
             }
           ],
-          "lastModified": "2026-03-23T10:11:25+01:00"
+          "lastModified": "2026-04-13T10:27:51+02:00"
         },
         {
           "title": "Navigation",
@@ -680,7 +680,7 @@
           "title": "Navigation Menu",
           "slug": "navigation-menu",
           "file": "docs/guides/storefront/navigation-menu/index.mdx",
-          "lastModified": "2026-02-12T16:47:03+01:00"
+          "lastModified": "2026-04-13T14:16:00Z"
         },
         {
           "title": "Listing Products",
@@ -2956,7 +2956,7 @@
                   "title": "PromotionService",
                   "slug": "promotion-service",
                   "file": "docs/reference/typescript-api/services/promotion-service.mdx",
-                  "lastModified": "2026-02-09T11:17:54+01:00"
+                  "lastModified": "2026-04-14T11:17:24+02:00"
                 },
                 {
                   "title": "ProvinceService",
@@ -3917,7 +3917,7 @@
                   "title": "Widgets",
                   "slug": "widgets",
                   "file": "docs/reference/dashboard/extensions-api/widgets.mdx",
-                  "lastModified": "2026-01-28T14:49:21+01:00"
+                  "lastModified": "2026-04-14T11:17:24+02:00"
                 }
               ],
               "lastModified": "2026-01-28T14:49:21+01:00"
@@ -4071,7 +4071,7 @@
                   "title": "UsePermissions",
                   "slug": "use-permissions",
                   "file": "docs/reference/dashboard/hooks/use-permissions.mdx",
-                  "lastModified": "2026-02-23T21:37:46+01:00"
+                  "lastModified": "2026-04-14T11:17:24+02:00"
                 },
                 {
                   "title": "UseSortedLanguages",
