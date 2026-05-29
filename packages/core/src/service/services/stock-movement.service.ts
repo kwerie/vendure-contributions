@@ -162,6 +162,7 @@ export class StockMovementService {
                 ctx,
                 ProductVariant,
                 orderLine.productVariantId,
+                { includeSoftDeleted: true },
             );
             const allocationLocations = await this.stockLocationService.getAllocationLocations(
                 ctx,

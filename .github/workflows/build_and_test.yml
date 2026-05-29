@@ -9,7 +9,8 @@ on:
         paths:
             - 'packages/**'
             - 'package.json'
-            - 'package-lock.json'
+            - 'bun.lock'
+            - 'bunfig.toml'
     pull_request:
         branches:
             - master
@@ -37,7 +38,7 @@ jobs:
             packages: ${{ steps.check.outputs.packages }}
             dashboard: ${{ steps.check.outputs.dashboard }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
               with:
                   fetch-depth: 0
             - name: Detect changed paths
@@ -56,7 +57,7 @@ jobs:
                   fi
                   changed=$(git diff --name-only "$(git merge-base "$base" HEAD)" HEAD)
 
-                  if echo "$changed" | grep -qE '^(packages/|package\.json|package-lock\.json)'; then
+                  if echo "$changed" | grep -qE '^(packages/|package\.json|bun\.lock|bunfig\.toml)'; then
                     echo "packages=true" >> "$GITHUB_OUTPUT"
                   else
                     echo "packages=false" >> "$GITHUB_OUTPUT"
@@ -79,10 +80,10 @@ jobs:
         permissions:
             contents: read
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
             - uses: ./.github/actions/setup
             - name: Build
-              run: npm run build
+              run: bun run build
     unit-tests:
         name: unit tests
         needs: detect-changes
@@ -95,14 +96,14 @@ jobs:
             matrix:
                 node: [20.x, 22.x, 24.x]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
             - uses: ./.github/actions/setup
               with:
                   node-version: ${{ matrix.node }}
             - name: Build
-              run: npx lerna run ci
+              run: bunx lerna run ci
             - name: Unit tests
-              run: npm run test
+              run: bun run test
     dashboard-i18n:
         name: dashboard i18n sync
         needs: detect-changes
@@ -111,7 +112,7 @@ jobs:
         permissions:
             contents: read
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
             - uses: ./.github/actions/setup
             - name: Check i18n catalogs are in sync
               working-directory: packages/dashboard
@@ -128,27 +129,27 @@ jobs:
             matrix:
                 shard: [1, 2, 3, 4]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
             - uses: ./.github/actions/setup
             - name: Build
-              run: npx lerna run ci --scope @vendure/testing --include-dependencies
+              run: bunx lerna run ci --scope @vendure/testing --include-dependencies
             - name: Cache Playwright browsers
               id: playwright-cache
-              uses: actions/cache@v4
+              uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
               with:
                   path: ~/.cache/ms-playwright
-                  key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+                  key: playwright-${{ runner.os }}-${{ hashFiles('**/bun.lock') }}
                   restore-keys: |
                       playwright-${{ runner.os }}-
             - name: Install Playwright browsers
               if: steps.playwright-cache.outputs.cache-hit != 'true'
-              run: npx playwright install chromium
+              run: bunx playwright install chromium
               working-directory: packages/dashboard
             - name: Install Playwright system deps
-              run: npx playwright install-deps chromium
+              run: bunx playwright install-deps chromium
               working-directory: packages/dashboard
             - name: Dashboard e2e tests
-              run: npm run e2e:pw -- --shard=${{ matrix.shard }}/4
+              run: bun run e2e:pw -- --shard=${{ matrix.shard }}/4
               working-directory: packages/dashboard
     sonarqube:
         name: SonarQube
@@ -158,7 +159,7 @@ jobs:
         permissions:
             contents: read
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
               with:
                   fetch-depth: 0
             - name: SonarQube Scan
@@ -182,17 +183,17 @@ jobs:
             matrix:
                 node: ${{ github.event_name == 'pull_request' && fromJSON('["22.x"]') || fromJSON('["20.x", "22.x", "24.x"]') }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
             - uses: ./.github/actions/setup
               with:
                   node-version: ${{ matrix.node }}
             - name: Build
-              run: npx lerna run ci
+              run: bunx lerna run ci
             - name: e2e tests
               env:
                   E2E_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
                   DB: sqljs
-              run: npm run e2e
+              run: bun run e2e
     e2e-mariadb:
         name: e2e (mariadb)
         needs: detect-changes
@@ -219,18 +220,18 @@ jobs:
             matrix:
                 node: ${{ github.event_name == 'pull_request' && fromJSON('["22.x"]') || fromJSON('["20.x", "22.x", "24.x"]') }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
             - uses: ./.github/actions/setup
               with:
                   node-version: ${{ matrix.node }}
             - name: Build
-              run: npx lerna run ci
+              run: bunx lerna run ci
             - name: e2e tests
               env:
                   E2E_MARIADB_PORT: ${{ job.services.mariadb.ports['3306'] }}
                   E2E_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
                   DB: mariadb
-              run: npm run e2e
+              run: bun run e2e
     e2e-mysql:
         name: e2e (mysql)
         needs: detect-changes
@@ -255,18 +256,18 @@ jobs:
             matrix:
                 node: ${{ github.event_name == 'pull_request' && fromJSON('["22.x"]') || fromJSON('["20.x", "22.x", "24.x"]') }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
             - uses: ./.github/actions/setup
               with:
                   node-version: ${{ matrix.node }}
             - name: Build
-              run: npx lerna run ci
+              run: bunx lerna run ci
             - name: e2e tests
               env:
                   E2E_MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
                   E2E_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
                   DB: mysql
-              run: npm run e2e
+              run: bun run e2e
     e2e-postgres:
         name: e2e (postgres)
         needs: detect-changes
@@ -292,18 +293,18 @@ jobs:
             matrix:
                 node: ${{ github.event_name == 'pull_request' && fromJSON('["22.x"]') || fromJSON('["20.x", "22.x", "24.x"]') }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
             - uses: ./.github/actions/setup
               with:
                   node-version: ${{ matrix.node }}
             - name: Build
-              run: npx lerna run ci
+              run: bunx lerna run ci
             - name: e2e tests
               env:
                   E2E_POSTGRES_PORT: ${{ job.services.postgres.ports['5432'] }}
                   E2E_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
                   DB: postgres
-              run: npm run e2e
+              run: bun run e2e
     all-passed:
         name: all-passed
         runs-on: ubuntu-latest
