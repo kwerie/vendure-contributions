@@ -1,7 +1,7 @@
 {
   "id": "core",
   "name": "Vendure Core Documentation",
-  "version": "3.6.2",
+  "version": "3.6.3",
   "vendureVersion": "v3",
   "navigation": [
     {
@@ -638,7 +638,7 @@
           "title": "Deployment",
           "slug": "deployment",
           "file": "docs/guides/extending-the-dashboard/deployment/index.mdx",
-          "lastModified": "2026-02-12T16:47:03+01:00"
+          "lastModified": "2026-05-26T10:57:06+02:00"
         },
         {
           "title": "Tech Stack",
@@ -717,18 +717,19 @@
     {
       "title": "Deployment",
       "slug": "deployment",
+      "file": "docs/guides/deployment/index.mdx",
       "children": [
         {
           "title": "Production Configuration",
           "slug": "production-configuration",
           "file": "docs/guides/deployment/production-configuration/index.mdx",
-          "lastModified": "2026-02-12T16:47:03+01:00"
+          "lastModified": "2026-05-26T10:57:06+02:00"
         },
         {
           "title": "Using Docker",
           "slug": "using-docker",
           "file": "docs/guides/deployment/using-docker.mdx",
-          "lastModified": "2026-02-12T16:47:03+01:00"
+          "lastModified": "2026-05-26T10:57:06+02:00"
         },
         {
           "title": "Horizontal Scaling",
@@ -740,7 +741,7 @@
           "title": "Getting Data into Production",
           "slug": "getting-data-into-production",
           "file": "docs/guides/deployment/getting-data-into-production.mdx",
-          "lastModified": "2026-02-12T16:47:03+01:00"
+          "lastModified": "2026-05-26T10:57:06+02:00"
         },
         {
           "title": "Server Resource Requirements",
@@ -764,7 +765,7 @@
           "title": "Deploy to Digital Ocean App Platform",
           "slug": "deploy-to-digital-ocean-app-platform",
           "file": "docs/guides/deployment/deploy-to-digital-ocean-app-platform/index.mdx",
-          "lastModified": "2026-02-12T16:47:03+01:00"
+          "lastModified": "2026-05-26T10:57:06+02:00"
         },
         {
           "title": "Deploy to Railway",
@@ -782,9 +783,10 @@
           "title": "Deploy to Google Cloud Run",
           "slug": "deploy-to-google-cloud-run",
           "file": "docs/guides/deployment/deploy-to-google-cloud-run/index.mdx",
-          "lastModified": "2026-02-12T16:47:03+01:00"
+          "lastModified": "2026-05-26T10:57:06+02:00"
         }
-      ]
+      ],
+      "lastModified": "2026-05-26T10:57:06+02:00"
     },
     {
       "title": "Legacy APIs",
@@ -2730,7 +2732,7 @@
                   "title": "DefaultSchedulerStrategy",
                   "slug": "default-scheduler-strategy",
                   "file": "docs/reference/typescript-api/scheduled-tasks/default-scheduler-strategy.mdx",
-                  "lastModified": "2026-01-28T14:49:21+01:00"
+                  "lastModified": "2026-05-04T16:38:19+02:00"
                 },
                 {
                   "title": "ScheduledTask",
@@ -2956,7 +2958,7 @@
                   "title": "PromotionService",
                   "slug": "promotion-service",
                   "file": "docs/reference/typescript-api/services/promotion-service.mdx",
-                  "lastModified": "2026-04-20T16:08:16+02:00"
+                  "lastModified": "2026-04-30T17:21:55+02:00"
                 },
                 {
                   "title": "ProvinceService",
@@ -3831,7 +3833,7 @@
                   "title": "UseGeneratedForm",
                   "slug": "use-generated-form",
                   "file": "docs/reference/dashboard/detail-views/use-generated-form.mdx",
-                  "lastModified": "2026-04-20T16:08:16+02:00"
+                  "lastModified": "2026-05-08T12:27:16+02:00"
                 }
               ],
               "lastModified": "2026-01-28T14:49:21+01:00"
@@ -3875,7 +3877,7 @@
                   "title": "FormComponents",
                   "slug": "form-components",
                   "file": "docs/reference/dashboard/extensions-api/form-components.mdx",
-                  "lastModified": "2026-04-20T16:08:16+02:00"
+                  "lastModified": "2026-04-30T17:21:55+02:00"
                 },
                 {
                   "title": "HistoryEntries",
@@ -4056,6 +4058,12 @@
                   "lastModified": "2026-02-25T13:59:17+01:00"
                 },
                 {
+                  "title": "UseIsServerConfigLoaded",
+                  "slug": "use-is-server-config-loaded",
+                  "file": "docs/reference/dashboard/hooks/use-is-server-config-loaded.mdx",
+                  "lastModified": "2026-05-08T12:27:16+02:00"
+                },
+                {
                   "title": "UseLocalFormat",
                   "slug": "use-local-format",
                   "file": "docs/reference/dashboard/hooks/use-local-format.mdx",
@@ -4109,7 +4117,7 @@
                   "title": "DataTable",
                   "slug": "data-table",
                   "file": "docs/reference/dashboard/list-views/data-table.mdx",
-                  "lastModified": "2026-04-20T16:08:16+02:00"
+                  "lastModified": "2026-05-08T12:27:16+02:00"
                 },
                 {
                   "title": "DataTableCellComponent",
@@ -4141,25 +4149,25 @@
                   "title": "Page",
                   "slug": "page",
                   "file": "docs/reference/dashboard/page-layout/page.mdx",
-                  "lastModified": "2026-04-20T16:08:16+02:00"
+                  "lastModified": "2026-05-08T12:27:16+02:00"
                 },
                 {
                   "title": "PageActionBar",
                   "slug": "page-action-bar",
                   "file": "docs/reference/dashboard/page-layout/page-action-bar.mdx",
-                  "lastModified": "2026-04-20T16:08:16+02:00"
+                  "lastModified": "2026-05-08T12:27:16+02:00"
                 },
                 {
                   "title": "PageBlock",
                   "slug": "page-block",
                   "file": "docs/reference/dashboard/page-layout/page-block.mdx",
-                  "lastModified": "2026-04-20T16:08:16+02:00"
+                  "lastModified": "2026-05-08T12:27:16+02:00"
                 },
                 {
                   "title": "PageTitle",
                   "slug": "page-title",
                   "file": "docs/reference/dashboard/page-layout/page-title.mdx",
-                  "lastModified": "2026-03-23T10:11:25+01:00"
+                  "lastModified": "2026-05-08T12:27:16+02:00"
                 },
                 {
                   "title": "UsePageBlock",
@@ -4168,7 +4176,7 @@
                   "lastModified": "2026-01-28T14:49:21+01:00"
                 }
               ],
-              "lastModified": "2026-04-20T16:08:16+02:00"
+              "lastModified": "2026-05-08T12:27:16+02:00"
             },
             {
               "title": "Vite Plugin",
